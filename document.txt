@@ -1,0 +1,4 @@
+ng g c components/admin/
+ng g c components/client/
+
+ Login api :  http://localhost:5000/api/Access/Login

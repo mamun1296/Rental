@@ -1,0 +1,84 @@
+<div class="d-flex justify-content-center align-items-center vh-100" style="background-color: rgb(191, 214, 216);">
+  <div class="login-card p-4 shadow rounded" style="background-color: rgb(94, 134, 129);">
+    
+    <!-- Title Section -->
+    <div class="text-center mb-4">
+      <h2 class="text-white" style="font-family: serif;">Welcome to Rental Service</h2>
+      <hr style="color: white;">
+    </div>
+
+    <div *ngIf="successMessage" class="alert alert-success" role="alert">
+      {{ successMessage }}
+    </div>
+    
+    <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+      {{ errorMessage }}
+    </div>
+    
+
+    <!-- Login Form -->
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+      <!-- Email Input -->
+      <div class="form-group mb-3">
+        <label for="email" class="form-label text-white">Email</label>
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          class="form-control"
+          placeholder="Enter your email"
+          [class.is-invalid]="loginForm.get('email')?.touched && loginForm.get('email')?.invalid"
+        />
+        <div *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid">
+          <div *ngIf="loginForm.get('email')?.errors?.['required']" class="text-white">
+            Email is required!
+          </div>
+          <div *ngIf="loginForm.get('email')?.errors?.['email']" class="text-white">
+            Please enter a valid email address!
+          </div>
+        </div>
+      </div>
+
+      <!-- Password Input -->
+      <div class="form-group mb-3">
+        <label for="password" class="form-label text-white">Password</label>
+        <input
+          type="password"
+          id="password"
+          formControlName="password"
+          class="form-control"
+          placeholder="Enter your password"
+          [class.is-invalid]="loginForm.get('password')?.touched && loginForm.get('password')?.invalid"
+        />
+        <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
+          <div *ngIf="loginForm.get('password')?.errors?.['required']" class="text-white">
+            Password is required!
+          </div>
+          <div *ngIf="loginForm.get('password')?.errors?.['minlength']" class="text-white">
+            Password must be at least 6 characters long!
+          </div>
+        </div>
+      </div>
+
+      <!-- Forgot Password and Free Trial Links -->
+      <div class="form-group mb-3" style="display: flex; justify-content: space-between; align-items: center;">
+        <a href="#" class="login-forgot text-white" style="font-size: 0.8rem;">Forgot Password?</a>
+        <span style="font-size: 0.8rem;">
+          <a [routerLink]="['/free-trial']" style="cursor: pointer;">Take A FREE TRIAL</a>.
+        </span>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="btn btn-primary w-100" [disabled]="loginForm.invalid">
+        Login
+      </button>
+    </form>
+
+    <hr style="color: white;">
+
+    <!-- Back Button -->
+    <a class="btn btn-sm btn-outline-info w-100" (click)="backToPrimaryHeader()">
+      <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+    </a>
+  </div>
+</div>
