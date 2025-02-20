@@ -21,33 +21,16 @@
                 </div>
             </li>
             <li>
-                <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">Menu Levels </span><span
-                        class="fa arrow"></span></a>
-                <ul class="nav nav-second-level collapse">
-                    <li>
-                        <a href="#" id="damian">Third Level <span class="fa arrow"></span></a>
-                        <ul class="nav nav-third-level">
-                            <li>
-                                <a href="#">Third Level Item</a>
-                            </li>
-                            <li>
-                                <a href="#">Third Level Item</a>
-                            </li>
-                            <li>
-                                <a href="#">Third Level Item</a>
-                            </li>
-
-                        </ul>
-                    </li>
-                    <li><a href="#">Second Level Item</a></li>
-                    <li>
-                        <a href="#">Second Level Item</a>
-                    </li>
-                    <li>
-                        <a href="#">Second Level Item</a>
+                <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">Menu Levels </span><span class="fa arrow"></span></a>
+                <ul *ngFor="let menuGroup of groupedMenuPermissions" class="nav nav-second-level collapse">
+                    <li *ngFor="let subMenu of menuGroup.subMenus">
+                        <a [routerLink]="subMenu.permissionKey">{{ subMenu.permissionName }}</a>
                     </li>
                 </ul>
             </li>
+            
+
+
             <li>
                 <a href="metrics.html"><i class="fa fa-pie-chart"></i> <span class="nav-label">Metrics</span>
                 </a>
@@ -56,4 +39,3 @@
 
     </div>
 </nav>
-

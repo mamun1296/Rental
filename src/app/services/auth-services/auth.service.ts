@@ -3,10 +3,8 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { jwtDecode } from 'jwt-decode';
-
 import { NotifyService } from '../notify-services/notify.service';
 import * as CryptoJS from 'crypto-js';
-import { PagePermissionsService } from '../page-permissions-service/page-permissions.service';
 import { MenuPermissionsService } from '../menu-permissions-service/menu-permissions.service';
 import { LoginService } from '../../components/login/login.service';
 
@@ -22,14 +20,45 @@ export class AuthService {
   public readonly THEME = 'user-theme';
   
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(this.isLoggedIn());
-  private pagePermissionsService = inject(PagePermissionsService);
-  private menuPermissionsService = inject(MenuPermissionsService);
+ // private menuPermissionsService = inject(MenuPermissionsService);
   
   constructor(
     private router: Router,
     private loginApiRoutesService: LoginService,
     private notifyService: NotifyService
   ) {}
+
+  // // Login method to authenticate and store the token
+  // login(credentials: { username: string; password: string }): Observable<any> {
+  //   return this.loginApiRoutesService.loginApi(credentials).pipe(
+  //     tap((response: any) => {
+  //       if (response.success) {
+  //         const { accessToken, menuPermissions } = response.data;
+          
+  //         // Store the access token
+  //         this.storeToken(accessToken);
+  
+  //         // Store menu permissions in localStorage
+  //         if (menuPermissions) {
+  //           localStorage.setItem(this.MENU_PERMISSIONS, JSON.stringify(menuPermissions));
+  //         }
+  
+  //         // Optional: Store user data if needed
+  //         const { userData } = response.data.userInfo;
+  //         if (userData) {
+  //           localStorage.setItem(this.USER, JSON.stringify(userData));
+  //         }
+  
+  //         this.isAuthenticatedSubject.next(true);
+  //       }
+  //     }),
+  //     catchError(err => {
+  //       this.notifyService.handleError(err);
+  //       return throwError(() => err);
+  //     })
+  //   );
+  // }
+
   login(credentials: { username: string; password: string }): Observable<any> {
     return this.loginApiRoutesService.loginApi(credentials).pipe(
       tap((response: any) => {      
@@ -105,10 +134,10 @@ export class AuthService {
   private clearToken(): void {
     if (this.isLocalStorageAvailable()) {
       localStorage.removeItem(this.ACCESS_TOKEN); 
-      this.pagePermissionsService.clearIds();
-      this.pagePermissionsService.clearPagePermissions();
-      this.menuPermissionsService.clearMenuPermissions();
-      this.pagePermissionsService.clearIds();
+     // this.pagePermissionsService.clearIds();
+     // this.pagePermissionsService.clearPagePermissions();
+      // this.menuPermissionsService.clearMenuPermissions();
+      //this.pagePermissionsService.clearIds();
     }
   }
 
@@ -147,10 +176,33 @@ export class AuthService {
     return decrypted.toString(CryptoJS.enc.Utf8);
   }
 
-  
+  //public $refreshToken = new Subject<boolean>();
+  //refreshToken(): Observable<any> {
   refreshToken(): void{
 
-    
+    // const refreshToken = localStorage.getItem('REFRESH_TOKEN');
+    // const accessToken = localStorage.getItem('ACCESS_TOKEN');
+
+    // if (refreshToken) {
+    //   const tokenObject = { AccessToken: accessToken, RefreshToken: refreshToken };
+    //     console.log('tokenObject', tokenObject);
+
+    //   return this.loginApiRoutesService.refreshTokenApi(tokenObject).pipe(
+    //     tap(response => {
+    //       console.log('Refresh Token Response:', response);
+
+    //       this.doLoginUser(response.data.accessToken, response.data.refreshToken, response.data.pagePermissions);
+    //     }),
+    //     catchError(error => {
+    //       console.log('refreshToken', error);
+    //       this.logOut();
+    //       return throwError(() => new Error('Failed to refresh token')); 
+    //     })
+    //   );
+    // } else {
+    //   console.error('No refresh token found');
+    //   return throwError(() => new Error('No refresh token found'));
+    // }
   }
 
 

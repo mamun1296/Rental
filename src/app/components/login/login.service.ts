@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { RoutersService } from "../../services/routes-services/routers.service";
+import { RoutesService } from "../../services/routes-services/routes.service";
 
 
 
@@ -11,7 +11,7 @@ import { RoutersService } from "../../services/routes-services/routers.service";
 
 export class LoginService{
     constructor(
-        private routesService: RoutersService
+        private routesService: RoutesService
       ) { }
        
       private controllerName = "Access";

@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';  // Import ReactiveFormsModule
 import { AuthService } from '../../services/auth-services/auth.service';
 import { NotifyService } from '../../services/notify-services/notify.service';
@@ -83,15 +82,4 @@ export class LoginComponent {
     localStorage.removeItem('accessToken');
     this.router.navigate(['/layout-container']);
   }
-
-  // showSnackbar(message: string, action: string = 'Dismiss', duration: number = 5000): void {
-  //   this.snackBar.open(message, action, {
-  //     duration,
-  //     horizontalPosition: 'center',
-  //     verticalPosition: 'bottom',
-  //   });
-  // }
-  
-
-
 }
