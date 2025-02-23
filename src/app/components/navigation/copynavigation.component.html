@@ -1,0 +1,451 @@
+<mat-sidenav-container class="sidenav-container" >
+  <!-------------------------------------------- Right side sidenav 
+  ---------------------------------------------- Menu Start 
+  ---------------------------------------------------------------->
+
+
+<mat-sidenav #drawer class="sidenav" fixedInViewport [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="true">
+  
+  <mat-toolbar class="custom-toolbar">
+    <img class="company-logo" src="/assets/img/Svg/Polock-Group-LOGO.png" alt="Company Logo">
+  </mat-toolbar>
+
+<!-- 
+<mat-nav-list>
+    <ng-container *ngFor="let menu of getVisibleMenus(menus)">
+      <a mat-list-item 
+         (click)="toggleSubMenu(menu)" 
+         class="menu-item" 
+         [class.expanded-menu-item]="menu.expanded" 
+         [routerLink]="menu.active && !menu.submenus?.length ? menu.path : null" 
+         routerLinkActive="active-menu-item"
+         [ngClass]="{'disabled': !menu.active}">
+        <span class="menu-item-content">
+          <mat-icon class="menu-toggle-icon" [class.expanded]="menu.expanded" *ngIf="menu.submenus && menu.submenus.length > 0">
+            {{ menu.expanded ? 'expand_more' : 'expand_less' }}
+          </mat-icon>
+          <mat-icon class="menu-icon">{{ menu.icon }}</mat-icon>
+          <span class="menu-item-title">{{ menu.title }}</span>
+        </span>
+      </a>
+    
+      <mat-nav-list *ngIf="menu.expanded && menu.submenus && menu.submenus.length > 0" class="border2">
+        <ng-container *ngFor="let submenu of getVisibleMenus(menu.submenus)">
+          <a mat-list-item 
+             (click)="toggleSubMenu(submenu)" 
+             class="submenu-item" 
+             [routerLink]="submenu.active && !submenu.submenus?.length ? submenu.path : null" 
+             routerLinkActive="active-submenu-item"
+             [ngClass]="{'disabled': !submenu.active}">
+            <span class="submenu-item-content">
+              <mat-icon class="menu-toggle-icon" [class.expanded]="submenu.expanded" *ngIf="submenu.submenus && submenu.submenus.length > 0">
+                {{ submenu.expanded ? 'expand_more' : 'expand_less' }}
+              </mat-icon>
+              <mat-icon class="menu-icon">{{ submenu.icon }}</mat-icon>
+              <span class="submenu-title">{{ submenu.title }}</span>
+            </span>
+          </a>
+    
+          <mat-nav-list *ngIf="submenu.expanded && submenu.submenus && submenu.submenus.length > 0" class="border3">
+            <ng-container *ngFor="let subsubmenu of getVisibleMenus(submenu.submenus)">
+              <a mat-list-item 
+                 (click)="toggleSubMenu(subsubmenu)" 
+                 class="subsubmenu-item"  
+                 [routerLink]="subsubmenu.active && !subsubmenu.submenus?.length ? subsubmenu.path : null" 
+                 routerLinkActive="active-subsubmenu-item"
+                 [ngClass]="{'disabled': !subsubmenu.active}">
+                <span class="subsubmenu-item-content">
+                  <mat-icon class="menu-toggle-icon" [class.expanded]="subsubmenu.expanded" *ngIf="subsubmenu.submenus && subsubmenu.submenus.length > 0">
+                    {{ subsubmenu.expanded ? 'expand_more' : 'expand_less' }}
+                  </mat-icon>
+                  <mat-icon class="menu-icon">{{ subsubmenu.icon }}</mat-icon>
+                  <span class="subsubmenu-title">{{ subsubmenu.title }}</span>
+                </span>
+              </a>
+            </ng-container>
+          </mat-nav-list>
+        </ng-container>
+      </mat-nav-list>
+    </ng-container>
+  </mat-nav-list>
+   -->
+
+  <mat-nav-list *ngIf="loginRole == 'Admin'">
+    <ng-container *ngFor="let menu of menus">     
+      <a mat-list-item 
+         (click)="onMenuClick(menu.mainMenuId); toggleSubMenu(menu)" 
+         class="menu-item" 
+         [class.expanded-menu-item]="menu.expanded" 
+         [routerLink]="menu.active && !menu.submenus?.length ? menu.path : null" 
+         routerLinkActive="active-menu-item"
+         [ngClass]="{'disabled': !menu.active}">
+        <span class="menu-item-content">
+          <mat-icon class="menu-toggle-icon" [class.expanded]="menu.expanded" *ngIf="menu.submenus && menu.submenus.length > 0">
+            {{ menu.expanded ? 'expand_more' : 'expand_less' }}
+          </mat-icon>
+          <mat-icon class="menu-icon">{{ menu.icon }}</mat-icon>
+          <span class="menu-item-title">{{ menu.title }}</span>
+        </span>
+      </a>
+    
+      <mat-nav-list *ngIf="menu.expanded && menu.submenus && menu.submenus.length > 0" class="border2">
+        <ng-container *ngFor="let submenu of getVisibleMenus(menu.submenus)">
+          <a mat-list-item 
+             (click)="onMenuClick(menu.mainMenuId, submenu.subMenuId); toggleSubMenu(submenu)" 
+             class="submenu-item" 
+             [routerLink]="submenu.active && !submenu.submenus?.length ? submenu.path : null" 
+             routerLinkActive="active-submenu-item"
+             [ngClass]="{'disabled': !submenu.active}">
+            <span class="submenu-item-content">
+              <mat-icon class="menu-toggle-icon" [class.expanded]="submenu.expanded" *ngIf="submenu.submenus && submenu.submenus.length > 0">
+                {{ submenu.expanded ? 'expand_more' : 'expand_less' }}
+              </mat-icon>
+              <mat-icon class="menu-icon">{{ submenu.icon }}</mat-icon>
+              <span class="submenu-title">{{ submenu.title }}</span>
+            </span>
+          </a>
+      
+          <mat-nav-list *ngIf="submenu.expanded && submenu.submenus && submenu.submenus.length > 0" class="border3">
+            <ng-container *ngFor="let subsubmenu of getVisibleMenus(submenu.submenus)">             
+              <a mat-list-item 
+                 (click)="onMenuClick(menu.mainMenuId, subsubmenu.subMenuId); toggleSubMenu(subsubmenu)" 
+                 class="subsubmenu-item"  
+                 [routerLink]="subsubmenu.active && !subsubmenu.submenus?.length ? subsubmenu.path : null" 
+                 routerLinkActive="active-subsubmenu-item"
+                 [ngClass]="{'disabled': !subsubmenu.active}">
+                <span class="subsubmenu-item-content">
+                  <mat-icon class="menu-toggle-icon" [class.expanded]="subsubmenu.expanded" *ngIf="subsubmenu.submenus && subsubmenu.submenus.length > 0">
+                    {{ subsubmenu.expanded ? 'expand_more' : 'expand_less' }}
+                  </mat-icon>
+              
+                  <mat-icon class="menu-icon"> &nbsp;&nbsp;&nbsp;{{ subsubmenu.icon }}</mat-icon>
+                  <span class="subsubmenu-title">&nbsp;&nbsp;&nbsp;{{ subsubmenu.title }}</span>
+                </span>
+              </a>
+            </ng-container>
+          </mat-nav-list>
+        </ng-container>
+      </mat-nav-list>
+
+    </ng-container>
+  </mat-nav-list>
+  
+  <mat-nav-list *ngIf="loginRole == 'Agency'">
+    <ng-container *ngFor="let menu of agencyMenus">     
+      <a mat-list-item 
+         (click)="onMenuClick(menu.mainMenuId); toggleSubMenu(menu)" 
+         class="menu-item" 
+         [class.expanded-menu-item]="menu.expanded" 
+         [routerLink]="menu.active && !menu.submenus?.length ? menu.path : null" 
+         routerLinkActive="active-menu-item"
+         [ngClass]="{'disabled': !menu.active}">
+        <span class="menu-item-content">
+          <mat-icon class="menu-toggle-icon" [class.expanded]="menu.expanded" *ngIf="menu.submenus && menu.submenus.length > 0">
+            {{ menu.expanded ? 'expand_more' : 'expand_less' }}
+          </mat-icon>
+          <mat-icon class="menu-icon">{{ menu.icon }}</mat-icon>
+          <span class="menu-item-title">{{ menu.title }}</span>
+        </span>
+      </a>
+    
+      <mat-nav-list *ngIf="menu.expanded && menu.submenus && menu.submenus.length > 0" class="border2">
+        <ng-container *ngFor="let submenu of getVisibleMenus(menu.submenus)">
+          <a mat-list-item 
+             (click)="onMenuClick(menu.mainMenuId, submenu.subMenuId); toggleSubMenu(submenu)" 
+             class="submenu-item" 
+             [routerLink]="submenu.active && !submenu.submenus?.length ? submenu.path : null" 
+             routerLinkActive="active-submenu-item"
+             [ngClass]="{'disabled': !submenu.active}">
+            <span class="submenu-item-content">
+              <mat-icon class="menu-toggle-icon" [class.expanded]="submenu.expanded" *ngIf="submenu.submenus && submenu.submenus.length > 0">
+                {{ submenu.expanded ? 'expand_more' : 'expand_less' }}
+              </mat-icon>
+              <mat-icon class="menu-icon">{{ submenu.icon }}</mat-icon>
+              <span class="submenu-title">{{ submenu.title }}</span>
+            </span>
+          </a>
+      
+          <mat-nav-list *ngIf="submenu.expanded && submenu.submenus && submenu.submenus.length > 0" class="border3">
+            <ng-container *ngFor="let subsubmenu of getVisibleMenus(submenu.submenus)">
+              <a mat-list-item 
+                 (click)="onMenuClick(menu.mainMenuId, subsubmenu.subMenuId); toggleSubMenu(subsubmenu)" 
+                 class="subsubmenu-item"  
+                 [routerLink]="subsubmenu.active && !subsubmenu.submenus?.length ? subsubmenu.path : null" 
+                 routerLinkActive="active-subsubmenu-item"
+                 [ngClass]="{'disabled': !subsubmenu.active}">
+                <span class="subsubmenu-item-content">
+                  <mat-icon class="menu-toggle-icon" [class.expanded]="subsubmenu.expanded" *ngIf="subsubmenu.submenus && subsubmenu.submenus.length > 0">
+                    {{ subsubmenu.expanded ? 'expand_more' : 'expand_less' }}
+                  </mat-icon>
+                  <mat-icon class="menu-icon">{{ subsubmenu.icon }}</mat-icon>
+                  <span class="subsubmenu-title">{{ subsubmenu.title }}</span>
+                </span>
+              </a>
+            </ng-container>
+          </mat-nav-list>
+        </ng-container>
+      </mat-nav-list>
+
+    </ng-container>
+  </mat-nav-list>
+  
+
+<!-- 
+   <mat-nav-list>
+    <ng-container *ngFor="let menu of menus">
+      <a mat-list-item 
+         (click)="onMenuClick(menu.mainMenuId); toggleSubMenu(menu)" 
+         class="menu-item" 
+         [class.expanded-menu-item]="menu.expanded" 
+         [routerLink]="menu.active && !menu.submenus?.length ? menu.path : null" 
+         routerLinkActive="active-menu-item"
+         [ngClass]="{'disabled': !menu.active}">
+        <span class="menu-item-content">
+          <mat-icon class="menu-toggle-icon" [class.expanded]="menu.expanded" *ngIf="menu.submenus && menu.submenus.length > 0">
+            {{ menu.expanded ? 'expand_more' : 'expand_less' }}
+          </mat-icon>
+          <mat-icon class="menu-icon">{{ menu.icon }}</mat-icon>
+          <span class="menu-item-title">{{ menu.title }}</span>
+        </span>
+      </a>
+      
+      <mat-nav-list *ngIf="menu.expanded && menu.submenus && menu.submenus.length > 0" class="border2">
+        <ng-container *ngFor="let submenu of getVisibleMenus(menu.submenus)">
+          <a mat-list-item 
+             (click)="onMenuClick(menu.mainMenuId, submenu.subMenuId); toggleSubMenu(submenu)" 
+             class="submenu-item" 
+             [routerLink]="submenu.active && !submenu.subSubMenu?.length ? submenu.path : null" 
+             routerLinkActive="active-submenu-item"
+             [ngClass]="{'disabled': !submenu.active}">
+            <span class="submenu-item-content">
+              <mat-icon class="menu-toggle-icon" [class.expanded]="submenu.expanded" *ngIf="submenu.subSubMenu && submenu.subSubMenu.length > 0">
+                {{ submenu.expanded ? 'expand_more' : 'expand_less' }}
+              </mat-icon>
+              <mat-icon class="menu-icon">{{ submenu.icon }}</mat-icon>
+              <span class="submenu-title">{{ submenu.title }}</span>
+            </span>
+          </a>
+          
+          <mat-nav-list *ngIf="submenu.expanded && submenu.subSubMenu && submenu.subSubMenu.length > 0" class="border3">
+            <ng-container *ngFor="let subsubmenu of getVisibleMenus(submenu.subSubMenu)">
+              <a mat-list-item 
+                 (click)="onMenuClick(menu.mainMenuId, subsubmenu.subMenuId); toggleSubMenu(subsubmenu)" 
+                 class="subsubmenu-item"  
+                 [routerLink]="subsubmenu.active && !subsubmenu.submenus?.length ? subsubmenu.path : null" 
+                 routerLinkActive="active-subsubmenu-item"
+                 [ngClass]="{'disabled': !subsubmenu.active}">
+                <span class="subsubmenu-item-content">
+                  <mat-icon class="menu-toggle-icon" [class.expanded]="subsubmenu.expanded" *ngIf="subsubmenu.submenus && subsubmenu.submenus.length > 0">
+                    {{ subsubmenu.expanded ? 'expand_more' : 'expand_less' }}
+                  </mat-icon>
+                  <mat-icon class="menu-icon">{{ subsubmenu.icon }}</mat-icon>
+                  <span class="subsubmenu-title">{{ subsubmenu.title }}</span>
+                </span>
+              </a>
+            </ng-container>
+          </mat-nav-list>
+        </ng-container>
+      </mat-nav-list>
+    </ng-container>
+  </mat-nav-list> -->
+  
+
+</mat-sidenav>
+
+
+  <!-------------------------------------------- Right side sidenav 
+  ---------------------------------------------- Menu End 
+  ---------------------------------------------------------------->
+
+
+  
+
+  <!-------------------------------------------- Right side sidenav 
+  ---------------------------------------------- Profile Start 
+  ---------------------------------------------------------------->
+
+  <mat-sidenav #rightSidenav class="sidenav" fixedInViewport
+  [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+  [mode]="(isHandset$ | async) ? 'over' : 'over'"
+  [opened]="false" 
+  position="end">
+
+    <!-- <mat-toolbar>{{ user?.roles }}</mat-toolbar>
+    <div class="user-info">
+      <p>Roles</p>
+      <div *ngIf="user?.roles?.length > 0; else noRoles">
+        <ul class="role-list">
+          <li *ngFor="let role of user?.roles">{{ role }}</li>
+        </ul>
+      </div>
+      <ng-template #noRoles>
+        <span>No roles assigned</span>
+      </ng-template>
+    </div> -->
+
+    <mat-toolbar>{{ loginRole }}</mat-toolbar>   
+   
+    <div class="user-info">
+    
+      <p class="app-header-title">Name : {{ loginName }}</p>
+      <p class="app-header-title">Email : {{ email }}</p>
+      <p class="app-header-title">Contact : {{ contactNumber }}</p>   
+    </div>
+    <mat-nav-list>
+
+      <a mat-list-item (click)="logOut()" class="btn btn-action btn-danger" type="submit" style="background-color:coral">Logout</a>
+      
+    </mat-nav-list>
+
+
+
+  </mat-sidenav>
+
+
+  <!-------------------------------------------- Right side sidenav 
+  ---------------------------------------------- Profile End 
+  ---------------------------------------------------------------->
+
+
+
+
+
+
+
+  <!-- 
+  ................................................................
+  -->
+  
+  <mat-sidenav-content>
+    <mat-toolbar color="primary" class="shadow-sm">
+     
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()" style="color:#ffff;">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      
+
+      <ng-container>
+          <h1 class="app-header-title">{{ loginRole }}</h1> 
+        <!-- &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+            <p class="app-header-title">Name : {{ loginName }}</p>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+            <p class="app-header-title">Contact : {{ contactNumber }}</p>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;  
+            <p class="app-header-title">Email : {{ email }}</p> -->
+      </ng-container>
+        
+        
+     
+      <span class="spacer"></span>
+
+
+
+      <!-- ----------------------------------------------- Profile
+      ----------------------------------------------- Start --- -->
+      <div class="flex-container">
+
+        <!-- *ngIf="!(isHandset$ | async) && user" -->
+        <ng-container >
+          <div class="text-small flex-item">
+            <span class="m-0 p-0 display-block">
+              {{ loginName }}
+            </span>
+          </div>
+        </ng-container>
+        
+        
+      
+        <div class="profile-image-container flex-item">
+
+          <a style="cursor: pointer;" (click)="rightSidenav.toggle()" matTooltip="Logout">
+            <img src="/assets/img/user.png" class="img-sm img-circle" alt="Profile Image">
+            
+            <i class="icofont-caret-down" style="font-size:25px;"></i>
+          </a>
+        </div>
+
+
+
+
+<!-- <div class="notification-icon-container flex-item">
+  <span class="notification-bell" (click)="toggleNotifications()">
+    <i class="fa-solid fa-bell"></i>
+    <span *ngIf="listOfNotication.length > 0" class="badge">{{ listOfNotication.length }}</span>
+  </span>
+
+  <div *ngIf="showNotifications" class="notification-list">
+    <ng-container *ngIf="listOfNotication.length; else noNotifications">
+      <div *ngFor="let notification of listOfNotication" 
+           class="notification-item" 
+           [ngClass]="{'unread': !notification.read}">
+        <div class="notification-header">
+          <div class="notification-title">{{ notification.title }}</div>
+          <div class="notification-time">{{ notification.createdDate }}</div>
+          <i class="fa-solid fa-times close-icon" (click)="deleteNotification(notification.id)"></i>
+        </div>
+        <div class="notification-description">{{ notification.message }}</div>
+      </div>
+    </ng-container>
+
+    <ng-template #noNotifications>
+      <div class="no-notification">No notifications</div>
+    </ng-template>
+
+    <div class="notification-footer">
+      <a *ngIf="notifications.length > 0" class="clear-all-btn" (click)="clearAllNotifications()">
+        Clear All
+      </a>
+    </div>
+
+    
+  </div>
+</div> -->
+
+
+
+      </div>
+
+      <!-- ----------------------------------------------- Profile
+      ----------------------------------------------- End --- -->
+
+
+      <!-- ------------------------------------- Toggle Bar 
+        ---------------------------------------- Start -->
+
+      <!-- <div class="custom-slide-toggle" [ngClass]="{ 'dark-mode': isLightMode }" (click)="toggle()">
+        
+        <input type="checkbox" [checked]="isLightMode" class="toggle-input">
+        
+        <div class="toggle-background">
+            <div class="toggle-handle" matTooltip="Change Mood"></div>
+        </div>
+
+        <span matTooltip="Light Mood" *ngIf="isLightMode" class="sun-icon"><i class="fa-solid fa-sun sun-color"></i></span> 
+        <span matTooltip="Dark Mood" *ngIf="!isLightMode" class="moon-icon"><i class="fa-solid fa-moon moon-color"></i></span>
+      </div> -->
+      
+     
+      <!-- ------------------------------------- Toggle Bar 
+        ---------------------------------------- End -->
+
+
+    </mat-toolbar>
+
+
+
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+
+
+  </mat-sidenav-content>
+
+
+
+
+
+</mat-sidenav-container>

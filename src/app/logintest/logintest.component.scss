@@ -28,6 +28,14 @@ body {
     padding: 40px;
     text-align: center;
 }
+.loginPageBG {
+    background-color: white !important; /* Set the background to white */
+    width: 100vw; /* Full width */
+    height: 100vh; /* Full height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 .right-panel {
     flex: 1;

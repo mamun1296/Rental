@@ -23,6 +23,7 @@ export class LogintestComponent {
   successMessage: string='';
 constructor(private fb: FormBuilder, private router: Router, private authService: AuthService,
      private notifyService: NotifyService) {
+      debugger
       this.loginForm = this.fb.group({
         userName:  new FormControl('', [Validators.required, Validators.minLength(5)]),
         password: new FormControl('', [Validators.required, Validators.minLength(6)]),
@@ -59,7 +60,7 @@ constructor(private fb: FormBuilder, private router: Router, private authService
   login(): void {
     if (this.loginForm.valid) {
       this.btnLogin = true;
-  
+     debugger
       // const isAdmin = this.loginForm.controls['isAdmin'].value;
       // const isEmployee = this.loginForm.controls['isEmployee']?.value || false; 
   

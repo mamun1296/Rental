@@ -1,0 +1,260 @@
+<p>user-modal works!</p>
+<ng-template #modal let-modal>
+    <div class="modal-header">
+      <span class="modal-title">{{ title }}</span>
+      <div class="icon-right">
+        <button type="button" class="btn btn-danger btn-xs" (click)="closeModal('Close click')">✖
+        </button>
+      </div>
+    </div>
+  
+    <div class="modal-body small-font">
+  
+      <mat-stepper orientation="horizontal" #stepper>
+  
+        <mat-step [stepControl]="form">
+          <ng-template matStepLabel>Create User</ng-template>
+  
+          <form [formGroup]="form" (ngSubmit)="confirmAction()"> 
+  
+            <!-- <div>
+              <app-search-select
+                dropdownDirection="down"
+                [options]="status"
+                idProperty="id"
+                valueProperty="value"
+                placeholder="Select an Status"
+                >
+              </app-search-select>
+  
+            </div> -->
+  
+            
+            <div class="form-group">
+              <label for="employeeCode" class="bold-font">Employee Code :</label>
+              <input
+                id="employeeCode"
+                type="text"
+                formControlName="employeeCode"
+                class="form-control shadow-sm"
+                [ngClass]="{ 'is-invalid': form.get('employeeCode')?.invalid && form.get('employeeCode')?.touched }"
+              />
+              <div *ngIf="form.get('employeeCode')?.invalid && form.get('employeeCode')?.touched" class="text-danger">
+                <small *ngIf="form.get('employeeCode')?.errors?.['required']">Employee Code is required.</small>
+                <small *ngIf="form.get('employeeCode')?.errors?.['maxlength']">Employee Code cannot be longer than 50 characters.</small>
+              </div>
+            </div>
+      
+            <div class="form-group">
+              <label for="firstName" class="bold-font">First Name :</label>
+              <input
+                id="firstName"
+                type="text"
+                formControlName="firstName"
+                class="form-control shadow-sm"
+                [ngClass]="{ 'is-invalid': form.get('firstName')?.invalid && form.get('firstName')?.touched }"
+              />
+              <div *ngIf="form.get('firstName')?.invalid && form.get('firstName')?.touched" class="text-danger">
+                <small *ngIf="form.get('firstName')?.errors?.['required']">First Name is required.</small>
+                <small *ngIf="form.get('firstName')?.errors?.['maxlength']">First Name cannot be longer than 50 characters.</small>
+              </div>
+            </div>
+      
+            <div class="form-group">
+              <label for="lastName" class="bold-font">Last Name :</label>
+              <input
+                id="lastName"
+                type="text"
+                formControlName="lastName"
+                class="form-control shadow-sm"
+                [ngClass]="{ 'is-invalid': form.get('lastName')?.invalid && form.get('lastName')?.touched }"
+              />
+              <div *ngIf="form.get('lastName')?.invalid && form.get('lastName')?.touched" class="text-danger">
+                <small *ngIf="form.get('lastName')?.errors?.['required']">Last Name is required.</small>
+                <small *ngIf="form.get('lastName')?.errors?.['maxlength']">Last Name cannot be longer than 50 characters.</small>
+              </div>
+            </div>
+      
+        
+      
+            <div class="form-group">
+              <label for="email" class="bold-font">Email :</label>
+              <input
+                id="email"
+                type="email"
+                formControlName="email"
+                class="form-control shadow-sm"
+                [ngClass]="{ 'is-invalid': form.get('email')?.invalid && form.get('email')?.touched }"
+              />
+              <div *ngIf="form.get('email')?.invalid && form.get('email')?.touched" class="text-danger">
+                <small *ngIf="form.get('email')?.errors?.['required']">Email is required.</small>
+                <small *ngIf="form.get('email')?.errors?.['email']">Invalid Email Address.</small>
+              </div>
+            </div>
+      
+            <div class="form-group">
+              <label for="phoneNumber" class="bold-font">Phone Number :</label>
+              <input
+                id="phoneNumber"
+                type="tel"
+                formControlName="phoneNumber"
+                class="form-control shadow-sm"
+                placeholder="e.g., +8801234567890 or 01234567890"
+                [ngClass]="{ 'is-invalid': form.get('phoneNumber')?.invalid && form.get('phoneNumber')?.touched }"
+              />
+              <div *ngIf="form.get('phoneNumber')?.invalid && form.get('phoneNumber')?.touched" class="text-danger">
+                <small *ngIf="form.get('phoneNumber')?.errors?.['required']">Phone Number is required.</small>
+                <small *ngIf="form.get('phoneNumber')?.errors?.['pattern']">Invalid Phone Number.</small>
+              </div>
+            </div>
+      
+            <!-- <div class="form-group checkbox-group">
+              <label class="checkbox-label">
+                <input type="checkbox" formControlName="isDefaultPassword" />
+                Default Password
+              </label>
+            </div>
+       -->
+  
+  
+  
+       <div class="form-group">
+        <label for="userName" class="bold-font">Username :</label>
+        <input
+          id="userName"
+          type="text"
+          formControlName="userName"
+          class="form-control shadow-sm"
+          [ngClass]="{ 'is-invalid': form.get('userName')?.invalid && form.get('userName')?.touched }"
+        />
+        <div *ngIf="form.get('userName')?.invalid && form.get('userName')?.touched" class="text-danger">
+          <small *ngIf="form.get('userName')?.errors?.['required']">Username is required.</small>
+          <small *ngIf="form.get('userName')?.errors?.['maxlength']">Username cannot be longer than 50 characters.</small>
+        </div>
+      </div>
+  
+  
+      <div *ngIf="!form.get('isDefaultPassword')?.value" class="form-group">
+        <label for="defaultPassword" class="bold-font">Password :</label>
+        <div class="input-group">
+          <input
+            id="defaultPassword"
+            [type]="showPassword ? 'text' : 'password'"
+            formControlName="defaultPassword"
+            class="form-control shadow-sm"
+            [ngClass]="{ 'is-invalid': form.get('defaultPassword')?.invalid && form.get('defaultPassword')?.touched }"
+          />
+          <div class="input-group-append">
+            <button type="button" class="btn btn-outline-secondary" (click)="togglePasswordVisibility()">
+              <i [class]="showPassword ? 'fas fa-eye' : 'fas fa-eye-slash'"></i>
+            </button>
+          </div>
+        </div>
+  
+        <div *ngIf="form.get('defaultPassword')?.invalid && form.get('defaultPassword')?.touched" class="text-danger">
+          <small *ngIf="form.get('defaultPassword')?.errors?.['required']">Password is required.</small>
+          <small *ngIf="form.get('defaultPassword')?.errors?.['minlength']">Password must be at least 6 characters.</small>
+        </div>
+      </div>
+      
+      <div class="form-group checkbox-group">
+        <label class="checkbox-label">
+          <input type="checkbox" formControlName="lockoutEnabled" />
+          Lockout Enabled
+        </label>
+      </div>
+  
+      <div class="form-group checkbox-group">
+        <label class="checkbox-label">
+          <input type="checkbox" formControlName="twoFactorEnabled" />
+          Two-Factor Enabled
+        </label>
+      </div>
+      
+  
+            
+  
+  
+         
+          </form>
+  
+        </mat-step>
+  
+        <mat-step [stepControl]="form">
+  
+          <ng-template matStepLabel>Assign Role</ng-template>
+          
+          <form [formGroup]="form" (ngSubmit)="confirmAction()">
+            <div class="form-group">
+              <label class="bold-font">Roles :</label>
+              <div class="input-group row">
+                <div *ngFor="let role of listOfRoles" class="col-4 col-md-4 col-lg-3 mb-1">
+                  <label class="d-flex align-items-center">
+                    <input
+                      type="checkbox"
+                      [checked]="selectedRoles.includes(role.name)"
+                      (change)="toggleRole(role.name, $event)"
+                      class="mr-1 pointer-cursor"
+                    />
+                    <span class="m-1 pointer-cursor">{{ role.name }}</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </form>
+          
+  
+        </mat-step>
+  
+  
+        <mat-step [stepControl]="form">
+  
+          <ng-template matStepLabel>Assign Categories</ng-template>
+          
+          <form [formGroup]="form" (ngSubmit)="confirmAction()">
+            <div class="form-group">
+              <label class="bold-font">Categories :</label>
+              <div class="input-group row">
+                <div *ngFor="let category of listOfCategory" class="col-6 col-md-6 col-lg-6 col-sm-12 mb-1">
+                  <label class="d-flex align-items-center">
+                    <input
+                      type="checkbox"
+                      [checked]="selectedCategories.includes(category.categoryId)"
+                      (change)="toggleCategory(category.categoryId, $event)"
+                      class="mr-1 pointer-cursor"
+                    />
+                    <span class="m-1 pointer-cursor">{{ category.categoryName }}</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </form>
+          
+  
+        </mat-step>
+  
+      </mat-stepper>
+  
+  
+  
+  
+  
+  
+    </div>
+  
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-primary btn-sm" (click)="resetForm()">
+        <i class="fas fa-redo-alt"></i>
+        Reset
+      </button>
+  
+      <button type="submit" class="btn btn-save btn-sm" [disabled]="form.invalid" (click)="form.valid ? confirmAction() : null">
+        <i class="fas fa-save"></i>
+        {{ mode === 'update' ? 'Update' : 'Save' }}
+      </button>
+      <button type="button" class="btn btn-outline-danger btn-md" (click)="closeModal('Cancel click')">
+        <i class="fas fa-times"></i> Close
+      </button>
+    </div>
+  </ng-template>
+  

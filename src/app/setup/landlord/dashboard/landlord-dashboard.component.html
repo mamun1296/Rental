@@ -1,0 +1,763 @@
+<div class="container-fluid p-2">
+  <h4 class="label-title">Complain List</h4>
+  <div class="tabs-container">
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a href="javascript:void(0)" (click)="selectTab(0)" class="nav-link" [ngClass]="{'active': selectedTab === 0}">
+          <i class="fa fa-list" aria-hidden="true"></i> | Problem List
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="javascript:void(0)" (click)="selectTab(1)" class="nav-link" [ngClass]="{'active': selectedTab === 1}">
+          <i class="fa fa-times" aria-hidden="true"></i> | Rejected List
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="javascript:void(0)" (click)="selectTab(2)" class="nav-link" [ngClass]="{'active': selectedTab === 2}">
+          <i class="fa fa-check" aria-hidden="true"></i> | Approved List
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="javascript:void(0)" (click)="selectTab(3)" class="nav-link" [ngClass]="{'active': selectedTab === 3}">
+          <i class="fa fa-check" aria-hidden="true"></i> | Solved List
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="javascript:void(0)" (click)="selectTab(4)" class="nav-link" [ngClass]="{'active': selectedTab === 4}">
+          <i class="fa fa-check" aria-hidden="true"></i> | Done List
+        </a>
+      </li>
+    </ul>
+  </div>
+
+    <div class="row m-t-sm mt-0">
+      <div *ngIf="selectedTab === 0" class="tab-pane active">
+        <div class="row m-t-sm mt-2">
+          <div class="col-md-12 mb-4">       
+            <div class="card shadow-lg p-4">
+              <form [formGroup]="complainFrom">
+                <div class="row g-3">   
+    
+                <div class="col-md-4 col-lg-4">
+                  <div class="form-group">
+                    <label for="propertyID" class="label-title">Property <i class="fa fa-angle-down"></i> <span class="text-danger"> *</span></label>
+                    <div class="dropdown-container">
+                        <input type="text"   
+                            [formControl]="propertySearchControl" 
+                            formControlName="propertyID"
+                            (focus)="isPropertyDropdownOpen = true"
+                            placeholder="Search by Property..."
+                        />
+                        <button mat-button class="btn btn-primary btn-sm" (click)="propertyToggleDropdown()">▼</button>
+                        <button *ngIf="complainFrom.controls['propertyID'].value" mat-button class="btn-clear" 
+                            (click)="clearPropertySelection()" title="Clear">✖</button>              
+                        <ul *ngIf="isPropertyDropdownOpen" class="dropdown-list">
+                            <li *ngFor="let item of filteredProperties" (click)="selectProperty(item)">
+                                {{ item.text }}
+                            </li>
+                            <li *ngIf="filteredProperties.length === 0">No results found</li>
+                        </ul>
+                    </div>                        
+                    <div
+                        *ngIf="complainFrom.get('propertyID')?.invalid && (complainFrom.get('propertyID')?.dirty || complainFrom.get('propertyID')?.touched)">
+                        <span class="text-danger">Property is required.</span>
+                    </div>   
+                </div>
+                </div>            
+    
+                <div class="col-md-4 col-lg-4">
+                  <div class="form-group">
+                    <label for="stateStatus" class="label-title">Status <i class="fa fa-angle-down"></i> </label>
+                    <select class="form-control textbox-border-color" id="stateStatus" formControlName="stateStatus">
+                      <option value="">---Search by Status---</option>
+                      <option *ngFor="let item of ddlStatus">{{item}}</option> 
+                    </select>           
+                  </div>
+                </div>
+                <div class="col-md-4 col-lg-4">
+                  <div class="form-group">
+                    <label for="isActive" class="label-title">Activation Status <i class="fa fa-angle-down"></i> </label>
+                    <select class="form-control textbox-border-color" id="isActive" formControlName="isActive">
+                      <option value="">---Search by Activation---</option>
+                      <option value="true">Active</option>
+                      <option value="false">In-Active</option>  
+                    </select>           
+                  </div>
+                </div>
+    
+              </div>
+              </form>
+          
+            </div>      
+      
+            <div class="card shadow-lg p-4 mt-4">
+                  <div class="table-scrollable">     
+                      <div class="table-responsive">  
+                          <div class="pointer-cursor">                                                  
+                              <!-- <button
+                                class="btn btn-sm btn-outline-success"
+                                (click)="bulkApproveSelected()" [hidden]="!btnAllApproval || selectedComplains.size === 0 || _selectComplainStatus !== 'Pending'"                        
+                            >
+                                <i class="fa fa-check faa-passing"></i> | All Approve Selected
+                              </button> -->
+                          </div>  
+                          <br>
+                          <!-- <div *ngIf="selectedComplainDetails?.length; else loading"> -->
+                            <table class="table table-hover table-striped textbox-border-color">
+                            <thead>
+                                <tr class="text-center">
+                                <th>#SL</th>  
+                                <th>Segment</th>                                                                
+                                <th class="text-center">Complain</th>
+                                <th>Comments</th>
+                                <th>Images</th>
+                                <th>Status</th>                            
+                                <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let complain of complains| paginate: { id: 'list', itemsPerPage: pagination.pageSize, currentPage: pagination.pageNumber, totalItems: pagination.totalRows }; let i = index">
+                                  <td class="text-center">{{ (pagination.pageNumber - 1) * pagination.pageSize + i + 1 }}</td>  
+                                <!-- <td class="text-center">
+                                  <input
+                                    type="checkbox"
+                                    [formControl]="complainApprovalControls[complain.complainID]"
+                                    (change)="toggleIndividualSelection(complain.complainID)"
+                                    [disabled]="complain.stateStatus !== 'Pending'"
+                                  />
+                                </td> -->
+                                
+                              <td class="text-center">{{ complain.segmentName }}</td>                                     
+                              <td class="text-center complain-text">{{ complain.complainName }}</td>
+                                <td class="text-center">                                
+                                  <input #commentsInput type="text" class="form-control textbox-border-color" id="comments" value="{{complain.comments}}">
+                                </td>
+                                <td style="text-align: center; vertical-align: middle;">
+                                    <div *ngIf="imageUrls && imageUrls[i]?.length" class="d-flex justify-content-center">
+                                          <div class="row justify-content-center">
+                                          <div class="col-md-3" *ngFor="let imgSrc of imageUrls[i]">
+                                            <button  class="btn btn-sm btn-outline-primary btn-size" title="Show Image" style="font-size: 11px;"mat-raised-button color="primary" (click)="openModal(imgSrc)">
+                                            <img [src]="imgSrc" widht="10" height="10"/>
+                                          </button>
+                                        </div>
+                                      </div>                                        
+                                    </div>
+                                    <span *ngIf="imageUrls[i] && (!imageUrls[i] || imageUrls[i].length === 0)"><img src="/assets/img/no-image_icon.png" alt="not found" widht="25" height="25"/></span>
+                                  </td>
+                                  <td class="text-center">   
+                                    <span class="label label-warning"
+                                    *ngIf="complain.isSentToLandlord==true && complain.isApproved==false">
+                                     Pending...</span>   
+                                  </td>
+    
+                                  <td class="text-center">                           
+                                      <button *ngIf="complain.stateStatus == 'Pending'"
+                                      class="btn btn-rounded btn-primary my-2 btn-action-size"
+                                      (click)="selectedApprove(complain.complainID, complain.complainInfoID, 'approve', commentsInput.value)"
+                                      [disabled]="complain.stateStatus !== 'Pending'" title="Approve" style="font-size: 11px;">
+                                      Approve
+                                      </button>
+                                      &nbsp;
+                                      <button *ngIf="complain.stateStatus == 'Pending'"
+                                      class="btn btn-rounded btn-danger my-2 btn-action-size"
+                                      (click)="selectedApprove(complain.complainID, complain.complainInfoID, 'reject', commentsInput.value)"
+                                      [disabled]="complain.stateStatus !== 'Pending'" title="Approve" style="font-size: 11px;">
+                                      Reject
+                                      </button>
+                                  </td>
+                                </tr>
+                            </tbody>
+                          </table>
+                        
+                      </div>
+              
+                  </div>  
+            </div>
+    
+            <div class="d-flex justify-content-end">
+              <!-- <mat-paginator [length]="pagination.totalRows"
+              [pageSize]="pagination.pageSize"
+              [pageIndex]="pagination.pageNumber - 1"
+              (page)="listPageChanged($event.pageIndex + 1)">
+              </mat-paginator> -->
+    
+              <pagination-controls 
+              id="list"
+              (pageChange)="listPageChanged($event)"
+              [maxSize]="5" 
+              [directionLinks]="true"
+              [autoHide]="false"
+              previousLabel="Previous"
+              nextLabel="Next" style="color: black;"> 
+            </pagination-controls>
+          </div>       
+    
+          </div>     
+        </div>  
+      </div>     
+      
+      <div *ngIf="selectedTab === 1" class="tab-pane active">
+        <div class="row m-t-sm mt-2">
+          <div class="col-md-12 mb-4">       
+            <div class="card shadow-lg p-4">
+              <form [formGroup]="complainFrom">
+                <div class="row g-3">   
+    
+                <div class="col-md-4 col-lg-4">
+                  <div class="form-group">
+                    <label for="propertyID" class="label-title">Property <i class="fa fa-angle-down"></i> <span class="text-danger"> *</span></label>
+                    <div class="dropdown-container">
+                        <input type="text"   
+                            [formControl]="propertySearchControl" 
+                            formControlName="propertyID"
+                            (focus)="isPropertyDropdownOpen = true"
+                            placeholder="Search by Property..."
+                        />
+                        <button mat-button class="btn btn-primary btn-sm" (click)="propertyToggleDropdown()">▼</button>
+                        <button *ngIf="complainFrom.controls['propertyID'].value" mat-button class="btn-clear" 
+                            (click)="clearPropertySelection()" title="Clear">✖</button>              
+                        <ul *ngIf="isPropertyDropdownOpen" class="dropdown-list">
+                            <li *ngFor="let item of filteredProperties" (click)="selectProperty(item)">
+                                {{ item.text }}
+                            </li>
+                            <li *ngIf="filteredProperties.length === 0">No results found</li>
+                        </ul>
+                    </div>                        
+                    <div
+                        *ngIf="complainFrom.get('propertyID')?.invalid && (complainFrom.get('propertyID')?.dirty || complainFrom.get('propertyID')?.touched)">
+                        <span class="text-danger">Property is required.</span>
+                    </div>   
+                </div>
+                </div>            
+    
+                <div class="col-md-4 col-lg-4">
+                  <div class="form-group">
+                    <label for="stateStatus" class="label-title">Status <i class="fa fa-angle-down"></i> </label>
+                    <select class="form-control textbox-border-color" id="stateStatus" formControlName="stateStatus">
+                      <option value="">---Search by Status---</option>
+                      <option *ngFor="let item of ddlStatus">{{item}}</option> 
+                    </select>           
+                  </div>
+                </div>
+                <div class="col-md-4 col-lg-4">
+                  <div class="form-group">
+                    <label for="isActive" class="label-title">Activation Status <i class="fa fa-angle-down"></i> </label>
+                    <select class="form-control textbox-border-color" id="isActive" formControlName="isActive">
+                      <option value="">---Search by Activation---</option>
+                      <option value="true">Active</option>
+                      <option value="false">In-Active</option>  
+                    </select>           
+                  </div>
+                </div>
+    
+              </div>
+              </form>
+          
+            </div>      
+      
+            <div class="card shadow-lg p-4 mt-4">
+                  <div class="table-scrollable">     
+                      <div class="table-responsive">  
+                          <div class="pointer-cursor">                                                 
+                             
+                          </div>  
+                          <br>                       
+                            <table class="table table-hover table-striped textbox-border-color">
+                            <thead>
+                                <tr class="text-center">
+                                  <th>#SL</th>  
+                                  <th>Segment</th>                                                                
+                                  <th class="text-center">Complain</th>
+                                  <th>Comments</th>
+                                  <th>Images</th>
+                                  <th>Status</th>                      
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let complain of complains| paginate: { id: 'list', itemsPerPage: pagination.pageSize, currentPage: pagination.pageNumber, totalItems: pagination.totalRows }; let i = index">
+                                  <td class="text-center">{{ (pagination.pageNumber - 1) * pagination.pageSize + i + 1 }}</td>                             
+                                
+                              <td class="text-center">{{ complain.segmentName }}</td>                                     
+                              <td class="text-center complain-text">{{ complain.complainName }}</td>
+                                <td class="text-center">{{ complain.comments }}</td> 
+                                <td style="text-align: center; vertical-align: middle;">
+                                    <div *ngIf="imageUrls && imageUrls[i]?.length" class="d-flex justify-content-center">
+                                          <div class="row justify-content-center">
+                                          <div class="col-md-3" *ngFor="let imgSrc of imageUrls[i]">
+                                            <button  class="btn btn-sm btn-outline-primary btn-size" title="Show Image" style="font-size: 11px;"mat-raised-button color="primary" (click)="openModal(imgSrc)">
+                                            <img [src]="imgSrc" widht="10" height="10"/>
+                                          </button>
+                                          </div>
+                                          </div>
+                                        
+                                    </div>
+                                    <span *ngIf="imageUrls[i] && (!imageUrls[i] || imageUrls[i].length === 0)"><img src="/assets/img/no-image_icon.png" alt="not found" widht="25" height="25"/></span>
+                                  </td>
+                                  <td class="text-center">    
+                                    <span class="label label-danger"
+                                      *ngIf="complain.isRejected==true"><i class="fa fa-times"></i>
+                                        Rejected
+                                    </span>                                  
+                                  </td>    
+                                </tr>
+                            </tbody>
+                          </table>
+                        
+                      </div>
+              
+                  </div>  
+            </div>
+    
+            <div class="d-flex justify-content-end">           
+    
+              <pagination-controls 
+              id="list"
+              (pageChange)="listPageChanged($event)"
+              [maxSize]="5" 
+              [directionLinks]="true"
+              [autoHide]="false"
+              previousLabel="Previous"
+              nextLabel="Next" style="color: black;"> 
+            </pagination-controls>
+          </div>       
+    
+          </div>     
+        </div>    
+      </div>   
+
+      <div *ngIf="selectedTab === 2" class="tab-pane active">
+        <div class="row m-t-sm mt-2">
+          <div class="col-md-12 mb-4">       
+            <div class="card shadow-lg p-4">
+              <form [formGroup]="complainFrom">
+                <div class="row g-3">    
+                <div class="col-md-4 col-lg-4">
+                  <div class="form-group">
+                    <label for="propertyID" class="label-title">Property <i class="fa fa-angle-down"></i> <span class="text-danger"> *</span></label>
+                    <div class="dropdown-container">
+                        <input type="text"   
+                            [formControl]="propertySearchControl" 
+                            formControlName="propertyID"
+                            (focus)="isPropertyDropdownOpen = true"
+                            placeholder="Search by Property..."
+                        />
+                        <button mat-button class="btn btn-primary btn-sm" (click)="propertyToggleDropdown()">▼</button>
+                        <button *ngIf="complainFrom.controls['propertyID'].value" mat-button class="btn-clear" 
+                            (click)="clearPropertySelection()" title="Clear">✖</button>              
+                        <ul *ngIf="isPropertyDropdownOpen" class="dropdown-list">
+                            <li *ngFor="let item of filteredProperties" (click)="selectProperty(item)">
+                                {{ item.text }}
+                            </li>
+                            <li *ngIf="filteredProperties.length === 0">No results found</li>
+                        </ul>
+                    </div>                        
+                    <div
+                        *ngIf="complainFrom.get('propertyID')?.invalid && (complainFrom.get('propertyID')?.dirty || complainFrom.get('propertyID')?.touched)">
+                        <span class="text-danger">Property is required.</span>
+                    </div>   
+                </div>
+                </div>            
+    
+                <div class="col-md-4 col-lg-4">
+                  <div class="form-group">
+                    <label for="stateStatus" class="label-title">Status <i class="fa fa-angle-down"></i> </label>
+                    <select class="form-control textbox-border-color" id="stateStatus" formControlName="stateStatus">
+                      <option value="">---Search by Status---</option>
+                      <option *ngFor="let item of ddlStatus">{{item}}</option> 
+                    </select>           
+                  </div>
+                </div>
+                <div class="col-md-4 col-lg-4">
+                  <div class="form-group">
+                    <label for="isActive" class="label-title">Activation Status <i class="fa fa-angle-down"></i> </label>
+                    <select class="form-control textbox-border-color" id="isActive" formControlName="isActive">
+                      <option value="">---Search by Activation---</option>
+                      <option value="true">Active</option>
+                      <option value="false">In-Active</option>  
+                    </select>           
+                  </div>
+                </div>    
+              </div>
+            </form>
+          
+            </div>      
+      
+            <div class="card shadow-lg p-4 mt-4">
+                  <div class="table-scrollable">     
+                      <div class="table-responsive">  
+                          <div class="pointer-cursor">                                                  
+                              <!-- <button
+                                class="btn btn-sm btn-outline-success"
+                                (click)="bulkApproveSelected()" [hidden]="!btnAllApproval || selectedComplains.size === 0 || _selectComplainStatus !== 'Pending'"                        
+                            >
+                                <i class="fa fa-check faa-passing"></i> | All Approve Selected
+                              </button> -->
+                          </div>  
+                          <br>
+                          <!-- <div *ngIf="selectedComplainDetails?.length; else loading"> -->
+                            <table class="table table-hover table-striped textbox-border-color">
+                            <thead>
+                                <tr class="text-center">
+                                <th>#SL</th>  
+                                <th>Segment</th>                                                                
+                                <th class="text-center">Complain</th>
+                                <th>Comments</th>
+                                <th>Images</th>
+                                <th>Status</th>                            
+                          
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let complain of complains| paginate: { id: 'list', itemsPerPage: pagination.pageSize, currentPage: pagination.pageNumber, totalItems: pagination.totalRows }; let i = index">
+                                  <td class="text-center">{{ (pagination.pageNumber - 1) * pagination.pageSize + i + 1 }}</td>  
+                                <!-- <td class="text-center">
+                                  <input
+                                    type="checkbox"
+                                    [formControl]="complainApprovalControls[complain.complainID]"
+                                    (change)="toggleIndividualSelection(complain.complainID)"
+                                    [disabled]="complain.stateStatus !== 'Pending'"
+                                  />
+                                </td> -->
+                                
+                               <td class="text-center">{{ complain.segmentName }}</td>                                     
+                               <td class="text-center complain-text">{{ complain.complainName }}</td>
+                                <td class="text-center complain-text">                                
+                                {{complain.comments}}
+                                </td>
+                                <td style="text-align: center; vertical-align: middle;" class="text-center">
+                                    <div *ngIf="imageUrls && imageUrls[i]?.length" class="d-flex justify-content-center">
+                                          <div class="row justify-content-center">
+                                          <div class="col-md-3" *ngFor="let imgSrc of imageUrls[i]">
+                                            <button  class="btn btn-sm btn-outline-primary btn-size" title="Show Image" style="font-size: 11px;"mat-raised-button color="primary" (click)="openModal(imgSrc)">
+                                            <img [src]="imgSrc" widht="10" height="10"/>
+                                          </button>
+                                          </div>
+                                          </div>
+                                        
+                                    </div>
+                                    <span *ngIf="imageUrls[i] && (!imageUrls[i] || imageUrls[i].length === 0)"><img src="/assets/img/no-image_icon.png" alt="not found" widht="25" height="25"/></span>
+                                  </td>
+                                  <td class="text-center">
+                                    <span class="label label-warning"
+                                        *ngIf="complain.stateStatus=='Pending'">{{complain.stateStatus
+                                        + '...'}}</span>
+                                    <span class="label label-primary" *ngIf="complain.stateStatus=='Approved'">
+                                        <i class="fa fa-check"></i> {{complain.stateStatus}}
+                                    </span>                                                             
+    
+                                  </td>    
+                                 
+                                </tr>
+                            </tbody>
+                          </table>
+                        
+                      </div>
+              
+                  </div>  
+            </div>
+    
+            <div class="d-flex justify-content-end">
+              <!-- <mat-paginator [length]="pagination.totalRows"
+              [pageSize]="pagination.pageSize"
+              [pageIndex]="pagination.pageNumber - 1"
+              (page)="listPageChanged($event.pageIndex + 1)">
+              </mat-paginator> -->
+    
+              <pagination-controls 
+              id="list"
+              (pageChange)="listPageChanged($event)"
+              [maxSize]="5" 
+              [directionLinks]="true"
+              [autoHide]="false"
+              previousLabel="Previous"
+              nextLabel="Next" style="color: black;"> 
+            </pagination-controls>
+          </div>       
+    
+          </div>     
+        </div>    
+      </div>    
+
+     
+
+      <div *ngIf="selectedTab === 3" class="tab-pane active">
+        <div class="row m-t-sm mt-2">
+          <div class="col-md-12 mb-4">       
+            <div class="card shadow-lg p-4">
+              <form [formGroup]="complainFrom">
+                <div class="row g-3">   
+    
+                <div class="col-md-4 col-lg-4">
+                  <div class="form-group">
+                    <label for="propertyID" class="label-title">Property <i class="fa fa-angle-down"></i> <span class="text-danger"> *</span></label>
+                    <div class="dropdown-container">
+                        <input type="text"   
+                            [formControl]="propertySearchControl" 
+                            formControlName="propertyID"
+                            (focus)="isPropertyDropdownOpen = true"
+                            placeholder="Search by Property..."
+                        />
+                        <button mat-button class="btn btn-primary btn-sm" (click)="propertyToggleDropdown()">▼</button>
+                        <button *ngIf="complainFrom.controls['propertyID'].value" mat-button class="btn-clear" 
+                            (click)="clearPropertySelection()" title="Clear">✖</button>              
+                        <ul *ngIf="isPropertyDropdownOpen" class="dropdown-list">
+                            <li *ngFor="let item of filteredProperties" (click)="selectProperty(item)">
+                                {{ item.text }}
+                            </li>
+                            <li *ngIf="filteredProperties.length === 0">No results found</li>
+                        </ul>
+                    </div>                        
+                    <div
+                        *ngIf="complainFrom.get('propertyID')?.invalid && (complainFrom.get('propertyID')?.dirty || complainFrom.get('propertyID')?.touched)">
+                        <span class="text-danger">Property is required.</span>
+                    </div>   
+                </div>
+                </div>            
+    
+                <div class="col-md-4 col-lg-4">
+                  <div class="form-group">
+                    <label for="stateStatus" class="label-title">Status <i class="fa fa-angle-down"></i> </label>
+                    <select class="form-control textbox-border-color" id="stateStatus" formControlName="stateStatus">
+                      <option value="">---Search by Status---</option>
+                      <option *ngFor="let item of ddlStatus">{{item}}</option> 
+                    </select>           
+                  </div>
+                </div>
+                <div class="col-md-4 col-lg-4">
+                  <div class="form-group">
+                    <label for="isActive" class="label-title">Activation Status <i class="fa fa-angle-down"></i> </label>
+                    <select class="form-control textbox-border-color" id="isActive" formControlName="isActive">
+                      <option value="">---Search by Activation---</option>
+                      <option value="true">Active</option>
+                      <option value="false">In-Active</option>  
+                    </select>           
+                  </div>
+                </div>
+    
+              </div>
+              </form>
+          
+            </div>      
+      
+            <div class="card shadow-lg p-4 mt-4">
+                  <div class="table-scrollable">     
+                      <div class="table-responsive">                            
+                          <br>
+                      
+                            <table class="table table-hover table-striped textbox-border-color">
+                            <thead>
+                                <tr class="text-center">
+                                <th>#SL</th>  
+                                <th>Segment</th>                                                                
+                                <th class="text-center">Complain</th>
+                                <th>Comments</th>
+                                <th>Images</th>
+                                <th>Status</th>                            
+                               
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let complain of complains| paginate: { id: 'list', itemsPerPage: pagination.pageSize, currentPage: pagination.pageNumber, totalItems: pagination.totalRows }; let i = index">
+                                  <td class="text-center">{{ (pagination.pageNumber - 1) * pagination.pageSize + i + 1 }}</td>                                 
+                                
+                              <td class="text-center">{{ complain.segmentName }}</td>                                     
+                              <td class="text-center complain-text">{{ complain.complainName }}</td>
+                                <td class="text-center">{{ complain.comments }}</td> 
+                                <td style="text-align: center; vertical-align: middle;">
+                                    <div *ngIf="imageUrls && imageUrls[i]?.length" class="d-flex justify-content-center">
+                                          <div class="row justify-content-center">
+                                          <div class="col-md-3" *ngFor="let imgSrc of imageUrls[i]">
+                                            <button  class="btn btn-sm btn-outline-primary btn-size" title="Show Image" style="font-size: 11px;"mat-raised-button color="primary" (click)="openModal(imgSrc)">
+                                            <img [src]="imgSrc" widht="10" height="10"/>
+                                          </button>
+                                          </div>
+                                          </div>
+                                        
+                                    </div>
+                                    <span *ngIf="imageUrls[i] && (!imageUrls[i] || imageUrls[i].length === 0)"><img src="/assets/img/no-image_icon.png" alt="not found" widht="25" height="25"/></span>
+                                  </td>
+                                  <td class="text-center">
+                                    <!-- <span class="label label-warning"
+                                        *ngIf="complain.stateStatus=='Pending'">{{complain.stateStatus
+                                        + '...'}}</span>
+                                    <span class="label label-primary" *ngIf="complain.stateStatus=='Approved'">
+                                        <i class="fa fa-check"></i> {{complain.stateStatus}}
+                                    </span>                                 
+                                
+                                    <span class="label label-danger"
+                                      *ngIf="complain.isRejected==true"><i class="fa fa-times"></i>
+                                      Rejected
+                                    </span>   
+                                    <span class="label label-info"
+                                    *ngIf="complain.isSentToLandlord==true"><i class="fa fa-times"></i>
+                                      Complain sent to Landlord
+                                    </span>    
+                                    <span class="label label-info"
+                                    *ngIf="complain.isAssignedTechnician==true"><i class="fa fa-times"></i>
+                                      Complain assigned to Technician
+                                    </span>                           -->
+                                    <span class="label label-success"
+                                    *ngIf="complain.isSolved==true"><i class="fa fa-check"></i>
+                                      Solved
+                                    </span>                                 
+    
+                                  </td>   
+                           
+                                </tr>
+                            </tbody>
+                          </table>
+                        
+                      </div>
+              
+                  </div>  
+            </div>
+    
+            <div class="d-flex justify-content-end">           
+    
+              <pagination-controls 
+              id="list"
+              (pageChange)="listPageChanged($event)"
+              [maxSize]="5" 
+              [directionLinks]="true"
+              [autoHide]="false"
+              previousLabel="Previous"
+              nextLabel="Next" style="color: black;"> 
+            </pagination-controls>
+          </div>       
+    
+          </div>     
+        </div>    
+      </div>   
+
+      <div *ngIf="selectedTab === 4" class="tab-pane active">
+        <div class="row m-t-sm mt-2">
+          <div class="col-md-12 mb-4">       
+            <div class="card shadow-lg p-4">
+              <form [formGroup]="complainFrom">
+                <div class="row g-3">   
+    
+                <div class="col-md-4 col-lg-4">
+                  <div class="form-group">
+                    <label for="propertyID" class="label-title">Property <i class="fa fa-angle-down"></i> <span class="text-danger"> *</span></label>
+                    <div class="dropdown-container">
+                        <input type="text"   
+                            [formControl]="propertySearchControl" 
+                            formControlName="propertyID"
+                            (focus)="isPropertyDropdownOpen = true"
+                            placeholder="Search by Property..."
+                        />
+                        <button mat-button class="btn btn-primary btn-sm" (click)="propertyToggleDropdown()">▼</button>
+                        <button *ngIf="complainFrom.controls['propertyID'].value" mat-button class="btn-clear" 
+                            (click)="clearPropertySelection()" title="Clear">✖</button>              
+                        <ul *ngIf="isPropertyDropdownOpen" class="dropdown-list">
+                            <li *ngFor="let item of filteredProperties" (click)="selectProperty(item)">
+                                {{ item.text }}
+                            </li>
+                            <li *ngIf="filteredProperties.length === 0">No results found</li>
+                        </ul>
+                    </div>                        
+                    <div
+                        *ngIf="complainFrom.get('propertyID')?.invalid && (complainFrom.get('propertyID')?.dirty || complainFrom.get('propertyID')?.touched)">
+                        <span class="text-danger">Property is required.</span>
+                    </div>   
+                </div>
+                </div>            
+    
+                <div class="col-md-4 col-lg-4">
+                  <div class="form-group">
+                    <label for="stateStatus" class="label-title">Status <i class="fa fa-angle-down"></i> </label>
+                    <select class="form-control textbox-border-color" id="stateStatus" formControlName="stateStatus">
+                      <option value="">---Search by Status---</option>
+                      <option *ngFor="let item of ddlStatus">{{item}}</option> 
+                    </select>           
+                  </div>
+                </div>
+                <div class="col-md-4 col-lg-4">
+                  <div class="form-group">
+                    <label for="isActive" class="label-title">Activation Status <i class="fa fa-angle-down"></i> </label>
+                    <select class="form-control textbox-border-color" id="isActive" formControlName="isActive">
+                      <option value="">---Search by Activation---</option>
+                      <option value="true">Active</option>
+                      <option value="false">In-Active</option>  
+                    </select>           
+                  </div>
+                </div>
+    
+              </div>
+              </form>
+          
+            </div>      
+      
+            <div class="card shadow-lg p-4 mt-4">
+                  <div class="table-scrollable">     
+                      <div class="table-responsive">                            
+                          <br>
+                      
+                            <table class="table table-hover table-striped textbox-border-color">
+                            <thead>
+                                <tr class="text-center">
+                                <th>#SL</th>  
+                                <th>Segment</th>                                                                
+                                <th class="text-center">Complain</th>
+                                <th>Comments</th>
+                                <th>Images</th>
+                                <th>Status</th>                            
+                               
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let complain of complains| paginate: { id: 'list', itemsPerPage: pagination.pageSize, currentPage: pagination.pageNumber, totalItems: pagination.totalRows }; let i = index">
+                                  <td class="text-center">{{ (pagination.pageNumber - 1) * pagination.pageSize + i + 1 }}</td>                                 
+                                
+                              <td class="text-center">{{ complain.segmentName }}</td>                                     
+                              <td class="text-center complain-text">{{ complain.complainName }}</td>
+                                <td class="text-center">{{ complain.comments }}</td> 
+                                <td style="text-align: center; vertical-align: middle;">
+                                    <div *ngIf="imageUrls && imageUrls[i]?.length" class="d-flex justify-content-center">
+                                          <div class="row justify-content-center">
+                                          <div class="col-md-3" *ngFor="let imgSrc of imageUrls[i]">
+                                            <button  class="btn btn-sm btn-outline-primary btn-size" title="Show Image" style="font-size: 11px;"mat-raised-button color="primary" (click)="openModal(imgSrc)">
+                                            <img [src]="imgSrc" widht="10" height="10"/>
+                                          </button>
+                                          </div>
+                                          </div>
+                                        
+                                    </div>
+                                    <span *ngIf="imageUrls[i] && (!imageUrls[i] || imageUrls[i].length === 0)"><img src="/assets/img/no-image_icon.png" alt="not found" widht="25" height="25"/></span>
+                                  </td>
+                                  <td class="text-center">                                
+                                    <span class="label label-info"
+                                    *ngIf="complain.isCompleted==true"><i class="fa fa-check"></i>
+                                      Done
+                                    </span>                                 
+    
+                                  </td>   
+                           
+                                </tr>
+                            </tbody>
+                          </table>
+                        
+                      </div>
+              
+                  </div>  
+            </div>
+    
+            <div class="d-flex justify-content-end">           
+    
+              <pagination-controls 
+              id="list"
+              (pageChange)="listPageChanged($event)"
+              [maxSize]="5" 
+              [directionLinks]="true"
+              [autoHide]="false"
+              previousLabel="Previous"
+              nextLabel="Next" style="color: black;"> 
+            </pagination-controls>
+          </div>       
+    
+          </div>     
+        </div>    
+      </div>   
+    </div>
+
+</div>

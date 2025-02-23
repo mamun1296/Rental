@@ -1,0 +1,15 @@
+<div>
+  <h3>Notifications</h3>
+  
+  <!-- Display received messages -->
+  <ul>
+    <li *ngFor="let message of receivedMessages">{{ message }}</li>
+  </ul>
+
+  <!-- Button to send message to a specific user -->
+  <input type="text" #userId placeholder="Enter User ID" />
+  <input type="text" #message placeholder="Enter message" />
+  <button (click)="sendMessageToUser(userId.value, message.value)">Send to User</button>
+
+  <button (click)="sendMessageToAll(message.value)">Send to All</button>
+</div>

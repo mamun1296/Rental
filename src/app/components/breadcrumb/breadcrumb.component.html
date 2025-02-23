@@ -1,0 +1,11 @@
+<div class="breadcrumb-container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item" *ngFor="let breadcrumb of breadcrumbs; let isLast = last">
+          <a *ngIf="!isLast" class="link-color" [matTooltip]="'Go to ' + breadcrumb.label" [routerLink]="breadcrumb.link">{{ breadcrumb.label }}</a>
+          <span *ngIf="isLast" class="link-active">{{ breadcrumb.text }}</span>
+        </li>
+      </ol>
+  </nav>
+</div>
+  

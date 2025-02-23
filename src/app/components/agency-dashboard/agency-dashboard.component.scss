@@ -1,0 +1,81 @@
+.custombackground-design {
+    text-decoration: none;
+    padding: 6px 10px;
+    background: #ffffff;
+    border-radius: 5px;
+    color: rgb(255 255 255);
+    width: 100%;
+    min-height: 100vh; /* Full height background */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Align content to the top */
+    padding-top: 30px; /* Add spacing at the top */
+  }
+  
+  .card-container {
+    margin-bottom: 30px; /* Adjust spacing below the cards */
+  }
+  
+  .table-section {
+    width: 100%; /* Make table span the entire width */
+    margin-top: 20px; /* Position table closer to cards */
+    padding: 20px;
+    background-color: #012136; /* Change to Alice Blue or any color you prefer */
+    border-radius: 10px;
+    box-shadow: 0 4px 6px #ffffff;
+  }
+  
+  .table-title {
+    color: black;
+  }
+  
+  .table th,
+  .table td {
+    vertical-align: middle; /* Center content vertically */
+  }
+  
+  .table button {
+    margin-right: 5px; /* Add spacing between buttons */
+  }
+  
+  .card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff; /* Card background */
+  }
+  
+  .card a {
+    display: block; /* Make the whole card area clickable */
+    text-decoration: none; /* Remove underline from the link */
+  }
+  
+  .card-body {
+    color: #333; /* Text color */
+    padding: 10px 15px; /* Adjust padding to your liking */
+  }
+  
+  .card-title {
+    color: #2f68a5; /* Title color */
+    font-weight: bold;
+  }
+  
+  .card-text {
+    color: #555555; /* Description text color */
+  }
+  
+  .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  .table-responsive {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+  
+  * {
+    text-decoration: none !important;
+  }
+  

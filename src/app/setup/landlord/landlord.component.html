@@ -1,0 +1,128 @@
+<div class="container-fluid p-4">  
+  <h4 class="label-title">Landlord Information</h4>  
+  <div class="card shadow-lg p-4">
+    <form [formGroup]="landlordForm" (ngSubmit)="onSubmit()">
+      <div class="row g-3">
+        <!-- Landlord Type -->
+        <div class="col-md-6 col-lg-4">
+          <div class="form-group">
+            <label for="landlordType" class="label-title">Landlord Type <i class="fa fa-angle-down"></i> <span class="text-danger"> *</span></label>
+            <select
+              class="form-control textbox-border-color"
+              id="landlordType"
+              formControlName="landlordType">
+              <option value="0" selected>---Select---</option>
+              <option value="Independent">Independent</option>
+              <option value="Trust">Trust</option>
+              <option value="Ltd">Ltd</option>
+            </select>
+            <div *ngIf="landlordForm.get('landlordType')?.invalid && landlordForm.get('landlordType')?.touched" class="text-danger">
+              Landlord is required.
+            </div>
+          </div>
+        </div>
+
+        <!-- Landlord Name -->
+        <div class="col-md-6 col-lg-4">
+          <div class="form-group">
+            <label for="landlordName" class="label-title">Landlord Name <span class="text-danger"> *</span></label>
+            <input
+              type="text"
+              class="form-control textbox-border-color"
+              id="landlordName"
+              formControlName="landlordName"
+            >
+            <div *ngIf="landlordForm.get('landlordName')?.invalid && landlordForm.get('landlordName')?.touched" class="text-danger">
+              Name is required and must be at least 6 characters.
+            </div>
+          </div>
+        </div>
+
+        <!-- Address -->
+        <div class="col-md-6 col-lg-4">
+          <div class="form-group">
+            <label for="address" class="label-title">Address <span class="text-danger"> *</span></label>
+            <input
+              type="text"
+              class="form-control textbox-border-color"
+              id="address"
+              formControlName="address"
+            >
+            <div *ngIf="landlordForm.get('address')?.invalid && landlordForm.get('address')?.touched" class="text-danger">
+              Address is required.
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact -->
+        <div class="col-md-6 col-lg-4">
+          <div class="form-group">
+            <label for="contactNumber" class="label-title">Contact <span class="text-danger"> *</span></label>
+            <input
+              type="text"
+              class="form-control textbox-border-color"
+              id="contactNumber"
+              formControlName="contactNumber"
+            >
+            <div *ngIf="landlordForm.get('contactNumber')?.invalid && landlordForm.get('contactNumber')?.touched" class="text-danger">
+              Contact number is required.
+            </div>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="col-md-6 col-lg-4">
+          <div class="form-group">
+            <label for="emailAddress" class="label-title">Email <span class="text-danger"> *</span></label>
+            <input
+              type="email"
+              class="form-control textbox-border-color"
+              id="emailAddress"
+              formControlName="emailAddress"
+            >
+            <div *ngIf="landlordForm.get('emailAddress')?.invalid && landlordForm.get('emailAddress')?.touched" class="text-danger">
+              Please enter a valid email address.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="row mt-4">
+        <div class="col-12" style="text-align: right;">
+          <button type="submit" class="btn btn-outline-primary" [disabled]="landlordForm.invalid"><i class="fa fa-paper-plane faa-passing"></i> | Submit</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- Responsive Data Table -->
+  <div class="card shadow-lg p-4 mt-4">
+    <div class="table-scrollable">
+      <div class="table-responsive">
+        <table class="table table-hover textbox-border-color">
+          <thead class="thead-dark">
+            <tr class="text-center">
+              <th>#SL</th>         
+              <th>Landlord</th>
+              <th>Landlord Type</th>
+              <th>Address</th>
+              <th>Contact</th>
+              <th>Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="text-center" *ngFor="let data of list; let i = index">
+              <td>{{ i + 1 }}</td>         
+              <td>{{ data.landlordName }}</td>
+              <td>{{ data.landlordType }}</td>
+              <td>{{ data.address }}</td>
+              <td>{{ data.contactNumber }}</td>
+              <td>{{ data.emailAddress }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,65 @@
+<!-- <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://unpkg.com/bs-brain@2.0.4/components/registrations/registration-5/assets/css/registration-5.css">
+
+<div class="container-fluid custombackground-design"> 
+    <h4 class="text-center mb-4">Employee Information</h4>
+    <div class="table-section">
+
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr class="text-center align-middle">
+                        <th class="table-title">#SL</th>
+                        <th class="table-title">Employee ID</th>
+                        <th class="table-title">Name</th>                       
+                        <th class="table-title">Email</th>
+                        <th class="table-title">Contact Number</th>                     
+                        <th class="table-title">Service Type</th>       
+                        <th class="table-title">User Name</th>
+                        <th class="table-title">Password</th>   
+                        <th class="table-title">Active</th>    
+                        <th class="table-title">Status</th>                        
+                        <th class="table-title">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                     <tr class="text-center align-middle" *ngFor="let agency of agencyList let i=index">
+                        <td class="font-bold text-center align-middle">
+                            {{i+1 + (pageSize*(pageNumber-1))}}</td>
+                        <td>{{agency.agencyID}}</td>
+                        <td>{{agency.agencyName}}</td>
+                        <td>{{agency.emailAddress}}</td>
+                        <td>{{agency.contactNumber}}</td>                    
+                        <td>{{agency.serviceName}}</td>   
+                        <td class="text-center align-middle">
+                            <span
+                                [class]="agency.isTrialRegistration == true? 'label label-primary':'label label-info'">
+                                {{agency.isTrialRegistration == true ? "Free Trial" :"Purchase"}}
+                            </span>
+                        </td>
+                        <td>{{agency.userName}}</td>
+                        <td>{{agency.password}}</td>
+                        <td class="text-center align-middle">
+                            <span
+                                [class]="agency.isActive == true? 'label label-primary':'label label-danger'">
+                                {{agency.isActive == true ? "Active" :"Inactive"}}
+                            </span>
+                        </td>
+                        <td class="text-center align-middle">
+                            <span
+                                [class]="agency.stateStatus =='Approved'? 'label label-primary':(agency.stateStatus =='Pending'? 'label label-warning':'label label-success')">{{agency.stateStatus}}</span>
+                        </td>  
+                        <td class="text-center align-middle">
+                            <button class="btn btn-sm text-success" type="button" title="Approval">
+                                <i class="fa fa-check"></i>
+                            </button>
+                            <button type="button" class="btn btn-sm text-primary" title="Delete">
+                                <i class="fa fa-trash text-danger"></i>
+                            </button>
+                        </td>
+                    </tr>                
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div> -->

@@ -1,0 +1,52 @@
+
+<div class="row">
+  <div class="col-12">
+    <div class="dropdown">
+      <div class="input-group search-select-input-group shadow-sm">
+        <div class="input-group-prepend">
+          <span class="input-group-text search-icon">
+            <i class="fas fa-search"></i>
+          </span>
+        </div>
+        <input
+          type="text"
+          class="form-control text-color"
+          placeholder="{{ placeholder }}"
+          aria-label="Search"
+          [formControl]="searchControl"
+          (focus)="toggleDropdown(true)"
+          [matTooltip]="placeholder"
+        />
+        <div class="input-group-append">
+          <span class="input-group-text select-icon" *ngIf="!searchControl.value">
+            <i class="fas fa-chevron-down"></i>
+          </span>
+          <button
+            class="clear-button"
+            type="button"
+            *ngIf="searchControl.value"
+            (click)="clearSelection()"
+            matTooltip="Clear Search"
+          >
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+      </div>
+      <ul
+        *ngIf="dropdownOpen && filteredOptions.length > 0"
+        class="dropdown-menu show w-100 search-select-dropdown"
+        [ngClass]="{ 'dropdown-up': dropdownDirection === 'up', 'dropdown-down': dropdownDirection === 'down' }"
+        #dropdownMenu
+      >
+        <li
+          *ngFor="let option of filteredOptions"
+          class="dropdown-item"
+          [ngClass]="{'selected-item': option[idProperty] === selectedId}"
+          (mousedown)="onSelect(option[idProperty])"
+        >
+          {{ option[valueProperty] }}
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

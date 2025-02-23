@@ -1,0 +1,176 @@
+<div class="container-fluid p-2">    
+    <div class="row m-t-sm mt-0">
+        <div class="col-md-12 mb-0">
+            <div class="card shadow-lg p-4">
+                <form [formGroup]="tenantEntryForm" (ngSubmit)="onSubmit()">
+                    <div class="row g-3 align-items-center">
+                  
+                        <div class="col-md-6 col-lg-4">
+                          <div class="form-group">
+                            <label for="propertyID" class="label-title">
+                              Property <i class="fa fa-angle-down"></i>
+                              <small class="text-danger"> *</small>
+                            </label>
+                            <div class="dropdown-container">
+                              <input
+                                type="text"
+                                [formControl]="propertySearchControl"
+                                formControlName="propertyID"
+                                (focus)="isPropertyDropdownOpen = true"
+                                placeholder="Select Property..."
+                              />
+                              <button
+                                mat-button
+                                class="btn btn-primary btn-sm"
+                                (click)="propertyToggleDropdown()"
+                              >
+                                ▼
+                              </button>
+                              <button
+                                *ngIf="tenantEntryForm.controls['propertyID'].value"
+                                mat-button
+                                class="btn-clear"
+                                (click)="clearPropertySelection()"
+                              >
+                                ✖
+                              </button>
+                              <ul
+                                *ngIf="isPropertyDropdownOpen"
+                                class="dropdown-list"
+                              >
+                                <li
+                                  *ngFor="let item of filteredProperty"
+                                  (click)="selectProperty(item)"
+                                >
+                                  {{ item.text }}
+                                </li>
+                                <li *ngIf="filteredProperty.length === 0">
+                                  No results found
+                                </li>
+                              </ul>
+                            </div>
+                            <div
+                              *ngIf="
+                                tenantEntryForm.get('propertyID')?.invalid &&
+                                (tenantEntryForm.get('propertyID')?.dirty ||
+                                  tenantEntryForm.get('propertyID')?.touched)
+                              "
+                            >
+                              <small class="text-danger">
+                                Property is required.
+                              </small>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-sm-1"></div>
+                        <div class="col-md-1 col-lg-2">
+                            <label></label>                  
+                          <div class="form-check d-flex align-items-center">
+                            <input
+                              class="form-check-input textbox-border-color"
+                              type="checkbox"
+                              id="isOwnerProperty"
+                              name="isOwnerProperty"
+                              formControlName="isOwnerProperty"
+                            />
+                            <label
+                              for="isOwnerProperty"
+                              class="form-check-label text-primary mb-0"
+                            >
+                              Is Owner Property?
+                            </label>
+                          </div>
+                        </div>
+                    </div>
+               
+                    <div class="card shadow-lg p-4 mt-4 table-card-size-collapse">
+                        <h4 class="text-dark"><i class="fa fa-plus-circle"></i> Add Tenant Info Details</h4>
+                        <div class="table-scrollable">
+                            <div class="table-responsive">
+                                <table class="table table-hover table-striped textbox-border-color">       
+                                    <thead>
+                                        <tr class="text-center">
+                                            <th style="width: 3%;">#SL</th>
+                                            <th style="width: 30%;">Tenant Name <small class="text-danger">*</small></th>                                           
+                                            <th style="width: 15%;">Contact Number <small class="text-danger">*</small></th>
+                                            <th style="width: 15%;">Email Address</th>
+                                            <th style="width: 15%;">Address <small class="text-danger">*</small></th>
+                                            <th style="width: 5%;">Action</th>
+                                        </tr>
+                                    </thead>
+                                    
+                                    <tbody formArrayName="tenantsDetail">
+                                        <tr *ngFor="let item of tenantsDetail.controls; let i = index" [formGroupName]="i">   
+                                            <td class="text-center">{{ i + 1 }}</td>               
+                                            <td>
+                                                <input type="text" name="tenantName{{ i }}" id="tenantName{{ i }}"
+                                                class="form-control textbox-border-color" formControlName="tenantName" (change)="tenantNameChanged($event, i)">
+                                            
+                                                <div *ngIf="tenantsDetail.at(i).get('tenantName')?.invalid && tenantsDetail.at(i).get('tenantName')?.touched">
+                                                    <small class="text-danger">Tenant name is required.</small>
+                                                </div>
+                                            </td>  
+                                                                                 
+
+                                            <td>
+                                                <input type="text" name="contactNumber" id="contactNumber"
+                                                    class="form-control textbox-border-color" formControlName="contactNumber">
+                                                
+                                                <div *ngIf="tenantsDetail.at(i).get('contactNumber')?.invalid && tenantsDetail.at(i).get('contactNumber')?.touched">
+                                                    <small class="text-danger">Contact number is required.</small>
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <input type="email" name="emailAddress" id="emailAddress"
+                                                    class="form-control textbox-border-color" formControlName="emailAddress" >
+                                                
+                                                <div *ngIf="tenantsDetail.at(i).get('emailAddress')?.invalid">
+                                                    <small class="text-danger">Enter valid email format.</small>
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <input type="text" name="address" id="address"
+                                                    class="form-control textbox-border-color" formControlName="address">
+                                                
+                                                <div *ngIf="tenantsDetail.at(i).get('address')?.invalid && tenantsDetail.at(i).get('address')?.touched">
+                                                    <small class="text-danger">Address is required.</small>
+                                                </div>
+                                            </td>
+                                            
+                                            <td class="text-center">
+                                                <button
+                                                    type="button"
+                                                    class="btn btn-sm btn-rounded btn-primary btn-size"
+                                                    (click)="addTenant()" title="Add"
+                                                >
+                                                    <i class="fa fa-plus"></i>
+                                                </button>
+                                                &nbsp;
+                                                <button
+                                                    type="button"
+                                                    class="btn btn-sm btn-rounded btn-danger btn-size"
+                                                    (click)="removeTenant(i)"
+                                                    *ngIf="tenantsDetail.controls.length > 1" title="Remove"
+                                                >
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-xl btn-outline btn-rounded btn-primary" [disabled]="tenantEntryForm.invalid" style="float: right;">
+                                        <i class="fa fa-paper-plane"></i> | Submit
+                                    </button>
+                                </div>
+                            </div>
+                        </div>  
+                    </div>
+                </form>
+            </div>  
+        </div>
+    </div>
+</div>

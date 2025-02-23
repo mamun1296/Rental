@@ -1,0 +1,344 @@
+<div class="container-fluid p-4">
+  <h4 class="label-title">Complain List</h4>
+  <div class="row">   
+    <div class="col-sm-4">
+        <div class="title-action">
+          <button type="button" class="btn btn-sm btn-primary btn-outline btn-rounded" (click)="listPageInit()"
+          *ngIf="entryPage"><i class="fa fa-arrow-left"></i> | Back to List</button>
+   
+       <button type="button" class="btn btn-sm btn-success btn-outline btn-rounded" (click)="[createcomplain()]"
+          *ngIf="listPage" title="Add New Property"><i class="fa fa-plus"></i> | Create</button>           
+        </div>
+    </div>
+
+  </div>
+  <br> 
+  <div class="row m-t-sm mt-2">
+      <div class="col-md-12 mb-4"*ngIf="listPage">
+        <div class="card shadow-lg p-4">
+          <form [formGroup]="complainFrom">
+            <div class="row g-3">   
+
+            <div class="col-md-4 col-lg-4">
+                <div class="form-group">
+                    <label for="propertyID" class="label-title">Property <i class="fa fa-angle-down"></i> <span class="text-danger"> *</span></label>
+                    <div class="dropdown-container">
+                        <input type="text"   
+                            [formControl]="propertySearchControl" 
+                            formControlName="propertyID"
+                            (focus)="isPropertyDropdownOpen = true"
+                            placeholder="Search by Property..."
+                        />
+                        <button mat-button class="btn btn-primary btn-sm" (click)="propertyToggleDropdown()">▼</button>
+                        <button *ngIf="complainFrom.controls['propertyID'].value" mat-button class="btn-clear" 
+                            (click)="clearPropertySelection()" title="Clear">✖</button>              
+                        <ul *ngIf="isPropertyDropdownOpen" class="dropdown-list">
+                            <li *ngFor="let item of filteredProperties" (click)="selectProperty(item)">
+                                {{ item.text }}
+                            </li>
+                            <li *ngIf="filteredProperties.length === 0">No results found</li>
+                        </ul>
+                    </div>                        
+                    <div
+                        *ngIf="complainFrom.get('propertyID')?.invalid && (complainFrom.get('propertyID')?.dirty || complainFrom.get('propertyID')?.touched)">
+                        <span class="text-danger">Property is required.</span>
+                    </div>   
+                </div>
+            </div>            
+
+            <div class="col-md-4 col-lg-4">
+              <div class="form-group">
+                <label for="stateStatus" class="label-title">Status <i class="fa fa-angle-down"></i> </label>
+                <select class="form-control textbox-border-color" id="stateStatus" formControlName="stateStatus">
+                  <option value="">---Search by Status---</option>
+                  <option *ngFor="let item of ddlStatus">{{item}}</option> 
+                </select>           
+              </div>
+            </div>
+            <div class="col-md-4 col-lg-4">
+              <div class="form-group">
+                <label for="isActive" class="label-title">Activation Status <i class="fa fa-angle-down"></i> </label>
+                <select class="form-control textbox-border-color" id="isActive" formControlName="isActive">
+                  <option value="">---Search by Activation---</option>
+                  <option value="true">Active</option>
+                  <option value="false">In-Active</option>  
+                </select>           
+              </div>
+            </div>
+
+          </div>
+          </form>
+      
+        </div>      
+  
+        <div class="card shadow-lg p-4 mt-4">
+              <div class="table-scrollable">     
+                  <div class="table-responsive">  
+                      <div class="pointer-cursor">                                                  
+                          <button
+                            class="btn btn-sm btn-outline-success"
+                            (click)="bulkApproveSelected()" [hidden]="!btnAllApproval || selectedComplains.size === 0 || _selectComplainStatus !== 'Pending'"                        
+                        >
+                           <i class="fa fa-check faa-passing"></i> | All Approve Selected
+                          </button>
+                      </div>  
+                      <br>
+                      <!-- <div *ngIf="selectedComplainDetails?.length; else loading"> -->
+                        <table class="table table-hover table-striped textbox-border-color">
+                        <thead>
+                            <tr class="text-center">
+                            <th>#SL</th>      
+                            <th>Segment</th>                                                                
+                            <th>Complain</th>
+                            <th>Images</th>                            
+                            <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                          <!-- <ng-container *ngIf="resetSerialNumber(); true"> -->
+                          <ng-container *ngFor="let data of list; let i =index">
+                            <tr *ngFor="let detail of selectedComplainDetails[i]; let j = index">
+                            <td>{{ serialNumbers[i] && serialNumbers[i][j] || 'N/A' }}</td>
+                            <!-- <td>
+                              <input
+                                type="checkbox"
+                                [formControl]="complainApprovalControls[data.complainInfoID]"
+                                (change)="toggleIndividualSelection(data.complainInfoID)"
+                                [disabled]="data.stateStatus !== 'Pending'"
+                              />
+                            </td>
+                            <td>
+                                <button *ngIf="data.stateStatus == 'Pending'"
+                                class="btn btn-rounded btn-sm btn-primary text-white btn-size"
+                                (click)="selectedApprove(data.complainInfoID, data.landlordID)"
+                                [disabled]="data.stateStatus !== 'Pending'" title="Approve" style="font-size: 11px;">
+                                <i class="fa fa-check"></i>
+                               </button>
+                            </td>                                 -->
+                            <td>{{ detail.segmentName }}</td>                                     
+                            <td>{{ detail.complainName }}</td>
+                            <td style="text-align: center; vertical-align: middle;">
+                                <div *ngIf="imageUrls[i] && imageUrls[i][j]?.length" class="d-flex justify-content-center">
+                                     <div class="row justify-content-center">
+                                      <div class="col-md-3" *ngFor="let imgSrc of imageUrls[i][j]">
+                                        <button  class="btn btn-sm btn-outline-primary btn-size" title="Show Image" style="font-size: 11px;"mat-raised-button color="primary" (click)="openModal(imgSrc)">
+                                        <img [src]="imgSrc" widht="10" height="10"/>
+                                      </button>
+                                      </div>
+                                     </div>
+                                    
+                                </div>
+                                <span *ngIf="imageUrls[i] && (!imageUrls[i][j] || imageUrls[i][j].length === 0)">No Image</span>
+                              </td>
+                              <td class="text-center">
+                                <button type="button" class="btn btn-sm btn-rounded btn-primary btn-size" title="Edit" style="font-size: 11px;" (click)="navigateToEditComplain(selectedComplainDetails[i][j], imageUrls[i][j],i,j)">
+                                  <i class="fa fa-pencil"></i>
+                                </button>
+                              </td>
+                            </tr>
+                          </ng-container>
+                        <!-- </ng-container> -->
+                        </tbody>
+                        </table>
+                    <!-- </div>                -->
+                      <!-- <table class="table table-hover table-striped textbox-border-color">
+                         <thead>                            
+                          <tr class="text-center">   
+                              <th>
+                                  <input
+                                    type="checkbox"
+                                    [formControl]="bulkApprovalControl"
+                                    (change)="toggleAllSelections()" title="All Approval"
+                                  />
+                                </th>                             
+                              <th>Action</th>  
+                              <th>#SL</th>    
+                              <th>Property</th>           
+                              <th>Property Type</th>             
+                              <th>Landlord</th>             
+                              <th>Activation Status</th>                       
+                              <th>Status</th>          
+                          </tr>
+                          </thead>
+                          <tbody class="text-center">
+                          <ng-container *ngFor="let data of list; let i =index">
+                              <tr (click)="complainToggleDetails(data.complainInfoID,i)"> 
+                               <td>
+                                  <input
+                                    type="checkbox"
+                                    [formControl]="complainApprovalControls[data.complainInfoID]"
+                                    (change)="toggleIndividualSelection(data.complainInfoID)"
+                                    [disabled]="data.stateStatus !== 'Pending'"
+                                  />
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-rounded btn-sm btn-success text-white btn-size" title="Details">
+                                    {{ expandedRows[data.complainInfoID] ? '-' : '+' }}
+                                    </button>
+                                      &nbsp;
+                                    <button *ngIf="data.stateStatus == 'Pending'"
+                                    class="btn btn-rounded btn-sm btn-primary text-white btn-size"
+                                    (click)="selectedApprove(data.complainInfoID, data.landlordID)"
+                                    [disabled]="data.stateStatus !== 'Pending'" title="Approve" style="font-size: 11px;">
+                                    <i class="fa fa-check"></i>
+                                   </button>
+                                </td>         
+                                <td>                       
+                                    {{ i + 1 }}
+                                </td>  
+                                <td>{{ data.propertyName }}</td>                                     
+                                <td>{{ data.propertyType }}</td>                                     
+                                <td>{{ data.landlordName }}</td>                                     
+                                <td class="text-center">
+                                  <span [class]="data.isActive? 'label label-primary':'label label-danger'">
+                                      {{data.isActive? "Active":"Inactive"}}
+                                  </span>
+                                </td>
+                                <td class="text-center">
+                                      <span class="label label-warning"
+                                          *ngIf="data.stateStatus=='Pending'">{{data.stateStatus
+                                          + '...'}}</span>
+                                      <span class="label label-primary" *ngIf="data.stateStatus=='Approved'">
+                                          <i class="fa fa-check"></i> {{data.stateStatus}}
+                                      </span>
+                                      <span class="label label-danger"
+                                          *ngIf="data.stateStatus=='Cancelled'"><i class="fa fa-times"></i>
+                                          {{data.stateStatus}}
+                                      </span>
+                                      <span class="label label-info" *ngIf="data.stateStatus=='Recheck'"><i
+                                              class="fa fa-backward"></i> {{data.stateStatus}}
+                                      </span>                                 
+                                   
+                                 </td>     
+                                                                
+                              </tr>
+                          
+                              <ng-container *ngIf="expandedRows[data.complainInfoID]">
+                              <tr>
+                                  <td></td>                           
+                                  <td colspan="7" >
+                                    <div *ngIf="selectedComplainDetails?.length; else loading">
+                                        <table class="table table-hover table-striped textbox-border-color">
+                                        <thead>
+                                            <tr class="text-center">
+                                            <th>#SL</th>      
+                                            <th>Segment</th>                                                                
+                                            <th>Complain</th>
+                                            <th>Images</th>                            
+                                            <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let detail of selectedComplainDetails[i]; let j = index">
+                                            <td>{{ j + 1 }}</td>                                     
+                                            <td>{{ detail.segmentName }}</td>                                     
+                                            <td>{{ detail.complainName }}</td>
+                                            <td>
+                                              <ng-container *ngIf="detail.images && detail.images.length > 0">
+                                                <i
+                                                  *ngFor="let image of detail.images; let imgIndex = index"
+                                                  class="fa fa-image"
+                                                  style="cursor: pointer; margin-right: 5px; color: #007bff; font-size: 16px;"
+                                                  (click)="showImage(image.filepath)">
+                                                </i>
+                                              </ng-container>
+                                              </td>
+                                              <td style="text-align: center; vertical-align: middle;">
+                                                <div *ngIf="imageUrls[i] && imageUrls[i][j]?.length" class="d-flex justify-content-center">
+                                                    <i
+                                                      class="fa fa-image"
+                                                     >
+                                                     <div class="row justify-content-center">
+                                                      <div class="col-md-3" *ngFor="let imgSrc of imageUrls[i][j]">
+                                                        <button  class="btn btn-sm btn-outline-primary btn-size" title="Show Image" style="font-size: 11px;"mat-raised-button color="primary" (click)="openModal(imgSrc)">
+                                                        <img [src]="imgSrc" widht="10" height="10"/>
+                                                      </button>
+                                                      </div>
+                                                     </div>
+                                                    
+                                                    </i>
+                                                </div>
+                                                <span *ngIf="imageUrls[i] && (!imageUrls[i][j] || imageUrls[i][j].length === 0)">No Image</span>
+                                              </td>
+                                              <td class="text-center">
+                                                <button type="button" class="btn btn-sm btn-rounded btn-primary btn-size" title="Edit" style="font-size: 11px;" (click)="navigateToEditComplain(selectedComplainDetails[i][j], imageUrls[i][j],i,j)">
+                                                  <i class="fa fa-pencil"></i>
+                                                </button>
+                                              </td>
+                                            </tr>
+                                        </tbody>
+                                        <div *ngIf="selectedImage" class="image-preview-modal">
+                                          <div class="modal-content">
+                                            <span class="close-btn" (click)="closeImage()">&times;</span>
+                                            <img [src]="selectedImage" alt="Image Preview" />
+                                          </div>
+                                        </div>
+                                        </table>
+                                    </div>
+                                    
+
+                                    
+                                    <table class="table table-hover table-striped textbox-border-color">
+                                      <thead>
+                                        <tr class="text-center">
+                                        <th>#SL</th>      
+                                        <th>Segment</th>                                                                
+                                        <th>Complain</th>
+                                        <th>Images</th>                            
+                                        <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                      <td>1</td>
+                                      <td>{{ data.segmentName }}</td>
+                                      <td>Light is not Working</td>
+                                      <td>
+                                        <button  class="btn btn-sm btn-rounded btn-primary btn-size" title="Show Image" style="font-size: 11px;"mat-raised-button color="primary" (click)="openModal()">
+                                        <i
+                                          class="fa fa-image"
+                                         >
+                                        </i>
+                                      </button>
+                                      </td>
+                                      <td class="text-center">
+                                        <button type="button" class="btn btn-sm btn-rounded btn-primary btn-size" title="Edit" style="font-size: 11px;">
+                                        <i class="fa fa-pencil"></i></button>
+                                      </td>
+                                    </tbody>
+                                    </table>
+                                    <div *ngIf="selectedImage" class="image-preview-modal">
+                                      <div class="modal-content">
+                                        <span class="close-btn" (click)="closeImage()">&times;</span>
+                                        <img [src]="selectedImage" alt="Image Preview" style="width: 80px; height: 80px; object-fit: cover; margin-left: 5px;"/>
+                                      </div>
+                                    </div>
+                                      <ng-template #loading>
+                                          <small class="text-center">Loading details...</small>
+                                      </ng-template>
+                                  </td>
+                              </tr>
+                              </ng-container>
+                          </ng-container>                                 
+                          </tbody>
+                      </table> -->
+                  </div>
+          
+              </div>  
+        </div>
+
+    
+        <div class="d-flex justify-content-end">
+          <pagination-controls (pageChange)="listPageChanged($event)" [responsive]="true"
+          [autoHide]="true" id="list"></pagination-controls>
+        </div>
+
+      </div>
+      <div class="col-md-12 mb-4" *ngIf="entryPage">
+        <app-add-complain (childToParent)="fnBackToList($event)">
+        </app-add-complain>
+    </div>
+   
+      
+  </div>
+
+</div>

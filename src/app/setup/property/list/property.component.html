@@ -1,0 +1,190 @@
+<div class="container-fluid p-2">  
+  <h4 class="label-title">Property Information</h4>  
+
+  <div class="row">   
+    <div class="col-sm-4">
+        <div class="title-action">
+          <button type="button" class="btn btn-sm btn-primary btn-outline btn-rounded" (click)="listPageInit()"
+          *ngIf="entryPage"><i class="fa fa-arrow-left"></i> | Back to List</button>
+   
+       <button type="button" class="btn btn-sm btn-success btn-outline btn-rounded" (click)="[createProperty()]"
+          *ngIf="listPage" title="Add New Property"><i class="fa fa-plus"></i> | Create</button>           
+        </div>
+    </div>
+
+  </div>
+  <br>
+  
+  <div class="row m-t-sm mt-0">
+      <div class="col-md-12 mb-2" *ngIf="listPage">
+        <div class="card shadow-lg p-4">
+          <form [formGroup]="propertyForm">
+            <div class="row g-3">
+                <div class="col-md-6 col-lg-4">
+                  <div class="form-group">
+                    <label for="landlordID" class="label-title">
+                      Landlord <i class="fa fa-angle-down"></i> <span class="text-danger"> *</span>
+                    </label>               
+           
+                    <div class="dropdown-container">
+                      <input
+                        type="text"
+                        [formControl]="landlordSearchControl"
+                        formControlName="landlordID"
+                        (focus)="isDropdownOpen = true"
+                        placeholder="  Search by Landlord..."
+                      />
+                      <button mat-button class="btn btn-primary btn-sm" (click)="toggleDropdown()">▼</button>
+               
+                      <button 
+                        *ngIf="propertyForm.controls['landlordID'].value" 
+                        mat-button 
+                        class="btn-clear" 
+                        (click)="clearSelection()">
+                        ✖
+                      </button>
+                    
+                      <ul *ngIf="isDropdownOpen" class="dropdown-list">
+                        <li *ngFor="let item of filteredLandlords" (click)="selectLandlord(item)">
+                          {{ item.text }}
+                        </li>
+                        <li *ngIf="filteredLandlords.length === 0">No results found</li>
+                      </ul>
+                    </div>                                               
+                </div>
+                </div>   
+      
+                <div class="col-md-6 col-lg-4">
+                  <div class="form-group">
+                    <label for="propertyType" class="label-title">Search by Property Type <i class="fa fa-angle-down"></i> </label>
+                    <select class="form-control textbox-border-color" id="propertyType" formControlName="propertyType">
+                      <option value="" selected>---Select---</option>
+                      <option value="Empty">Empty</option>
+                      <option value="Half Furnish">Half Furnish</option>
+                      <option value="Full Furnish">Full Furnish</option>
+                    </select>           
+                  </div>
+                </div>
+                
+            </div>
+          </form>
+      
+        </div>      
+  
+
+        <div class="card shadow-lg p-4 mt-4">
+          <div class="table-scrollable">
+            <div class="table-responsive">
+              <table class="table table-hover table-striped textbox-border-color">       
+                <thead>
+                  <tr class="text-center">
+                    <th>Action</th>  
+                    <th>#SL</th>             
+                    <th>Property</th>
+                    <th>Property Type</th>
+                    <th>Landlord</th>
+                    <th>Landlord Type</th>
+                    <th>Address</th>     
+                    <th>Contact Number</th>
+                    <th>Email Address</th>  
+                    <th>Agency</th>
+                  </tr>
+                </thead>
+                <tbody class="text-center">
+                  <ng-container *ngFor="let data of list; let i =index">
+                    <tr (click)="toggleDetails(data.propertyID)">
+                      <td>
+                        <button type="button" class="btn btn-sm btn-rounded btn-success text-white btn-size" title="Details">
+                          {{ expandedRows[data.propertyID] ? '-' : '+' }}
+                        </button>
+                      </td>         
+                      <td>                       
+                        {{ i + 1 }}
+                      </td>             
+                      <td>{{ data.propertyName }}</td>
+                      <td>{{ data.propertyType }}</td>
+                      <td>{{ data.landlordName }}</td>
+                      <td>{{ data.landlordType }}</td>              
+                      <td>{{ data.address }}</td>
+                      <td>{{ data.contactNumber }}</td>
+                      <td>{{ data.emailAddress }}</td>
+                      <td>{{ data.agencyName }}</td>                     
+                    </tr>
+                  
+                    <ng-container *ngIf="expandedRows[data.propertyID]">
+                      <tr>
+                        <td colspan="10">
+                          <div *ngIf="selectedPropertyDetails[data.propertyID]?.length; else loading">
+                            <table class="table table-hover table-striped textbox-border-color">
+                              <thead>
+                                <tr class="text-center">
+                                  <th>#SL</th>      
+                                  <th>Segment Name</th>
+                                  <th>Length</th>
+                                  <th>Width</th>
+                                  <th>Action</th>
+                                </tr>
+                              </thead>
+                              <tbody class="text-center">
+                                <tr
+                                  *ngFor="let detail of selectedPropertyDetails[data.propertyID]; let j = index">
+                                  <td>{{ j + 1 }}</td>                                     
+                                  <td>{{ detail.segmentName }}</td>
+                                  <td>{{ detail.segmentLength }}</td>
+                                  <td>{{ detail.segmentWidth }}</td>
+                                  <td class="text-center">
+                                    <button
+                                      type="button"
+                                      class="btn btn-sm btn-rounded btn-primary btn-size"
+                                      title="Edit" style="font-size: 11px;">
+                                      <i class="fa fa-pencil"></i>
+                                    </button>
+                                  
+                                    <!-- <button
+                                      type="button"
+                                      class="btn btn-sm btn-rounded btn-danger btn-size"
+                                      title="Delete">
+                                      <i class="fa fa-trash"></i>
+                                    </button> -->
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          <ng-template #loading>
+                            <div class="text-center">Loading details...</div>
+                          </ng-template>
+                        </td>
+                      </tr>
+                    </ng-container>
+                  </ng-container>                                 
+                </tbody>
+              </table>
+            </div>
+          
+        </div>
+
+      </div>
+        
+      <div class="d-flex justify-content-end">
+        <pagination-controls (pageChange)="listPageChanged($event)" [responsive]="true"
+        [autoHide]="true" id="list"></pagination-controls>
+      </div>
+
+      </div>
+
+      <div class="col-md-12 mb-4" *ngIf="entryPage">
+          <app-add-property-modal
+              (childToParent)="fnBackToList($event)">
+          </app-add-property-modal>
+      </div>
+
+      
+  </div>
+
+</div>
+  
+
+
+
+  

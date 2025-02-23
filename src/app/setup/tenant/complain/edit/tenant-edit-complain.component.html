@@ -1,0 +1,126 @@
+<div class="container-fluid p-4">
+    <div class="card shadow-lg p-2">
+    <form [formGroup]="complainForm" (ngSubmit)="submit()">
+        <!-- <form> -->
+            <div style="position: sticky;">
+                        <div class="form-group mb-2">
+               
+                            <label for="propertyID" class="label-title">Property <i class="fa fa-angle-down"></i> <span class="text-danger"> *</span></label>
+                            <div>
+                                <input type="text"  class="form-control" id="propertyID"                
+                                formControlName="propertyID"/>
+                                <!-- <button mat-button class="btn btn-primary btn-sm" (click)="propertyToggleDropdown()">▼</button>               
+                                <button *ngIf="complainForm.controls['propertyID'].value" mat-button class="btn-clear"  (click)="clearPropertySelection()"
+                                    >✖</button>              
+                                <ul class="dropdown-list" *ngIf="isPropertyDropdownOpen">
+                                    <li *ngFor="let item of filteredProperties" (click)="selectProperty(item)">
+                                        {{ item.text }}
+                                    </li>
+                                    <li *ngIf="filteredProperties.length === 0">No results found</li>
+                                </ul> -->
+                            </div>
+                            <!-- <select class="form-control textbox-border-color" id="propertyID" formControlName="propertyID" style="height: 35px;" required>
+                                <option value="" selected>---Select---</option>
+                                <option [value]="item.id" *ngFor="let item of filteredProperty">
+                                    {{item.text}}
+                                </option>                    
+                            </select> -->               
+                            <!-- <div *ngIf="showPropertyInvalid">
+                                <span class="text-danger">Property is required.</span>
+                            </div> -->
+                        </div>   
+                <!-- <div *ngFor="let complain of complains.controls; let i = index" [formGroupName]="i" -->
+                    <div
+                    style="margin-bottom: 20px; padding: 10px; border: 1px solid #ccc; border-radius: 5px;"
+                    #complainFormDiv>
+                <!-- <div style="text-align:right;" *ngIf="i!=0"><button type="button" class="btn btn-sm btn-outline-danger" (click)="removeComplain(i)" title="Remove Complain"><i class="fa-solid fa-minus"></i></button></div> -->
+                <div class="row g-3">
+            <div class="col-md-6 col-lg-6">
+                <div class="form-group">
+                    <label for="segmentID" class="label-title">Segment <i class="fa fa-angle-down"></i> <span class="text-danger"> *</span></label>
+                    <!-- <div class="dropdown-container" >
+                        <select formControlName="segmentID" id="" placeholder="select segment"
+                        (change)="onSegmentChange($event)" class="form-control">
+                        <option *ngFor="let segment of segments" [value]="segment.id">{{ segment.text }}</option>
+                        </select>
+                    </div>
+    
+                    <div *ngIf="complain.get('segmentID')?.invalid && (complain.get('segmentID')?.dirty || complain.get('segmentID')?.touched)">
+                        <small class="text-danger">Segment is required.</small>
+                    </div> -->
+                    <div class="dropdown-container" >
+                        <select formControlName="segmentID" id="segmentID" placeholder="select segment"
+                      class="form-control">
+                      <option *ngFor="let segment of filteredSegments" [value]="segment.id">
+                        {{ segment.text }}
+                      </option>
+                        </select>
+                    </div>
+    
+                    <!-- <div *ngIf="complain.get('segmentID')?.invalid && (complain.get('segmentID')?.dirty || complain.get('segmentID')?.touched)">
+                        <small class="text-danger">Segment is required.</small>
+                    </div> -->
+                </div>
+            </div>    
+    
+            <div class="col-md-6 col-lg-6">
+            <div class="form-group">
+                <label for="complainName" class="label-title">Complain<small class="text-danger"> *</small></label>
+                <textarea
+                class="form-control textbox-border-color"
+                id="complainName"
+                formControlName="complainName"
+                (input)="adjustHeight($event)"
+                ></textarea>
+                <!-- <textarea
+                class="form-control textbox-border-color"
+                id="complainName"
+                formControlName="complainName"
+                ></textarea> -->
+                <!-- <div *ngIf="complain.get('complainName')?.invalid && complain.get('complainName')?.touched">
+                    <small class="text-danger">Complain is required.</small>
+                </div> -->
+            </div>
+            </div>
+            <div class="col-md-12 col-lg-12">
+                <div class="form-group">
+                        <h5 class="label-title">Upload Images</h5>
+                        <input type="file" id="fileInput" [accept]="acceptedFormats" (change)="onFileSelected($event,0)" multiple class="label-title"/>
+                        <!-- <input type="file" id="fileInput" multiple class="label-title"/> -->
+                        <!-- <div class="preview-container p-2" *ngIf="images.length > 0"> -->
+                            <div class="preview-container p-2"></div>
+                                <div class="container">
+                                    <div class="image-preview" *ngFor="let image of imagePreviews; let j = index">
+                                    <!-- <div class="image-preview"> -->
+                                      <div>
+                                        <img [src]="image" alt="Image Preview" width="100" height="100"/>
+                                        <!-- <img  alt="Image Preview" /> -->
+                                      </div>
+                                      <button
+                                        type="button"
+                                        class="btn btn-sm btn-rounded btn-danger btn-size"
+                                        (click)="removeImage(0,j)"
+                                        [attr.value]="null" 
+                                        title="Remove"><i class="fa fa-trash"></i></button>
+                                        <!-- <button
+                                        type="button"
+                                        class="btn btn-sm btn-rounded btn-danger btn-size"
+                                        [attr.value]="null" 
+                                        title="Remove"><i class="fa fa-trash"></i></button> -->
+                                    </div>
+                                  </div>
+                          </div>
+                        </div>
+                       
+                        </div>
+                        </div>
+            </div>
+          <br>
+          <div style="text-align:right">
+            <!-- <button class="btn btn-sm btn-outline-success" [disabled]="complainForm.invalid"><i class="fa fa-paper-plane faa-passing"></i> | Submit</button> -->
+            <button class="btn btn-sm btn-outline-success" [disabled]="complainForm.invalid"><i class="fa fa-paper-plane faa-passing"></i> | Submit</button>
+        </div>
+        </form>
+    
+    </div>
+    </div>

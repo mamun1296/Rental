@@ -1,0 +1,91 @@
+<ng-template #modal let-modal>
+    <div class="modal-header">
+      <span class="modal-title">{{ title }}</span>
+      <div class="icon-right">
+        <button type="button" class="btn btn-danger btn-xs" (click)="closeModal('Close click')">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+    </div>
+  
+    <div class="modal-body small-font">
+  
+  
+      <mat-stepper orientation="horizontal" #stepper>
+  
+        <mat-step [stepControl]="form">
+          <ng-template matStepLabel>Create Role</ng-template>
+  
+          <form [formGroup]="form" (ngSubmit)="confirmAction()">
+            <div class="form-group">
+              <label for="name" class="bold-font">Role Name:</label>
+              <input
+                id="name"
+                type="text"
+                formControlName="name"
+                class="form-control shadow-sm"
+                [ngClass]="{ 'is-invalid': form.get('name')?.invalid && form.get('name')?.touched }"
+              />
+              <div *ngIf="form.get('name')?.invalid && form.get('name')?.touched" class="text-danger">
+                <small *ngIf="form.get('name')?.errors?.['required']">Role Name is required.</small>
+                <small *ngIf="form.get('name')?.errors?.['maxlength']">Role Name cannot be longer than 100 characters.</small>
+              </div>
+            </div>
+      
+            <div class="form-group">
+              <label for="description" class="bold-font">Description:</label>
+              <textarea
+                id="description"
+                formControlName="description"
+                class="form-control shadow-sm"
+                [ngClass]="{ 'is-invalid': form.get('description')?.invalid && form.get('description')?.touched }"
+              ></textarea>
+              <div *ngIf="form.get('description')?.invalid && form.get('description')?.touched" class="text-danger">
+                <small *ngIf="form.get('description')?.errors?.['maxlength']">Description cannot be longer than 250 characters.</small>
+              </div>
+            </div>
+      
+  
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="form">
+          <ng-template matStepLabel>Role Permission Assign</ng-template>
+          <div class="form-group">
+            <label class="bold-font">Permissions :</label>
+            <div class="input-group row">
+              <div *ngFor="let permission of listOfPermissions" class="col-6 col-md-6 col-sm-12 mb-1">
+                <label class="d-flex align-items-center cursor">
+                  <input
+                    type="checkbox"
+                    [checked]="selectedPermissions.includes(permission.id)"
+                    (change)="togglePermission(permission.id, $event)"
+                    class="mr-1"
+                  />
+                  <span class="m-1">{{ permission.permissionKey }}</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </mat-step>
+        
+  
+      </mat-stepper>
+      
+    </div>
+  
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-primary btn-sm" (click)="resetForm()">
+        <i class="fas fa-redo-alt"></i> Reset
+      </button>
+  
+      <button type="submit" class="btn btn-save btn-sm" [disabled]="form.invalid" (click)="form.valid ? confirmAction() : null">
+        <i class="fas fa-save"></i>
+        {{ mode === 'update' ? 'Update' : 'Save' }}
+      </button>
+      
+      <button type="button" class="btn btn-outline-danger btn-md" (click)="closeModal('Cancel click')">
+        <i class="fas fa-times"></i> Close
+      </button>
+    </div>
+  </ng-template>
+  

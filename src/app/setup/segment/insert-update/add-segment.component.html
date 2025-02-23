@@ -1,0 +1,174 @@
+<div class="container-fluid p-2">    
+    <div class="row m-t-sm mt-0">
+        <div class="col-md-12 mb-0">
+            <div class="card shadow-lg p-4">
+                <form [formGroup]="segmentEntryForm" (ngSubmit)="onSegmentSubmit()">
+                    <div class="row g-3">
+                        <div class="col-md-6 col-lg-4">
+                            <div class="form-group">
+                                <label for="landlordID" class="label-title">
+                                    Landlord <i class="fa fa-angle-down"></i> <small class="text-danger"> *</small>
+                                </label>          
+                                <div class="dropdown-container">
+                                    <input type="text" [formControl]="landlordSearchControl" formControlName="landlordID"
+                                        (focus)="isLandlordDropdownOpen = true" placeholder="Select Landlord..."/>
+
+                                    <button mat-button class="btn btn-primary btn-sm" (click)="landlordToggleDropdown()">▼</button>
+
+                                    <button 
+                                        *ngIf="segmentEntryForm.controls['landlordID'].value" 
+                                        mat-button 
+                                        class="btn-clear" 
+                                        (click)="clearLandlordSelection()">✖
+                                    </button>
+                                    
+                                    <ul *ngIf="isLandlordDropdownOpen" class="dropdown-list">
+                                        <li *ngFor="let item of filteredLandlords" (click)="selectLandlord(item)">
+                                            {{ item.text }}
+                                        </li>
+                                        <li *ngIf="filteredLandlords.length === 0">No results found</li>
+                                    </ul>
+                                </div>
+                                <div
+                                    *ngIf="segmentEntryForm.get('landlordID')?.invalid && (segmentEntryForm.get('landlordID')?.dirty || segmentEntryForm.get('landlordID')?.touched)">
+                                    <small class="text-danger">Landlord is required.</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-lg-4">
+                            <div class="form-group">
+                                <label for="propertyID" class="label-title">Property <i class="fa fa-angle-down"></i> <small class="text-danger"> *</small></label>
+                                <div class="dropdown-container">
+                                    <input type="text"   
+                                        [formControl]="propertySearchControl" 
+                                        formControlName="propertyID"
+                                        (focus)="isPropertyDropdownOpen = true"
+                                        placeholder=" Select Property..."
+                                    />
+                                    <button mat-button class="btn btn-primary btn-sm" (click)="propertyToggleDropdown()">▼</button>               
+                                    <button *ngIf="segmentEntryForm.controls['propertyID'].value" mat-button class="btn-clear" 
+                                        (click)="clearPropertySelection()">✖</button>              
+                                    <ul *ngIf="isPropertyDropdownOpen" class="dropdown-list">
+                                        <li *ngFor="let item of filteredProperty" (click)="selectProperty(item)">
+                                            {{ item.text }}
+                                        </li>
+                                        <li *ngIf="filteredProperty.length === 0">No results found</li>
+                                    </ul>
+                                </div>
+                                <!-- <select class="form-control textbox-border-color" id="propertyID" formControlName="propertyID" style="height: 35px;" required>
+                                    <option value="" selected>---Select---</option>
+                                    <option [value]="item.id" *ngFor="let item of filteredProperty">
+                                        {{item.text}}
+                                    </option>                    
+                                </select> -->               
+                                <div
+                                    *ngIf="segmentEntryForm.get('propertyID')?.invalid && (segmentEntryForm.get('propertyID')?.dirty || segmentEntryForm.get('propertyID')?.touched)">
+                                    <small class="text-danger">Property is required.</small>
+                                </div>   
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-lg-4">
+                            <div class="form-group">
+                                <label for="segmentID" class="label-title">Segment <i class="fa fa-angle-down"></i> <small class="text-danger"> *</small></label>
+                                <div class="dropdown-container">
+                                    <input type="text"   
+                                        [formControl]="segmentSearchControl" 
+                                        formControlName="segmentID"
+                                        (focus)="isSegmentDropdownOpen = true"
+                                        placeholder="Select Segment..."
+                                    />
+                                    <button mat-button class="btn btn-primary btn-sm" (click)="segmentToggleDropdown()">▼</button>               
+                                    <button *ngIf="segmentEntryForm.controls['segmentID'].value" mat-button class="btn-clear" 
+                                        (click)="clearSegmentSelection()">✖</button>              
+                                    <ul *ngIf="isSegmentDropdownOpen" class="dropdown-list">
+                                        <li *ngFor="let item of filteredSegment" (click)="selectSegment(item)">
+                                            {{ item.text }}
+                                        </li>
+                                        <li *ngIf="filteredSegment.length === 0">No results found</li>
+                                    </ul>
+                                </div>
+
+                                <div *ngIf="segmentEntryForm.get('segmentID')?.invalid && (segmentEntryForm.get('segmentID')?.touched || segmentEntryForm.get('segmentID')?.dirty)" class="text-danger">
+                                    <small>Segment is required.</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Items Table -->
+                    <div class="card shadow-lg p-4 mt-4 table-card-size-collapse">
+                        <h4 class="text-dark"><i class="fa fa-plus-circle"></i> Add Item Details</h4>
+                        <div class="table-scrollable">
+                            <div class="table-responsive">
+                                <table class="table table-hover table-striped textbox-border-color">       
+                                    <thead>
+                                        <tr class="text-center">
+                                            <th style="width: 3%;">#SL</th>
+                                            <th style="width: 30%;">Item <small class="text-danger">*</small></th>
+                                            <th style="width: 15%;">Quantity <small class="text-danger">*</small></th>
+                                            <th style="width: 5%;">Action</th>
+                                        </tr>
+                                    </thead>
+                                    
+                                    <tbody formArrayName="items">
+                                        <tr *ngFor="let item of items.controls; let i = index" [formGroupName]="i">   
+                                            <td class="text-center">{{ i + 1 }}</td>               
+                                            <td>
+                                                <select name="itemID{{ i }}" id="itemID{{ i }}"
+                                                    class="form-control textbox-border-color" formControlName="itemID"
+                                                    (change)="itemNameChanged($event, i)">
+                                                    <option value="">---Select---</option>
+                                                    <option [value]="item.id" *ngFor="let item of ddlItems">
+                                                        {{item.text}}
+                                                    </option>                    
+                                                </select>                 
+                                                <div *ngIf="items.at(i).get('itemID')?.invalid && items.at(i).get('itemID')?.touched">
+                                                    <small class="text-danger">Item is required.</small>
+                                                </div>
+                                            </td>                    
+                                            <td>
+                                                <input type="number" name="itemQty" id="itemQty"
+                                                    class="form-control textbox-border-color font-bold no-spinner" formControlName="itemQty" minlength="0">
+                                                
+                                                <div *ngIf="items.at(i).get('itemQty')?.invalid && items.at(i).get('itemQty')?.touched">
+                                                    <small class="text-danger">Item Qty is required.</small>
+                                                </div>
+                                            </td>
+                                            
+                                            <td class="text-center">
+                                                <button
+                                                    type="button"
+                                                    class="btn btn-sm btn-rounded btn-primary btn-size"
+                                                    (click)="addItem()" title="Add"
+                                                >
+                                                    <i class="fa fa-plus"></i>
+                                                </button>
+                                                &nbsp;
+                                                <button
+                                                    type="button"
+                                                    class="btn btn-sm btn-rounded btn-danger btn-size"
+                                                    (click)="removeItem(i)"
+                                                    *ngIf="items.controls.length > 1" title="Remove"
+                                                >
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-xl btn-outline btn-rounded btn-primary" [disabled]="segmentEntryForm.invalid" style="float: right;">
+                                        <i class="fa fa-paper-plane"></i> | Submit
+                                    </button>
+                                </div>
+                            </div>
+                        </div>  
+                    </div>
+                </form>
+            </div>  
+        </div>
+    </div>
+</div>

@@ -1,0 +1,70 @@
+<div class="content">
+    <div class="body">
+        <div class="row">
+            <div class="action-row">
+                <button class="btn btn-md btn-add" (click)=" this.openUserRoleModal()">Add Assign Role</button>
+            </div>
+        </div>
+
+        <div class="list">
+            <table class="table table-bordered table-striped simple-table">
+                <thead>
+                    <tr>
+                        <th>User Name</th>
+                        <th>Roles</th>
+                        <th class="text-center action-width">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let userRole of listOfUserRoles">
+                        <td data-label="User Name">{{ userRole.userName }}</td>
+                        <td data-label="Roles">
+                            <ng-container *ngFor="let role of userRole.roles; let isFirst = first">
+                                <span *ngIf="!isFirst">, </span> 
+                                {{ role }}
+                            </ng-container>
+                        </td>
+   
+                        <td data-label="Actions" class="text-center action-width">
+                            <app-action
+                                (actionClick)="handleActionClick($event, userRole)"
+                                [actions]="itemActions">
+                            </app-action>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="pagination-container">
+            <app-pagination 
+                [items]="items"
+                [totalPages]="totalPage" 
+                [currentPage]="pageNumber" 
+                [pageSizeOptions]="pageSizeOptions" 
+                [pageSize]="pageSize"
+                [minPagesToShow]="minPagesToShow"
+                [minCurrentPage]="minCurrentPage"
+                (pageChange)="goToPage($event)" 
+                (pageSizeChange)="changePageSize($event)">
+            </app-pagination>
+        </div>
+    </div>
+</div>
+
+<ng-container *ngIf="showUserRoleModal">
+    <app-user-roles-modal
+        [mode]="mode"
+        (closeModalEvent)="closeUserRoleModal()"
+        (add)="addUserRole($event)">
+    </app-user-roles-modal>
+</ng-container>
+
+<ng-container *ngIf="showEditModal">
+    <app-user-roles-modal
+        [data]="updateData"
+        [mode]="mode"
+        (closeModalEvent)="closeEditModal()"
+        (update)="updateUserRole($event)">
+    </app-user-roles-modal>
+</ng-container>

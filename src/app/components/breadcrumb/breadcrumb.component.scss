@@ -1,0 +1,30 @@
+.breadcrumb-container {
+  position: sticky;
+  top: 4.04rem; 
+  width: 100%;
+  padding: 0.3125rem 1.25rem; 
+  border-radius: 0 0 0.3125rem 0.3125rem; 
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1); 
+  z-index: 10;
+}
+
+.breadcrumb {
+  margin: 0;
+  padding: 0;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+  content: '>';
+  padding: 0 0.5rem; 
+  font-weight: bold;
+}
+
+.breadcrumb-item a {
+  font-size: 0.875rem; 
+  transition: color 0.3s, text-decoration 0.3s;
+}
+
+.breadcrumb-item .link-active {
+  font-size: 1.1rem;
+  font-weight: 500;
+}

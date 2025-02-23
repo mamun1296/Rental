@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PrimaryLayoutComponent } from './primary-layout.component';
+import { NotificationComponent } from './notification.component';
 
-describe('PrimaryLayoutComponent', () => {
-  let component: PrimaryLayoutComponent;
-  let fixture: ComponentFixture<PrimaryLayoutComponent>;
+describe('NotificationComponent', () => {
+  let component: NotificationComponent;
+  let fixture: ComponentFixture<NotificationComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PrimaryLayoutComponent]
+      imports: [NotificationComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(PrimaryLayoutComponent);
+    fixture = TestBed.createComponent(NotificationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

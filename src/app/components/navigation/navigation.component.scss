@@ -1,0 +1,66 @@
+
+.sidenav-container {
+  height: 100%;
+}
+
+
+
+.sidenav {
+  width: 200px;
+}
+
+.sidenav .mat-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+
+}
+
+
+.mat-sidenav-content mat-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+}
+
+
+
+.flex-container {
+  display: flex;
+  justify-content: flex-end;
+  flex: 1;
+}
+
+
+
+.flex-item {
+  margin-right: 15px;
+}
+
+
+.dropdown-toggle{
+  padding-left: 10px;
+}
+
+
+
+.custom-toolbar {
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 65px;
+  background-color: #012136;
+}
+
+.company-logo {
+  height: 60px;
+  width: auto;
+  margin-right: 15px;
+}
+
+.app-header-title{
+  color:#ffff;
+  margin-left:10px;
+}
+

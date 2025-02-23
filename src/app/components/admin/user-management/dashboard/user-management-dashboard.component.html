@@ -1,0 +1,62 @@
+<!-- <div class="content">
+  
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+  
+    <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center" dynamicHeight [selectedIndex]="selectedTabIndex">
+      <mat-tab *ngFor="let tab of tabs" [disabled]="tab.disabled">
+        <ng-template mat-tab-label>
+          <div class="tab-content">
+            <mat-icon>{{ tab.icon }}</mat-icon> 
+            <div class="tab-details">
+              <span class="tab-label">{{ tab.label }}</span> 
+             
+            </div>
+          </div>
+        </ng-template>
+  
+        <div [ngSwitch]="tab.label">
+            <small class="tab-description">{{ tab.description }}</small> 
+          <div *ngSwitchCase="'User'">
+            <app-users></app-users>
+          </div>
+          <div *ngSwitchCase="'Role'">
+            <app-roles></app-roles>
+          </div>
+
+          <div *ngSwitchCase="'User Roles'">
+            <app-user-roles></app-user-roles>
+          </div>
+
+          <div *ngSwitchCase="'Permission Assign'">
+            <app-permissions></app-permissions>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+    
+  </div>
+   -->
+   <div class="content">
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+    <div>
+      <mat-tab-group
+        [(selectedIndex)]="selectedTabIndex"
+        (selectedTabChange)="onTabChanged($event)"
+        mat-stretch-tabs="false"
+        mat-align-tabs="center"
+        dynamicHeight
+        class="custom-tab-group">
+        <mat-tab
+          *ngFor="let tab of tabs; let i = index"
+          [label]="tab.label"
+          [disabled]="tab.disabled"
+        ></mat-tab>
+      </mat-tab-group>
+  
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+  
+
+  
+  

@@ -1,0 +1,10 @@
+.custom-checkbox {
+    border-radius: 4px;
+    border: 2px solid #214422;
+    padding: 5px;
+}
+
+.custom-checkbox:checked {
+    background-color: #214422;
+    border-color: #214422;
+}

@@ -1,0 +1,291 @@
+
+<div class="card shadow-lg p-4">
+    <form [formGroup]="propertyEntryForm" (ngSubmit)="onPropertySubmit()">
+      <div style="position: sticky;">
+        <div class="row g-3">
+          <div class="col-md-6 col-lg-4">
+              <div class="form-group">
+                <label for="landlordID" class="label-title">
+                  Landlord <i class="fa fa-angle-down"></i> <small class="text-danger"> *</small>
+                </label>               
+       
+                <div class="dropdown-container">
+                  <input
+                    type="text"
+                    [formControl]="searchControl"
+                    formControlName="landlordID"
+                    (focus)="isDropdownOpen = true"
+                    placeholder="  Select Landlord..."
+                  />
+                  <button mat-button class="btn btn-primary btn-sm" (click)="toggleDropdown()">▼</button>
+                  
+                  <!-- Clear Button -->
+                  <button 
+                    *ngIf="propertyEntryForm.controls['landlordID'].value" 
+                    mat-button 
+                    class="btn-clear" 
+                    (click)="clearSelection()">
+                    ✖
+                  </button>
+                
+                  <ul *ngIf="isDropdownOpen" class="dropdown-list">
+                    <li *ngFor="let item of filteredLandlords" (click)="selectLandlord(item)">
+                      {{ item.text }}
+                    </li>
+                    <li *ngIf="filteredLandlords.length === 0">No results found</li>
+                  </ul>
+                </div>
+                <div
+                  *ngIf="
+                    propertyEntryForm.controls['landlordID'].invalid &&
+                    (propertyEntryForm.controls['landlordID'].dirty ||
+                      propertyEntryForm.controls['landlordID'].touched)
+                  "
+                >
+                  <small class="text-danger">Landlord is required.</small>
+                </div>                                      
+            </div>
+          </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="form-group">
+            <label for="landlordName" class="label-title">Property Name <small class="text-danger">*</small></label>
+              <input type="text"propertyName class="form-control textbox-border-color" id="propertyName" formControlName="propertyName" required>            
+            <div *ngIf="propertyEntryForm.get('propertyName')?.invalid && propertyEntryForm.get('propertyName')?.touched" class="text-danger">
+              Property Name is required.
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <div class="form-group">
+            <label for="propertyType" class="label-title">Property Type <i class="fa fa-angle-down"></i> <small class="text-danger"> *</small></label>
+            <select class="form-control textbox-border-color" id="propertyType" formControlName="propertyType" required>
+              <option value="" selected>---Select---</option>
+              <option value="Empty">Empty</option>
+              <option value="Half Furnish">Half Furnish</option>
+              <option value="Full Furnish">Full Furnish</option>
+            </select>
+            <div *ngIf="propertyEntryForm.get('propertyType')?.invalid && propertyEntryForm.get('propertyType')?.touched" class="text-danger">
+              Property is required.
+            </div>
+          </div>
+        </div>    
+
+        <div class="col-md-6 col-lg-4">
+        <div class="form-group">
+            <label for="address" class="label-title">Address <small class="text-danger"> *</small></label>
+            <input
+            type="text"
+            class="form-control textbox-border-color"
+            id="address"
+            formControlName="address"
+            >
+            <div *ngIf="propertyEntryForm.get('address')?.invalid && propertyEntryForm.get('address')?.touched" class="text-danger">
+            Address is required.
+            </div>
+        </div>
+        </div>
+
+
+        <div class="col-md-6 col-lg-4">
+            <div class="form-group">
+              <label for="contactNumber" class="label-title">Contact <small class="text-danger"> *</small></label>
+              <input
+                type="text"
+                class="form-control textbox-border-color"
+                id="contactNumber"
+                formControlName="contactNumber"
+              >
+              <div *ngIf="propertyEntryForm.get('contactNumber')?.invalid && propertyEntryForm.get('contactNumber')?.touched" class="text-danger">
+                Contact number is required.
+              </div>
+            </div>
+          </div>
+  
+          <div class="col-md-6 col-lg-4">
+            <div class="form-group">
+              <label for="emailAddress" class="label-title">Email</label>
+              <input
+                type="text"
+                class="form-control textbox-border-color"
+                id="emailAddress"
+                formControlName="emailAddress"
+              >
+            
+            </div>
+          </div>   
+  
+          <div class="col-md-6 col-lg-4">
+            <div class="form-group">
+              <label for="propertyDescription" class="label-title">Description</label>
+              <input
+                type="text"
+                class="form-control textbox-border-color"
+                id="propertyDescription"
+                formControlName="propertyDescription"
+              >
+           
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+ 
+      
+      <br>
+
+      <div class="card shadow-sm p-3">
+        <h4 class="text-dark"><i class="fa fa-plus-circle"></i> Add Segment Details</h4>
+        <div class="table-scrollable">
+          <div class="table-responsive">
+            <table class="table table-striped table-hover textbox-border-color">
+              <thead>
+                <tr class="text-center">
+                  <th style="width: 2%;">#SL</th>
+                  <th style="width: 30%;">Segment Name <small class="text-danger">*</small></th>
+                  <th style="width: 15%;">Lenth <small class="text-danger">*</small></th>
+                  <th style="width: 15%;">Width <small class="text-danger">*</small></th>           
+                  <th style="width: 7%;">Action</th>
+                </tr>
+              </thead>
+  
+              <tbody formArrayName="segments">
+                <tr *ngFor="let item of segments.controls; let i = index" [formGroupName]="i">   
+                  <td class="text-center font-bold">{{ i + 1 }}</td>               
+                  <td>
+                    <input type="text" name="segmentName{{ i }}" id="segmentName{{ i }}"
+                    class="form-control textbox-border-color font-bold" formControlName="segmentName"
+                    (change)="segmentNameChanged($event, i)">
+                
+                    <div *ngIf="segments.at(i).get('segmentName')?.invalid && segments.at(i).get('segmentName')?.touched">
+                      <small class="text-danger">Segment name is required.</small>
+                    </div>
+                  </td>
+  
+                  <td>
+                    <input type="text" name="segmentLength" id="segmentLength"
+                    class="form-control textbox-border-color font-bold" formControlName="segmentLength">
+                
+                    <div *ngIf="segments.at(i).get('segmentLength')?.invalid && segments.at(i).get('segmentLength')?.touched">
+                      <small class="text-danger">Length is required.</small>
+                    </div>
+                  </td>
+                  <td>
+                    <input type="text" name="segmentWidth" id="segmentWidth"
+                    class="form-control textbox-border-color font-bold" formControlName="segmentWidth">
+                
+                    <div *ngIf="segments.at(i).get('segmentWidth')?.invalid && segments.at(i).get('segmentWidth')?.touched">
+                      <small class="text-danger">Width is required.</small>
+                    </div>
+                  </td>          
+             
+                  <td class="text-center">
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-rounded btn-primary btn-size"
+                      (click)="addSegment()" title="Add"
+                    >
+                      <i class="fa fa-plus"></i>
+                    </button>
+                    &nbsp;
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-rounded btn-danger btn-size"
+                      (click)="removeSegment(i)"
+                      *ngIf="segments.controls.length > 1" title="Remove"
+                    >
+                      <i class="fa fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>         
+          <div class="form-group">
+            <button type="submit" class="btn btn-xl btn-outline btn-rounded btn-primary" [disabled]="propertyEntryForm.invalid" style="float: right;">
+              <i class="fa fa-paper-plane"></i> | Submit
+            </button>
+          </div>
+        </div>
+      </div>
+      
+
+    </form>
+
+</div>
+
+
+  <!-- <div class="card shadow-sm p-3 table-card-size-collapse">
+    <h4 class="text-dark"><i class="fa fa-plus-circle"></i> Add Item Details</h4>
+    <div class="table-scrollable table-responsive">
+      <table class="table table-striped table-hover textbox-border-color">
+        <thead>
+          <tr class="text-center">
+            <th style="width: 5%;">#SL</th>
+            <th>Item</th>
+            <th style="width: 15%;">Action</th>
+          </tr>
+        </thead>
+
+        <tbody formArrayName="segments">
+          <tr *ngFor="let item of segments.controls; let i = index" [formGroupName]="i">
+            <td>{{ i + 1 }}</td>
+            <td>
+          
+              <div class="dropdown-container">
+                <input
+                  type="text"
+                  formControlName="segmentName"
+                  placeholder="Select Item..."
+                  (focus)="isItemDropdownOpen = true"
+                  (change)="itemNameChanged($event, i)"
+                  class="form-control"
+                />
+                <button type="button" (click)="itemToggleDropdown(i)">▼</button>
+                <button type="button" (click)="itemClearSelection(i)">✖</button>
+        
+                <ul *ngIf="isItemDropdownOpen" class="dropdown-list">
+                  <li *ngFor="let item of ddlsegments" (click)="segmentselect(item, i)">
+                    {{ item.text }}
+                  </li>
+                </ul>
+              </div>       
+         
+              <div *ngIf="segments.at(i).get('segmentName')?.invalid && segments.at(i).get('segmentName')?.touched">
+                <small class="text-danger">Item is required.</small>
+              </div>
+            </td>
+            <td class="text-center">
+              <button
+                type="button"
+                class="btn btn-sm btn-rounded btn-primary"
+                (click)="addItem()"
+                title="Add"
+                style="border-radius: 50%;"
+              >
+                <i class="fa fa-plus"></i>
+              </button>
+              &nbsp;
+              <button
+                type="button"
+                class="btn btn-sm btn-rounded btn-danger"
+                (click)="removeItem(i)"
+                *ngIf="segments.controls.length > 1"
+                title="Remove"
+                style="border-radius: 50%;"
+              >
+                <i class="fa fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+          
+        </tbody>
+      </table>
+      <div class="form-group">
+        <button type="submit" class="btn btn-xl btn-outline btn-rounded btn-primary" [disabled]="propertyEntryForm.invalid" style="float: right;">
+          <i class="fa fa-paper-plane"></i> | Submit
+        </button>
+      </div>
+    </div>
+  </div> -->

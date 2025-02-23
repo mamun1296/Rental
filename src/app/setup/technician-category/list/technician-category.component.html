@@ -1,0 +1,75 @@
+<!-- technician entry -->
+<div class="container-fluid">
+  <div class="card shadow-lg p-3">
+    <h4 class="text-dark"><i class="fa fa-plus-circle"></i> Add Technician Category</h4>
+    <form [formGroup]="technicianCategoryForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="label-title" for="categoryName">Category Name <span style="color: red;">*</span></label>
+            <input type="text" class="form-control textbox-border-color" id="categoryName" formControlName="categoryName"
+              oninvalid="this.setCustomValidity('Please enter the category name.')" oninput="this.setCustomValidity('')" />
+            <div
+              *ngIf="technicianCategoryForm.get('categoryName')?.invalid && technicianCategoryForm.get('categoryName')?.touched"
+              class="text-danger">
+              Technician Category Name is Required.
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="label-title" for="description">Description <span style="color: red;">*</span></label>
+            <input type="text" class="form-control textbox-border-color" id="description" formControlName="description"
+              required oninvalid="this.setCustomValidity('Please enter the description.')"
+              oninput="this.setCustomValidity('')" required>
+              <div *ngIf="technicianCategoryForm.get('description')?.invalid && technicianCategoryForm.get('description')?.touched" class="text-danger">
+                Category Description is Required.
+              </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group mt-2">
+        <button type="submit" class="btn btn-sm btn-outline-primary" [disabled]="technicianCategoryForm.invalid" style="float: right;"><i class="fa fa-paper-plane"></i>
+          | Submit
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+
+<!-- list of technician -->
+<div class="container-fluid p-2">
+  <div class="card shadow-lg p-4">
+    <div class="d-flex justify-content-between align-items-center">
+      <div class="form-group m-0 position-relative">
+        <input type="text" class="form-control form-control-sm pl-4" placeholder="Search here...">
+        <i class="fa fa-search position-absolute"
+          style="left: 10px; top: 50%; transform: translateY(-50%); color: #999;"></i>
+      </div>
+    </div>
+
+    <div class="table-responsive mt-3">
+      <table class="table table-hover textbox-border-color">
+        <thead>
+          <tr class="text-center">
+            <th>#SL</th>
+            <th>Category Name</th>
+            <th>Category Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="text-center">
+            <td>1</td>
+            <td>Technician Category Name</td>
+            <td>Technician Category Description</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,57 @@
+
+.custom-slide-toggle {
+  display: inline-block;
+  cursor: pointer;
+  position: relative;
+}
+
+.toggle-background {
+  
+  border-radius: 20px;
+  width: 60px; 
+  height: 30px; 
+  position: relative;
+}
+
+.toggle-handle {
+  background-color: rgba(163, 157, 157, 0.7);
+  border-radius: 50%;
+  width: 20px; 
+  height: 20px; 
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  transition: transform 0.3s;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); 
+}
+
+.toggle-input {
+  display: none; 
+}
+
+.moon-icon,
+.sun-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.sun-icon {
+  left: 7px; 
+}
+
+.moon-icon {
+  right: 11px; 
+}
+
+.dark-mode .toggle-handle {
+  transform: translateX(30px); 
+}
+
+.dark-mode .moon-icon {
+  display: none; 
+}
+
+.dark-mode .sun-icon {
+  display: inline; 
+}

@@ -1,0 +1,152 @@
+<div class="container-fluid p-2">  
+    <h4 class="label-title"> <i class="fa fa-plus-circle"></i> Add Employee Information</h4>  
+      <div class="row m-t-sm mt-0">
+        <div class="col-md-12 mb-2">
+          <div class="card shadow-lg p-4">        
+            <form [formGroup]="agencyEmployeesEntryForm" (ngSubmit)="onSubmit()">
+              <div class="row mb-3">             
+                <div class="col-md-6">  
+                  <label for="empName" class="label-title">Name</label><span class="text-danger"> * </span>
+                  <input type="text" class="form-control textbox-border-color" id="name" formControlName="empName" required>
+                  <div *ngIf="agencyEmployeesEntryForm.get('empName')?.invalid && agencyEmployeesEntryForm.get('empName')?.touched" class="text-danger">
+                    Name is required.
+                  </div>                
+                </div>          
+                <div class="col-md-6">
+                    <label for="contact" class="label-title">Contact Number</label><span class="text-danger"> * </span>
+                    <input type="text" class="form-control textbox-border-color" id="contactNumber" formControlName="contactNumber" required />               
+                    <div *ngIf="agencyEmployeesEntryForm.get('contactNumber')?.invalid && agencyEmployeesEntryForm.get('contactNumber')?.touched" class="text-danger">
+                        <span *ngIf="agencyEmployeesEntryForm.get('contactNumber')?.errors?.['required']">Contact number is required.</span>
+                        <span *ngIf="agencyEmployeesEntryForm.get('contactNumber')?.errors?.['pattern']">Invalid phone number.</span>
+                      </div>
+                  </div>    
+              </div>
+
+              <div class="row mb-3">                           
+                <div class="col-md-6">
+                    <label for="emailAddress" class="label-title">Email</label><span class="text-danger"> * </span>
+                    <input type="text" class="form-control textbox-border-color" id="password" formControlName="emailAddress" required />
+                    <div *ngIf="agencyEmployeesEntryForm.get('emailAddress')?.touched && agencyEmployeesEntryForm.get('emailAddress')?.invalid">
+                      <div *ngIf="agencyEmployeesEntryForm.get('emailAddress')?.errors?.['required']" class="text-danger">
+                        Email is required.
+                      </div>
+                      <div *ngIf="agencyEmployeesEntryForm.get('emailAddress')?.errors?.['email']" class="text-danger">
+                       Invalid email address.
+                      </div>
+                  </div>
+                  </div>  
+                  <div class="col-md-6">
+                    <label for="address" class="label-title" >Address</label><span class="text-danger"> * </span>
+                    <input type="text" class="form-control textbox-border-color" id="address" formControlName="address" required />
+                    <div *ngIf="agencyEmployeesEntryForm.get('address')?.hasError('required') && agencyEmployeesEntryForm.get('address')?.touched" class="text-danger">
+                      Address is required.
+                    </div>
+                  </div>   
+               
+              </div>
+
+              <div class="row mb-3">                 
+                <div class="col-md-6">
+                    <label for="userName" class="label-title" >User Name</label><span class="text-danger"> * </span>
+                    <input type="text" class="form-control textbox-border-color" id="userName" formControlName="userName" required />
+                    <div *ngIf="agencyEmployeesEntryForm.get('userName')?.touched && agencyEmployeesEntryForm.get('userName')?.invalid">                              
+                          <span *ngIf="agencyEmployeesEntryForm.get('userName')?.errors?.['required']" class="text-danger">Username is required.</span>
+                          <span *ngIf="agencyEmployeesEntryForm.get('userName')?.errors?.['minlength']" class="text-danger">Username must be 4 characters long.</span>
+                          <span *ngIf="agencyEmployeesEntryForm.get('userName')?.errors?.['maxlength']" class="text-danger">Username cannot be longer than 50 characters.</span>                  
+                    </div>
+
+                  </div>         
+                  <div class="col-md-4">  
+                      <br>
+                      <button type="submit" class="btn btn-sm btn-outline-success" [disabled]="agencyEmployeesEntryForm.invalid">
+                        <i class="fa fa-paper-plane"></i> Submit
+                      </button>                   
+                  </div>   
+              </div>
+
+            </form>     
+          </div>      
+    
+          <div class="card shadow-lg p-4 mt-0">
+                <div class="table-scrollable">     
+                    <div class="table-responsive">  
+                        <div class="d-flex justify-content-between align-items-center mb-3">                           
+                          <form [formGroup]="agencyEmployeesListForm" class="d-flex">
+                            <div class="form-group mb-0" style="width: 380px;">
+                              <label for="searchString" class="label-title">Search </label>
+                              <input type="text" class="form-control textbox-border-color" formControlName="searchString"
+                                placeholder="Search by anything..."/>
+                            </div>
+                          </form>
+                        </div>                
+                        <table class="table table-hover table-striped textbox-border-color">
+                           <thead>                            
+                            <tr class="text-center">   
+                                <th>#SL</th>                
+                                <th>Employee Name</th>             
+                                <th>Email</th>             
+                                <th>Contact Number</th>       
+                                <th>Address</th>             
+                                <th>User Name</th>             
+                                <th>Password</th>             
+                                <th>Activation Status</th>                       
+                                <th>Approve Status</th>          
+                            </tr>
+                            </thead>
+                            <tbody class="text-center">
+                            <ng-container *ngFor="let data of list; let i =index">
+                                <tr>                                   
+                                  <td>                       
+                                      {{ i + 1 }}
+                                  </td>                                                 
+                                  <td>{{ data.empName }}</td>                                     
+                                  <td>{{ data.emailAddress }}</td>     
+                                  <td>{{ data.contactNumber }}</td>                                     
+                                  <td>{{ data.address }}</td>                                     
+                                  <td>{{ data.userName }}</td>   
+                                  <td>{{ data.password }}</td>                                          
+                                  <td class="text-center">
+                                    <span [class]="data.isActive? 'label label-primary':'label label-danger'">
+                                        {{data.isActive? "Active":"Inactive"}}
+                                    </span>
+                                  </td>
+                                  <td class="text-center">
+                                      <span class="label label-warning"
+                                          *ngIf="data.stateStatus=='Pending'">{{data.stateStatus
+                                          + '...'}}</span>
+                                      <span class="label label-primary" *ngIf="data.stateStatus=='Approved'">
+                                          <i class="fa fa-check"></i> {{data.stateStatus}}
+                                      </span>
+                                      <span class="label label-danger"
+                                          *ngIf="data.stateStatus=='Cancelled'"><i class="fa fa-times"></i>
+                                          {{data.stateStatus}}
+                                      </span>
+                                      <span class="label label-info" *ngIf="data.stateStatus=='Recheck'"><i
+                                              class="fa fa-backward"></i> {{data.stateStatus}}
+                                      </span>
+                                   </td>                                                                       
+                                </tr>
+                            </ng-container>                                 
+                            </tbody>
+                        </table>
+                    </div>
+            
+                </div>  
+          </div>
+
+      
+          <div class="d-flex justify-content-end">
+            <pagination-controls (pageChange)="listPageChanged($event)" [responsive]="true"
+            [autoHide]="true" id="list"></pagination-controls>
+          </div>
+
+        </div>  
+        
+      </div>
+  
+  </div>
+    
+  
+  
+  
+    

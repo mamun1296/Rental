@@ -1,0 +1,175 @@
+<div class="container-fluid p-2">  
+    <h4 class="label-title"> <i class="fa fa-plus-circle"></i> Technician</h4>  
+      <div class="row m-t-sm mt-0">
+        <div class="col-md-12 mb-2">
+          <div class="card shadow-lg p-4">        
+            <form [formGroup]="technicianForm" (ngSubmit)="onSubmit()">
+              <div class="row mb-3">             
+                <div class="col-md-4">  
+                  <label for="technicianName" class="label-title">Technician Name</label><span class="text-danger"> * </span>
+                  <input type="text" class="form-control textbox-border-color" id="name" formControlName="technicianName" required>
+                  <div *ngIf="technicianForm.get('technicianName')?.invalid && technicianForm.get('technicianName')?.touched" class="text-danger">
+                    Name is required.
+                  </div>                
+                </div>
+                <div class="col-md-4">      
+                    <label for="technicianCategoryID" class="label-title">Technician Category</label><span class="text-danger"> * </span>                 
+                    <select class="form-control textbox-border-color" id="technicianCategoryID" formControlName="technicianCategoryID" required="required">
+                      <option value="">---Select---</option>       
+                      <option *ngFor="let item of ddlTechnicianCategory" value="{{item.id}}">{{item.text}}</option>               
+                    </select>   
+
+                    <div *ngIf="technicianForm.get('technicianCategoryID')?.touched && technicianForm.get('technicianCategoryID')?.invalid">
+                      <div *ngIf="technicianForm.get('technicianCategoryID')?.errors?.['required']" class="text-danger">
+                        Category is required.
+                      </div>                    
+                  </div>                 
+                </div>
+
+                <div class="col-md-4">
+                  <label for="emailAddress" class="label-title">Email</label><span class="text-danger"> * </span>
+                  <input type="text" class="form-control textbox-border-color" id="password" formControlName="emailAddress" required />
+                  <div *ngIf="technicianForm.get('emailAddress')?.touched && technicianForm.get('emailAddress')?.invalid">
+                    <div *ngIf="technicianForm.get('emailAddress')?.errors?.['required']" class="text-danger">
+                      Email is required.
+                    </div>
+                    <div *ngIf="technicianForm.get('emailAddress')?.errors?.['email']" class="text-danger">
+                      Please enter a valid email address.
+                    </div>
+                </div>
+                </div>           
+              </div>
+
+              <div class="row mb-3">  
+                <div class="col-md-4">
+                  <label for="contact" class="label-title">Contact</label><span class="text-danger"> * </span>
+                  <input type="text" class="form-control textbox-border-color" id="contactNumber" formControlName="contactNumber" required />
+                  <div *ngIf="technicianForm.get('contactNumber')?.hasError('required') && technicianForm.get('contactNumber')?.touched" class="text-danger">
+                    Contact number is required.
+                  </div>
+                </div>                 
+                  <div class="col-md-4">
+                    <label for="userName" class="label-title" >User Name</label><span class="text-danger"> * </span>
+                    <input type="text" class="form-control textbox-border-color" id="userName" formControlName="userName" required />
+                    <div *ngIf="technicianForm.get('userName')?.hasError('required') && technicianForm.get('userName')?.touched" class="text-danger">
+                      User name is required.
+                    </div>
+                  </div>
+  
+                  
+                  <div class="col-md-4">
+                    <label for="password" class="label-title">Password</label><span class="text-danger"> * </span>
+                    <input type="text" class="form-control textbox-border-color" id="password" formControlName="password" required />
+                    <div *ngIf="technicianForm.get('password')?.hasError('required') && technicianForm.get('password')?.touched" class="text-danger">
+                      Password is required.
+                    </div>
+                    <div *ngIf="technicianForm.get('password')?.errors?.['minlength']" class="text-danger">
+                      Password must be at least 4 characters long!
+                    </div>
+                  </div>
+              </div>
+
+              <div class="row mb-3">                 
+                  <div class="col-md-8">
+                    <label for="address" class="label-title" >Address</label><span class="text-danger"> * </span>
+                    <input type="text" class="form-control textbox-border-color" id="address" formControlName="address" required />
+                    <div *ngIf="technicianForm.get('address')?.hasError('required') && technicianForm.get('address')?.touched" class="text-danger">
+                      Address is required.
+                    </div>
+                  </div>   
+                  <div class="col-md-4">  
+                      <br>
+                      <button type="submit" class="btn btn-sm btn-outline-success" [disabled]="technicianForm.invalid">
+                        <i class="fa fa-paper-plane"></i> Submit
+                      </button>                   
+                  </div>   
+              </div>
+
+            </form>     
+          </div>      
+    
+          <div class="card shadow-lg p-4 mt-0">
+                <div class="table-scrollable">     
+                    <div class="table-responsive">  
+                        <div class="d-flex justify-content-between align-items-center mb-3">                           
+                          <form [formGroup]="technicianForm" class="d-flex">
+                            <div class="form-group mb-0" style="width: 380px;">
+                              <label for="searchString" class="label-title">Search </label>
+                              <input type="text" class="form-control textbox-border-color" formControlName="searchString"
+                                placeholder="Search by anything..."/>
+                            </div>
+                          </form>
+                        </div>                
+                        <table class="table table-hover table-striped textbox-border-color">
+                           <thead>                            
+                            <tr class="text-center">   
+                                <th>#SL</th>
+                                <th>Technician Category</th>
+                                <th>Technician Name</th>             
+                                <th>Email</th>             
+                                <th>Contact Number</th>       
+                                <th>Address</th>             
+                                <th>User Name</th>             
+                                <th>Password</th>             
+                                <th>Activation Status</th>                       
+                                <th>Approve Status</th>          
+                            </tr>
+                            </thead>
+                            <tbody class="text-center">
+                            <ng-container *ngFor="let data of list; let i =index">
+                                <tr>                                   
+                                  <td>                       
+                                      {{ i + 1 }}
+                                  </td>  
+                                  <td>{{ data.technicianCategoryName }}</td>                                     
+                                  <td>{{ data.technicianName }}</td>                                     
+                                  <td>{{ data.emailAddress }}</td>     
+                                  <td>{{ data.contactNumber }}</td>                                     
+                                  <td>{{ data.address }}</td>                                     
+                                  <td>{{ data.userName }}</td>   
+                                  <td>{{ data.password }}</td>                                          
+                                  <td class="text-center">
+                                    <span [class]="data.isActive? 'label label-primary':'label label-danger'">
+                                        {{data.isActive? "Active":"Inactive"}}
+                                    </span>
+                                  </td>
+                                  <td class="text-center">
+                                      <span class="label label-warning"
+                                          *ngIf="data.stateStatus=='Pending'">{{data.stateStatus
+                                          + '...'}}</span>
+                                      <span class="label label-primary" *ngIf="data.stateStatus=='Approved'">
+                                          <i class="fa fa-check"></i> {{data.stateStatus}}
+                                      </span>
+                                      <span class="label label-danger"
+                                          *ngIf="data.stateStatus=='Cancelled'"><i class="fa fa-times"></i>
+                                          {{data.stateStatus}}
+                                      </span>
+                                      <span class="label label-info" *ngIf="data.stateStatus=='Recheck'"><i
+                                              class="fa fa-backward"></i> {{data.stateStatus}}
+                                      </span>
+                                   </td>                                                                       
+                                </tr>
+                            </ng-container>                                 
+                            </tbody>
+                        </table>
+                    </div>
+            
+                </div>  
+          </div>
+
+      
+          <div class="d-flex justify-content-end">
+            <pagination-controls (pageChange)="listPageChanged($event)" [responsive]="true"
+            [autoHide]="true" id="list"></pagination-controls>
+          </div>
+
+        </div>  
+        
+      </div>
+  
+  </div>
+    
+  
+  
+  
+    

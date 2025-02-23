@@ -1,0 +1,197 @@
+
+<div id="wrapper">
+  <nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul class="nav metismenu" id="side-menu">
+            <li class="p-1">
+              <img 
+              src="../../assets/img/logo.jpg" 
+              alt="Logo" 
+              class="img-fluid"
+              >
+            </li>
+            
+
+            <li *ngFor="let menu of menus">
+              <a href="complain">
+                <i class="fa fa-sitemap"></i>
+                <span class="nav-label">{{ menu.title }}</span>
+                <span class="fa arrow" *ngIf="menu.submenus?.length"></span>
+              </a>
+              <ul class="nav nav-second-level collapse" *ngIf="menu.submenus?.length">
+                <li *ngFor="let submenu of menu.submenus">
+                  <a *ngIf="!submenu.submenus" [routerLink]="submenu.path">{{ submenu.title }}</a>
+                  <a *ngIf="submenu.submenus">
+                    {{ submenu.title }}
+                    <span class="fa arrow"></span>
+                  </a>
+                  <ul class="nav nav-third-level" *ngIf="submenu.submenus">
+                    <li *ngFor="let subSubmenu of submenu.submenus">
+                      <a [routerLink]="subSubmenu.path">{{ subSubmenu.title }}</a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            
+
+
+            <li>
+                <a href="metrics.html"><i class="fa fa-pie-chart"></i> <span class="nav-label">Metrics</span>
+                </a>
+            </li>
+        </ul>
+
+    </div>
+</nav>
+   <div id="page-wrapper" class="gray-bg dashbard-1">
+       <app-header />
+       <router-outlet/>
+       <app-footer />
+   </div>
+  
+   <app-chatbox />
+   <app-rightsidebar />
+ </div>
+
+ <!-- Toast notification  -->
+ 
+ <div class="toast toast toast-bootstrap hide" role="alert" aria-live="assertive" aria-atomic="true"
+   style="position: absolute; top:20px; right:20px">
+   <div class="toast-header">
+       <i class="fa fa-square text-navy"> </i>
+       <strong class="mr-auto m-l-sm">Notification</strong>
+       <small>1 min ago</small>
+       <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+       </button>
+   </div>
+   <div class="toast-body">
+       Welcome to <strong>INSPINIA</strong> - Responsive Admin Theme.
+   </div>
+ </div>  
+
+
+
+
+
+
+
+
+
+<!-- <mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="true">
+
+    <mat-toolbar class="custom-toolbar">
+      <img class="company-logo" src="/assets/img/Svg/pro-matrix.jfif" alt="Company Logo">
+    </mat-toolbar>
+
+    <mat-nav-list>
+      <ng-container *ngFor="let menu of filteredMenus">
+        Main Menu 
+        <a mat-list-item (click)="toggleSubMenu(menu)" class="menu-item" [class.expanded-menu-item]="menu.expanded"
+          [routerLink]="menu.active && !menu.submenus?.length ? menu.path : null" routerLinkActive="active-menu-item"
+          [ngClass]="{'disabled': !menu.active}">
+          <span class="menu-item-content">
+            <mat-icon class="menu-toggle-icon" [class.expanded]="menu.expanded"
+              *ngIf="menu.submenus && menu.submenus.length > 0">
+              {{ menu.expanded ? 'expand_more' : 'expand_less' }}
+            </mat-icon>
+            <mat-icon class="menu-icon">{{ menu.icon }}</mat-icon>
+            <span class="menu-item-title">{{ menu.title }}</span>
+          </span>
+        </a>
+
+        Submenus 
+        <mat-nav-list *ngIf="menu.expanded && menu.submenus && menu.submenus.length > 0" class="submenu-list">
+          <ng-container *ngFor="let submenu of menu.submenus">
+            <a mat-list-item (click)="toggleSubMenu(submenu)" class="submenu-item"
+              [routerLink]="submenu.active && !submenu.submenus?.length ? submenu.path : null"
+              routerLinkActive="active-submenu-item" [ngClass]="{'disabled': !submenu.active}">
+              <span class="submenu-item-content">
+                <mat-icon class="menu-toggle-icon" [class.expanded]="submenu.expanded"
+                  *ngIf="submenu.submenus && submenu.submenus.length > 0">
+                  {{ submenu.expanded ? 'expand_more' : 'expand_less' }}
+                </mat-icon>
+                <mat-icon class="menu-icon">{{ submenu.icon }}</mat-icon>
+                <span class="submenu-title">{{ submenu.title }}</span>
+              </span>
+            </a>
+
+            <!-- Nested Submenus 
+            <mat-nav-list *ngIf="submenu.expanded && submenu.submenus && submenu.submenus.length > 0"
+              class="nested-submenu-list">
+              <ng-container *ngFor="let subsubmenu of submenu.submenus">
+                <a mat-list-item (click)="toggleSubMenu(subsubmenu)" class="nested-submenu-item"
+                  [routerLink]="subsubmenu.active ? subsubmenu.path : null"
+                  routerLinkActive="active-nested-submenu-item" [ngClass]="{'disabled': !subsubmenu.active}">
+                  <span class="nested-submenu-item-content">
+                    <mat-icon class="menu-icon">{{ subsubmenu.icon }}</mat-icon>
+                    <span class="nested-submenu-title">{{ subsubmenu.title }}</span>
+                  </span>
+                </a>
+              </ng-container>
+            </mat-nav-list>
+          </ng-container>
+        </mat-nav-list>
+      </ng-container>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav #rightSidenav class="sidenav" fixedInViewport
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'over'"
+    [opened]="false" position="end">
+
+
+    <mat-toolbar>{{ loginRole }}</mat-toolbar>
+
+    <div class="user-info">
+
+      <p class="app-header-title">Name : {{ loginName }}</p>
+      <p class="app-header-title">Email : {{ email }}</p>
+      <p class="app-header-title">Contact : {{ contactNumber }}</p>
+    </div>
+    <mat-nav-list>
+
+      <a mat-list-item (click)="logOut()" class="btn btn-action btn-danger" type="submit"
+        style="background-color:coral">Logout</a>
+
+    </mat-nav-list>
+
+
+
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary" class="shadow-sm">
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()" style="color:#ffff;">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <ng-container>
+        <h1 class="app-header-title">{{ loginRole }}</h1>
+      </ng-container>
+      <span class="spacer"></span>
+      <div class="flex-container">
+        <ng-container>
+          <div class="text-small flex-item">
+            <span class="m-0 p-0 display-block">
+              {{ loginName }}
+            </span>
+          </div>
+        </ng-container>
+
+
+
+        <div class="profile-image-container flex-item">
+
+          <a style="cursor: pointer;" (click)="rightSidenav.toggle()" matTooltip="Logout">
+            <img src="/assets/img/user.png" class="img-sm img-circle" alt="Profile Image">
+
+            <i class="icofont-caret-down" style="font-size:25px;"></i>
+          </a>
+        </div>
+      </div>
+    </mat-toolbar>
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container> -->

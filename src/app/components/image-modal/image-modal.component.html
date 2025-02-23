@@ -1,0 +1,17 @@
+<div #dialogContainer mat-dialog-title class="modal-header">
+  <mat-dialog-actions align="end">
+    <button class="btn btn-outline-danger btn-sm" mat-button (click)="close()" title="Cancel">✖</button>
+  </mat-dialog-actions>
+</div>
+
+<mat-dialog-content class="image-container" [ngStyle]="{'width.px': dialogWidth, 'height.px': dialogHeight}">
+  <img [src]="data.imageUrl" alt="Preview" class="modal-image" 
+       [ngClass]="{'zoomed': isZoomed}"
+       (click)="toggleZoom()"/>
+
+  <!-- Expand & Shrink Buttons -->
+  <div class="size-controls">
+    <button class="size-button expand" (click)="adjustSize(true)" title="Expand"><i class="fa fa-expand"></i></button>
+    <button class="size-button shrink" (click)="adjustSize(false)" title="Shrink" ><i class="fa fa-compress"></i></button>
+  </div>
+</mat-dialog-content>

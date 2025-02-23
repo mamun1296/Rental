@@ -1,0 +1,148 @@
+
+
+<!-- 
+<mat-accordion>
+    <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)" [expanded]="panelOpenState()">
+      <mat-expansion-panel-header>
+        <mat-panel-title> Pagination </mat-panel-title>
+        <mat-panel-description>
+         {{panelOpenState() ? 'Open' : 'Closed'}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      
+        <div *ngIf="items && items > 0; else noDataMessage">
+        
+            <div class="row" id="pagination">
+    
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                    
+                    <div class="btn-group float-left" id="radioBtn">
+                    
+                        <div class="pagination-info-container ">
+                            <span class="pagination-info total-pages-info">
+                                Total Pages: <strong class="total-pages">{{ totalPages }}</strong>
+                            </span>
+                            <span class="pagination-info page-size-info">
+                                Page Size
+                            </span>
+                            <select class="form-control pagination-select" [(ngModel)]="pageSize" (change)="changePageSize($event)"
+                                [disabled]="currentPage > 1"
+                                [matTooltip]="currentPage > 1 ? 'Cannot change the page size while on this page' : 'Change the page size'"
+                                >
+                                <option *ngFor="let option of pageSizeOptions" [value]="option">{{ option }}</option>
+                            </select>
+                        </div>
+                        
+                    </div>
+    
+            
+                </div>
+    
+                <div class="col-12 col-lg-8 col-md-8 col-sm-12">
+                    <button class="btn btn-light pagination-btn first-last-btn" (click)="goToFirstPage()" [disabled]="currentPage <= 1"
+                    matTooltip="Go to First Page"
+                    >
+                        <i class="fa fa-angle-double-left"></i> 
+                    </button>
+
+                    <button class="btn btn-light pagination-btn" (click)="goToPreviousPage()" [disabled]="currentPage <= 1"
+                    matTooltip="Go to Previous Page">
+                        <i class="fa fa-angle-left"></i> 
+                    </button>
+
+                    <button *ngFor="let page of getPaginationArray()" [class.active]="page === currentPage"
+                        class="btn btn-light pagination-btn" (click)="goToPage(page)">{{ page }}</button>
+
+                    <button class="btn btn-light pagination-btn" (click)="goToNextPage()"
+                        [disabled]="currentPage >= totalPages"
+                        matTooltip="Go to Next Page">
+                         <i class="fa fa-angle-right"></i>
+                    </button>
+
+                    <button class="btn btn-light pagination-btn first-last-btn" (click)="goToLastPage()"
+                        [disabled]="currentPage >= totalPages"
+                        matTooltip="Go to Last Page">
+                         <i class="fa fa-angle-double-right"></i>
+                    </button>
+                    
+                </div>
+    
+            </div>
+
+        </div>
+
+    
+    
+    </mat-expansion-panel>
+</mat-accordion> -->
+
+
+
+<div *ngIf="items && items > 0; else noDataMessage">
+        
+    <div class="row" id="pagination">
+
+        <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+            
+            <div class="btn-group float-left" id="radioBtn">
+            
+                <div class="pagination-info-container ">
+                    <span class="pagination-info total-pages-info">
+                        Total Pages: <strong class="total-pages">{{ totalPages }}</strong>
+                    </span>
+                    <span class="pagination-info page-size-info" *ngIf="currentPage == 1">
+                        Page Size
+                    </span>
+                    <select class="form-control pagination-select" [(ngModel)]="pageSize" (change)="changePageSize($event)"
+                        *ngIf="currentPage == 1"
+                        [matTooltip]="currentPage > 1 ? 'Cannot change the page size while on this page' : 'Change the page size'"
+                        >
+                        <option *ngFor="let option of pageSizeOptions" [value]="option">{{ option }}</option>
+                    </select>
+                </div>
+                
+            </div>
+
+    
+        </div>
+
+        <div class="col-12 col-lg-8 col-md-8 col-sm-12">
+            <button class="btn btn-light pagination-btn first-last-btn" (click)="goToFirstPage()" [disabled]="currentPage <= 1"
+            matTooltip="Go to First Page"
+            >
+                <i class="fa fa-angle-double-left"></i> 
+            </button>
+
+            <button class="btn btn-light pagination-btn" (click)="goToPreviousPage()" [disabled]="currentPage <= 1"
+            matTooltip="Go to Previous Page">
+                <i class="fa fa-angle-left"></i> 
+            </button>
+
+            <button *ngFor="let page of getPaginationArray()" [class.active]="page === currentPage"
+                class="btn btn-light pagination-btn" (click)="goToPage(page)">{{ page }}</button>
+
+            <button class="btn btn-light pagination-btn" (click)="goToNextPage()"
+                [disabled]="currentPage >= totalPages"
+                matTooltip="Go to Next Page">
+                 <i class="fa fa-angle-right"></i>
+            </button>
+
+            <button class="btn btn-light pagination-btn first-last-btn" (click)="goToLastPage()"
+                [disabled]="currentPage >= totalPages"
+                matTooltip="Go to Last Page">
+                 <i class="fa fa-angle-double-right"></i>
+            </button>
+            
+        </div>
+
+    </div>
+
+</div>
+
+
+<ng-template #noDataMessage>
+    <div class="no-data-message">
+        <p class="no-data-text">Oops! No data found.</p>
+    </div>
+</ng-template>

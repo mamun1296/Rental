@@ -1,0 +1,84 @@
+<div class="content">
+    <div class="body">
+      <div class="row">
+        <div class="action-row">
+          <button class="btn btn-sm btn-primary btn-add" (click)="openRoleModal()"><i class="fa fa-plus"></i>  Add Role</button>
+        </div>
+      </div>
+  
+      <div class="list">
+        <table class="table table-scrollable table-hover simple-table">
+          <thead>
+            <tr>
+              <th class="text-center" style="font-size: 15px;font-weight: bold;">Role Name</th>
+              <th class="text-center" style="font-size: 15px;font-weight: bold;">Description</th>
+              <th class="text-center" style="font-size: 15px;font-weight: bold;">Activation Status</th>             
+              <th class="text-center action-width" style="font-size: 15px;font-weight: bold;">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let role of listOfRoles">
+
+              <td data-label="Role Name" class="text-center" style="font-size: 15px;">{{ role.name }}</td>
+              <td data-label="Description" class="text-center" style="font-size: 15px;">{{ role.description }}</td>
+              <td class="text-center" style="font-size: 20px;">
+                <span [class]="role.isActive? 'label label-primary':'label label-danger'">
+                    {{role.isActive? "Active":"Inactive"}}
+                </span>
+              </td>            
+              <td class="text-center" data-label="Actions">
+                <app-action
+                  (actionClick)="handleActionClick($event, role)"
+                  [actions]="itemActions">
+                </app-action>
+              </td>
+              
+            </tr>
+          </tbody>
+        </table>
+      </div>
+<!-- <div class="pagination-container">
+        <app-pagination 
+          [items]="items"
+          [totalPages]="totalPage" 
+          [currentPage]="pageNumber" 
+          [pageSizeOptions]="pageSizeOptions" 
+          [pageSize]="pageSize"
+          [minPagesToShow]="minPagesToShow"
+          [minCurrentPage]="minCurrentPage"
+          (pageChange)="goToPage($event)" 
+          (pageSizeChange)="changePageSize($event)">
+        </app-pagination> 
+      </div>-->
+    </div>
+  </div>
+  
+  <!-- ------------------------ Modal ------------------------------------------ Starting -->
+  
+  <ng-container *ngIf="showRoleModal">
+    <app-role-modal
+      [mode]="mode"
+      (closeModalEvent)="closeRoleModal()"
+      (add)="addRole($event)"
+      >
+    </app-role-modal>
+  </ng-container>
+  
+  <ng-container *ngIf="showEditModal">
+    <app-role-modal
+      [data]="updateData"
+      [mode]="mode"
+      (closeModalEvent)="closeEditModal()"
+      (update)="updateRole($event)"
+      >
+    </app-role-modal>
+  </ng-container>
+  
+
+  <ng-container *ngIf="showDeleleteConfirmationModal">
+    <app-delete-confirmation-modal 
+      (closeModalEvent)="closeDeleteConfirmationModal()"
+      (deleteConfirm)="deleteRole($event)"
+      [data]="deleteData">
+    </app-delete-confirmation-modal>
+  </ng-container>

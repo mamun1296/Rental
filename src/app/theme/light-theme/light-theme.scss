@@ -1,0 +1,356 @@
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+.themeLight{
+
+  @include mat.all-component-colors($light-theme);
+
+  .sidenav-container{
+    background-color: #ffffff;
+    color: #ffffff; 
+  }
+
+  .content{
+    background-color: #f6fafd;
+  }
+  
+  .list{
+    background: $light-background
+  }
+
+
+  .grid-container.body-color {
+    background: $light-background;
+  }
+    
+  // mat-toolbar {
+  //   background-color: $light-mat-toolbar;
+  // }
+
+  mat-toolbar { 
+    background-color: #012136;
+    font-size: 15px;
+    color: #ffffff; 
+  }
+
+
+  .sun-color {
+    color: $sun-yellow;
+    text-shadow: 0.125rem 0.125rem 0.25rem $toggle-shadow; 
+  }
+
+  .toggle-background {
+    background: $light-toggle-background;
+  }
+
+  .card {
+    background: #ffffff;
+    color: #ffffff;
+  }
+
+  mat-sidenav {
+    background-color: #012136;
+  }
+
+  // ------------------------- Menu Color
+  .menu-toggle-icon {
+    color: #ffffff;
+  }
+
+  .menu-item-title {
+    color: #ffffff;
+    text-shadow: 0.0625rem 0.0625rem 0.125rem $text-shadow-color; 
+  }
+
+  .menu-icon {
+    color: #ffffff;
+    // text-shadow: 0.0625rem 0.0625rem 0.125rem $icon-shadow; 
+  }
+
+
+
+  
+  // .......................................................... Pagination
+  // ....................................... Start 
+
+
+
+  .pagination-btn {
+    border: none;
+    margin: 0 0.125rem; 
+    background-color: #d0e4f6;
+    color: #2c3e50; 
+    font-size: 0.7rem; 
+    padding: 0.15rem 0.55rem; 
+  }
+
+  .pagination-btn:hover {
+    background-color: #b0bec5;
+    color: #ffffff; 
+  }
+
+  .pagination-btn.active {
+    background-color: $color-secondary-dark;
+    font-size: 0.8rem; 
+    color: #ffffff; 
+    font-weight: bold; 
+    z-index: 9999;
+  }
+
+  .pagination-select {
+    border: 0.0625rem solid #b0bec5; 
+    background-color: #f9fbe7; 
+    color: #2c3e50; 
+    font-weight: normal;
+    font-size: 0.7rem; 
+    padding: 0.15rem 0.5rem; 
+    cursor: pointer;
+  }
+
+  .pagination-select:hover {
+    background-color: #f0f4c3; 
+  }
+
+  .pagination-select:focus {
+    outline: none;
+    border-color: #a5d6a7;
+  }
+
+  .no-data-message {
+    background-color: #e8f5e9;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    margin-bottom: 0.5rem; 
+  }
+
+  .no-data-text {
+    color: #e57373; 
+    font-size: 0.7rem; 
+  }
+
+  .total-pages, .page-size {
+    color: #2c3e50; 
+    font-size: 0.7rem; 
+  }
+
+  .first-last-btn {
+    background-color: #d0e4f6; 
+  }
+
+  .first-last-btn:hover {
+    background-color: #00796b; 
+    color: #ffffff; 
+  }
+
+  .pagination-info-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem; 
+  }
+
+  .pagination-info {
+    font-size: 0.7rem;
+    color: #2c3e50; 
+  }
+
+  .total-pages-info {
+    margin-right: 0.9375rem; 
+    white-space: nowrap;
+  }
+
+  .page-size-info {
+    margin-right: 0.3125rem; 
+    white-space: nowrap;
+  }
+
+  .pagination-container{
+    background-color: $light-background !important;
+  }
+
+  // ....................................... End 
+  // .......................................................... Pagination
+
+
+
+
+
+  // .......................................................... Delete Confirmation Modal
+  // ....................................... Start 
+
+  .modal-header,
+  .modal-body,
+  .modal-footer{
+    background-color: #ffffff;
+    color: $light-text;
+  }
+
+  // ....................................... End 
+  // .......................................................... Delete Confirmation Modal
+
+  // ............................................ Text Color 
+  // ............................. Starting
+
+  .light-font-color * {
+    color: $light-text;
+  }
+
+  .text-color * {
+    color: $light-text;
+  }
+  // ............................. End
+  // ............................................ Text Color 
+  // ......................... Text Color
+
+
+
+  // ............................................ Breadcrumb
+  // ...................... Starting
+
+  .link-color, .link-active {
+    color: $color-secondary-dark;
+  }
+
+  .breadcrumb-container {
+    background-color: $light-background;
+  }
+
+  .breadcrumb-item.active {
+    color: $light-text;
+  }
+
+  .breadcrumb-item + .breadcrumb-item::before {
+    content: '>';
+    color: $light-text;
+  }
+
+  // ...................... End
+  // ............................................ Breadcrumb
+
+  
+
+
+  // ........................................................... Material
+  // ............................................. Starting
+
+
+    // .......................................................... mat-accordion
+    // ....................................... Start
+    mat-expansion-panel {
+      background-color: $light-background;
+    }
+
+    .mat-expansion-panel-header:not([aria-disabled=true]) {
+      background-color: $dark-background !important;
+      border-bottom: 1px solid $light-border;
+    }
+  
+
+
+
+    .mat-expansion-panel-header-title,
+    .mat-expansion-panel-header-title span
+    .mat-expansion-panel-header-description {
+      color: $light-text;
+    }
+  
+    .mat-expansion-panel-header:not([aria-disabled=true]) {
+      background-color: $light-background !important;
+      border-bottom: 1px solid $light-border;
+    }
+  
+    
+    // ....................................... End
+    // .......................................................... mat-accordion
+
+    .mat-grid-list {
+      background-color: $light-background;
+    }
+
+
+
+  // ............................................. End
+  // ........................................................... Material
+
+
+
+
+
+  // .................................... Bootstrap Input 
+  // ................. Starting
+
+  .search-select-input-group {
+    border: 0.0625rem solid #ddd;
+  }
+
+  .input-group-text.search-icon,
+  .select-icon {
+    color:  $light-text;
+  }
+
+  .search-select-dropdown {
+    background-color: $light-background;
+  }
+
+  .dropdown-item {
+    color: $light-text;
+  }
+
+  .dropdown-item:hover {
+    color: $light-text;
+  }
+
+  .form-control {
+    color: $light-text;
+    
+    &::placeholder {
+      color: $light-text; /* Set placeholder color to a lighter red */
+      opacity: 1; /* Ensure the placeholder is fully opaque */
+    }
+  }
+
+
+
+  // ................. End
+  // .................................... Bootstrap Input 
+
+
+
+  // .................................... Card 
+   
+  // ................. Starting
+
+  // .card-title {
+  //   border-bottom: 0.0625rem solid #ddd;
+  // }
+  
+  .card-title {
+    box-shadow: 0 0.0625rem 0.125rem rgba(0, 0, 0, 0.1); /* Bottom shadow only */
+    padding-bottom: 0.25rem; /* Adjust padding as needed */
+  }
+  
+
+
+
+  // ................. End
+  // .................................... Card  
+
+
+
+
+  // ............................... Scrollbar
+
+  .search-select-dropdown, .card-content, .content, .content-card, .card-items, .bar-chart-content, .chart-content {
+    scrollbar-color: #ffff; 
+  }
+
+
+
+
+  // -----------------------------------------------
+  .custom-toolbar{
+    background-color: $light-background;
+  }
+
+
+}

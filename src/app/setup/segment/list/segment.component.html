@@ -1,0 +1,219 @@
+<div class="container-fluid p-2">  
+    <h4 class="label-title">Segment Wise Item Assign</h4>  
+  
+    <div class="row">   
+      <div class="col-sm-4">
+          <div class="title-action">
+            <button type="button" class="btn btn-sm btn-primary btn-outline btn-rounded" (click)="listPageInit()"
+            *ngIf="entryPage"><i class="fa fa-arrow-left"></i> | Back to List</button>
+     
+         <button type="button" class="btn btn-sm btn-success btn-outline btn-rounded" (click)="[createProperty()]"
+            *ngIf="listPage" title="Add New Segment"><i class="fa fa-plus"></i> | Create</button>           
+          </div>
+      </div>
+  
+    </div>
+    <br>
+    
+    <div class="row m-t-sm mt-0">
+        <div class="col-md-12 mb-4" *ngIf="listPage">
+          <div class="card shadow-lg p-4">
+            <form [formGroup]="segmentForm">
+              <div class="row g-3">
+                <div class="col-md-6 col-lg-4">
+                  <div class="form-group">
+                      <label for="landlordID" class="label-title">
+                          Landlord <i class="fa fa-angle-down"></i> <span class="text-danger"> *</span>
+                      </label>          
+                      <div class="dropdown-container">
+                          <input type="text" [formControl]="landlordSearchControl" formControlName="landlordID"
+                              (focus)="isLandlordDropdownOpen = true" placeholder="Search by Landlord..."/>
+
+                          <button mat-button class="btn btn-primary btn-sm" (click)="landlordToggleDropdown()">▼</button>
+
+                          <button 
+                              *ngIf="segmentForm.controls['landlordID'].value" 
+                              mat-button 
+                              class="btn-clear" 
+                              (click)="clearLandlordSelection()">✖
+                          </button>
+                          
+                          <ul *ngIf="isLandlordDropdownOpen" class="dropdown-list">
+                              <li *ngFor="let item of filteredLandlords" (click)="selectLandlord(item)">
+                                  {{ item.text }}
+                              </li>
+                              <li *ngIf="filteredLandlords.length === 0">No results found</li>
+                          </ul>
+                      </div>
+                      <div
+                          *ngIf="segmentForm.get('landlordID')?.invalid && (segmentForm.get('landlordID')?.dirty || segmentForm.get('landlordID')?.touched)">
+                          <span class="text-danger">Landlord is required.</span>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="col-md-6 col-lg-4">
+                  <div class="form-group">
+                      <label for="propertyID" class="label-title">Property <i class="fa fa-angle-down"></i> <span class="text-danger"> *</span></label>
+                      <div class="dropdown-container">
+                          <input type="text"   
+                              [formControl]="propertySearchControl" 
+                              formControlName="propertyID"
+                              (focus)="isPropertyDropdownOpen = true"
+                              placeholder=" Search by Property..."
+                          />
+                          <button mat-button class="btn btn-primary btn-sm" (click)="propertyToggleDropdown()">▼</button>               
+                          <button *ngIf="segmentForm.controls['propertyID'].value" mat-button class="btn-clear" 
+                              (click)="clearPropertySelection()">✖</button>              
+                          <ul *ngIf="isPropertyDropdownOpen" class="dropdown-list">
+                              <li *ngFor="let item of filteredProperty" (click)="selectProperty(item)">
+                                  {{ item.text }}
+                              </li>
+                              <li *ngIf="filteredProperty.length === 0">No results found</li>
+                          </ul>
+                      </div>
+                      <!-- <select class="form-control textbox-border-color" id="propertyID" formControlName="propertyID" style="height: 35px;" required>
+                          <option value="" selected>---Select---</option>
+                          <option [value]="item.id" *ngFor="let item of filteredProperty">
+                              {{item.text}}
+                          </option>                    
+                      </select> -->               
+                      <div
+                          *ngIf="segmentForm.get('propertyID')?.invalid && (segmentForm.get('propertyID')?.dirty || segmentForm.get('propertyID')?.touched)">
+                          <span class="text-danger">Property is required.</span>
+                      </div>   
+                  </div>
+              </div>
+
+              <div class="col-md-6 col-lg-4">
+                  <div class="form-group">
+                      <label for="segmentID" class="label-title">Segment <i class="fa fa-angle-down"></i> <span class="text-danger"> *</span></label>
+                      <div class="dropdown-container">
+                          <input type="text"   
+                              [formControl]="segmentSearchControl" 
+                              formControlName="segmentID"
+                              (focus)="isSegmentDropdownOpen = true"
+                              placeholder="Search by Segment..."
+                          />
+                          <button mat-button class="btn btn-primary btn-sm" (click)="segmentToggleDropdown()">▼</button>               
+                          <button *ngIf="segmentForm.controls['segmentID'].value" mat-button class="btn-clear" 
+                              (click)="clearSegmentSelection()">✖</button>              
+                          <ul *ngIf="isSegmentDropdownOpen" class="dropdown-list">
+                              <li *ngFor="let item of filteredSegment" (click)="selectSegment(item)">
+                                  {{ item.text }}
+                              </li>
+                              <li *ngIf="filteredSegment.length === 0">No results found</li>
+                          </ul>
+                      </div>
+
+                      <div *ngIf="segmentForm.get('segmentID')?.invalid && (segmentForm.get('segmentID')?.touched || segmentForm.get('segmentID')?.dirty)" class="text-danger">
+                          Segment is required.
+                      </div>
+                  </div>
+              </div>
+
+                  
+              </div>
+            </form>
+        
+          </div>      
+    
+  
+          <div class="card shadow-lg p-4 mt-4">
+                <div class="table-scrollable">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-striped textbox-border-color">       
+                            <thead>
+                            <tr class="text-center">
+                                <th>Action</th>  
+                                <th>#SL</th>        
+                                <th>Landlord</th>     
+                                <th>Property</th>
+                                <th>Segment</th>
+                                <th>Segment Length</th>
+                                <th>Segment Width</th>
+                            </tr>
+                            </thead>
+                            <tbody class="text-center">
+                            <ng-container *ngFor="let data of list; let i =index">
+                                <tr (click)="segmentToggleDetails(data.segmentWiseItemID)">
+                                  <td>
+                                      <button type="button" class="btn btn-rounded btn-sm btn-success text-white btn-size" title="Details">
+                                      {{ expandedRows[data.segmentWiseItemID] ? '-' : '+' }}
+                                      </button>
+                                  </td>         
+                                  <td>                       
+                                      {{ i + 1 }}
+                                  </td>   
+                                  <td>{{ data.landlordName }}</td>          
+                                  <td>{{ data.propertyName }}</td>
+                                  <td>{{ data.segmentName }}</td>    
+                                  <td>{{ data.segmentLength}}</td>    
+                                  <td>{{ data.segmentWidth }}</td>                            
+                                </tr>
+                            
+                                <ng-container *ngIf="expandedRows[data.segmentWiseItemID]">
+                                <tr>
+                                    <td colspan="7" >
+                                      <div *ngIf="selectedSegmentDetails[data.segmentWiseItemID]?.length; else loading">
+                                          <table class="table table-hover table-striped textbox-border-color">
+                                          <thead>
+                                              <tr class="text-center">
+                                              <th>#SL</th>      
+                                              <th>Item</th>
+                                              <th>Quantity</th>                                     
+                                              <th>Action</th>
+                                              </tr>
+                                          </thead>
+                                          <tbody class="text-center">
+                                              <tr
+                                              *ngFor="let detail of selectedSegmentDetails[data.segmentWiseItemID]; let j = index">
+                                              <td>{{ j + 1 }}</td>                                     
+                                              <td>{{ detail.itemName }}</td>
+                                              <td>{{ detail.itemQty }}</td>                                       
+                                              <td class="text-center">
+                                                  <button type="button" class="btn btn-sm btn-rounded btn-primary btn-size" title="Edit" style="font-size: 11px;">
+                                                  <i class="fa fa-pencil"></i></button>                                            
+                                                  <!-- <button type="button" class="btn btn-sm btn-rounded btn-danger" title="Delete"> <i class="fa fa-trash"></i>
+                                                    </button> -->
+                                              </td>
+                                              </tr>
+                                          </tbody>
+                                          </table>
+                                      </div>
+                                        <ng-template #loading>
+                                            <div class="text-center">Loading details...</div>
+                                        </ng-template>
+                                    </td>
+                                </tr>
+                                </ng-container>
+                            </ng-container>                                 
+                            </tbody>
+                        </table>
+                    </div>
+            
+                </div>  
+          </div>
+          
+          <div class="d-flex justify-content-end">
+            <pagination-controls (pageChange)="listPageChanged($event)" [responsive]="true"
+            [autoHide]="true" id="list"></pagination-controls>
+          </div>
+
+        </div>
+  
+        <div class="col-md-12 mb-4" *ngIf="entryPage">
+            <app-add-segment
+                (childToParent)="fnBackToList($event)">
+            </app-add-segment>
+        </div>
+  
+        
+    </div>
+  
+  </div>
+    
+  
+  
+  
+    

@@ -1,0 +1,175 @@
+
+<div class="container-fluid p-2">  
+  <h4 class="label-title"> <i class="fa fa-plus-circle"></i> Add Items</h4>  
+    <div class="row m-t-sm mt-0">
+      <div class="col-md-12 mb-2">
+        <div class="card shadow-lg p-4">        
+          <form [formGroup]="itemEntryForm" (ngSubmit)="onItemSubmit()">
+          <div class="table-scrollable">
+            <div class="table-responsive">
+              <table class="table table-borderless table-striped table-hover textbox-border-color">
+                <thead>
+                  <tr class="text-center">
+                    <th style="width: 2%;">#SL</th>
+                    <th style="width: 30%;">Item Name <small class="text-danger">*</small></th>
+                    <th style="width: 15%;">Item Category <small class="text-danger">*</small></th>
+                    <th style="width: 15%;">Description</th>           
+                    <th style="width: 3%;">Action</th>
+                  </tr>
+                </thead>
+
+                <tbody formArrayName="items">
+                  <tr *ngFor="let item of items.controls; let i = index" [formGroupName]="i">   
+                    <td class="text-center font-bold">{{ i + 1 }}</td>               
+                    <div>
+                      <input
+                        type="text"
+                        name="itemName{{ i }}"
+                        id="itemName{{ i }}"
+                        class="form-control textbox-border-color"
+                        formControlName="itemName"
+                        (change)="itemNameChanged($event, i)"
+                      />
+                      <div *ngIf="items.at(i).get('itemName')?.invalid && items.at(i).get('itemName')?.touched">
+                        <small class="text-danger" *ngIf="items.at(i).get('itemName')?.errors?.['required']">
+                          Item name is required.
+                        </small>
+                        <small class="text-danger" *ngIf="items.at(i).get('itemName')?.errors?.['minlength']">
+                          Item name must be at least 2 characters long.
+                        </small>
+                        <small class="text-danger" *ngIf="items.at(i).get('itemName')?.errors?.['duplicate']">
+                          Duplicate item name detected.
+                        </small>
+                      </div>
+                    </div>
+                    
+
+                    <td>                           
+                      <select class="form-control textbox-border-color" id="categoryID" formControlName="categoryID" required="required">
+                        <option value="">---Select---</option>       
+                        <option *ngFor="let item of ddlItemsCategory" value="{{item.id}}">{{item.text}}</option>               
+                      </select>   
+                      <div *ngIf="items.at(i).get('categoryID')?.invalid && items.at(i).get('categoryID')?.touched">                 
+                        <div *ngIf="items.at(i).get('categoryID')?.errors?.['required']" class="text-danger">
+                          <small class="text-danger">Item category is required.</small>
+                        </div>
+                      </div>
+                    </td>
+
+                    <td>
+                      <input type="text" name="description" id="description"
+                      class="form-control textbox-border-color font-bold" formControlName="description">             
+                    
+                    </td>          
+              
+                    <td class="text-center">
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-rounded btn-primary btn-size"
+                        (click)="addItem()" title="Add"
+                      >
+                        <i class="fa fa-plus"></i>
+                      </button>
+                      &nbsp;
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-rounded btn-danger btn-size"
+                        (click)="removeItem(i)"
+                        *ngIf="items.controls.length > 1" title="Remove"
+                      >
+                        <i class="fa fa-trash"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>         
+            <div class="form-group">
+              <button type="submit" class="btn btn-sm btn-outline-success btn-rounded" [disabled]="itemEntryForm.invalid" style="float: right;">
+                <i class="fa fa-paper-plane"></i> Submit
+              </button>
+            </div>
+          </div>
+
+          </form>
+        </div>
+
+        <div class="card shadow-lg p-4 mt-0">
+          <div class="table-scrollable">     
+              <div class="table-responsive">  
+                  <div class="d-flex justify-content-between align-items-center mb-3">                           
+                    <form [formGroup]="itemListForm" class="d-flex">
+                      <div class="form-group mb-0" style="width: 380px;">
+                        <label for="searchString" class="label-title">Search </label>
+                        <input type="text" class="form-control textbox-border-color" formControlName="searchString"
+                          placeholder="Search by anything..."/>
+                      </div>
+                    </form>
+                  </div>                
+                  <table class="table table-hover table-striped textbox-border-color">
+                     <thead>                            
+                      <tr class="text-center">   
+                          <th>#SL</th>                         
+                          <th>Item Name</th>             
+                          <th>Description</th>     
+                          <th>Item Category</th>  
+                          <th>Activation Status</th>                       
+                          <th>Approve Status</th>    
+                          <th>Action</th>        
+                      </tr>
+                      </thead>
+                      <tbody class="text-center">
+                      <ng-container *ngFor="let data of list; let i =index">
+                          <tr>                                   
+                            <td>                       
+                                {{ i + 1 }}
+                            </td>                                                              
+                            <td>{{ data.itemName }}</td>             
+                            <td>{{ data.description }}</td>       
+                            <td>{{ data.categoryName }}</td>                                                                        
+                            <td class="text-center">
+                              <span [class]="data.isActive? 'label label-primary':'label label-danger'">
+                                  {{data.isActive? "Active":"Inactive"}}
+                              </span>
+                            </td>
+                            <td class="text-center">
+                                <span class="label label-warning"
+                                    *ngIf="data.stateStatus=='Pending'">{{data.stateStatus
+                                    + '...'}}</span>
+                                <span class="label label-primary" *ngIf="data.stateStatus=='Approved'">
+                                    <i class="fa fa-check"></i> {{data.stateStatus}}
+                                </span>
+                                <span class="label label-danger"
+                                    *ngIf="data.stateStatus=='Cancelled'"><i class="fa fa-times"></i>
+                                    {{data.stateStatus}}
+                                </span>
+                                <span class="label label-info" *ngIf="data.stateStatus=='Recheck'"><i
+                                        class="fa fa-backward"></i> {{data.stateStatus}}
+                                </span>
+                             </td>     
+                             
+                             <td class="text-center">
+                              <button type="button" class="btn btn-sm btn-rounded btn-primary btn-size" title="Edit" style="font-size: 11px;">
+                              <i class="fa fa-pencil"></i></button>   
+                              &nbsp;                                         
+                              <button type="button" class="btn btn-sm btn-rounded btn-danger btn-size" title="Delete"> <i class="fa fa-trash"></i>
+                              </button>
+                            </td>
+                          </tr>
+                      </ng-container>                                 
+                      </tbody>
+                  </table>
+              </div>
+      
+          </div>  
+        </div>
+
+      <div class="d-flex justify-content-end">
+        <pagination-controls (pageChange)="listPageChanged($event)" [responsive]="true"
+        [autoHide]="true" id="list"></pagination-controls>
+      </div>
+      </div>
+    </div>
+
+</div>
+

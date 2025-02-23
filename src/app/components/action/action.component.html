@@ -1,0 +1,37 @@
+<!-- 
+
+   <div class="button-container">
+    <ng-container *ngFor="let action of actions">
+      <button
+        *ngIf="action.isActive !== false"
+        [ngClass]="action.color"
+        [matTooltip]="action.title"
+        class="btn btn-xs shadow-sm"
+        (click)="onActionClick(action.label)">
+        <i [ngClass]="action.icon"></i> 
+      </button>
+    </ng-container>
+  </div>
+   -->
+
+
+
+   <div class="button-container">
+    <ng-container *ngFor="let action of actions">
+      <button
+        *ngIf="action.isActive !== false"
+        [ngClass]="action.cssClass"
+        [matTooltip]="action.tooltip"
+        class="btn btn-sm"
+        (click)="onActionClick(action.buttonName,action.isDisabled)"
+        [disabled]="action.isDisabled"
+
+        >
+        <i [ngClass]="action.icon"></i> 
+      </button>
+    </ng-container>
+  </div>
+  
+  
+  
+  

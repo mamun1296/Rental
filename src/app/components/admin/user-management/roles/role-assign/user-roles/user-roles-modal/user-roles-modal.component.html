@@ -1,0 +1,64 @@
+<ng-template #modal let-modal>
+    <div class="modal-header">
+        <span class="modal-title">{{ title }}</span>
+        <div class="icon-right">
+            <button type="button" class="btn btn-danger btn-sm" (click)="closeModal('Close click')">
+                <i class="fa fa-close"></i> 
+            </button>
+        </div>
+    </div>
+
+    <div class="modal-body small-font">
+        <form [formGroup]="form" (ngSubmit)="confirmAction()">
+            <div class="form-group">
+                <label for="userId" class="bold-font">Select User:</label>
+                <app-search-select
+                    dropdownDirection="down"
+                    [options]="listOfUsers"
+                    idProperty="id"
+                    valueProperty="fullName"
+                    placeholder="Select a User"
+                    (selectionChange)="onSelection($event)"
+                    (optionSelected)="onOptionSelected($event)"> 
+                    </app-search-select>
+                <div *ngIf="form.get('userId')?.invalid && form.get('userId')?.touched" class="text-danger">
+                    <small>User selection is required.</small>
+                </div>
+            </div>
+
+            <div class="form-group checkbox-group">
+                <label class="checkbox-label">Roles:</label>
+                <div class="d-flex flex-wrap">
+                    <div *ngFor="let role of roles" class="mr-2">
+                        <input
+                            type="checkbox"
+                            [checked]="selectedRoles.includes(role.name)"
+                            (change)="addRole(role.name)"
+                        />
+                        {{ role.name }}
+                    </div>
+                </div>
+                <div *ngIf="form.get('roles')?.invalid && form.get('roles')?.touched" class="text-danger">
+                    <small>Please select at least one role.</small>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+    <div class="modal-footer">
+
+        <button type="button" class="btn btn-outline-primary btn-sm" (click)="resetForm()">
+        <i class="fa fa-undo"></i>
+        Reset
+      </button>
+  
+      <button type="submit" class="btn btn-save btn-sm" [disabled]="form.invalid" (click)="form.valid ? confirmAction() : null">
+        <i class="fa fa-save"></i>
+        {{ mode === 'update' ? 'Update' : 'Save' }}
+      </button>
+      <button type="button" class="btn btn-outline-danger btn-sm" (click)="closeModal('Cancel click')">
+        <i class="fa fa-close"></i> Close
+      </button>
+    </div>
+</ng-template>

@@ -1,0 +1,76 @@
+
+<div class="container-fluid p-2">  
+  <h4 class="label-title"> <i class="fa fa-plus-circle"></i> Menu Distribution</h4>  
+    <div class="row m-t-sm mt-0">
+      <div class="col-md-12 mb-2">
+        <div class="card shadow-lg p-4">        
+          <form [formGroup]="userPermissionForm" (ngSubmit)="submitForm()">
+            <div class="form-group">
+              <div class="col-md-6">
+                <label for="agencyEmpID" class="label-title">Agency Employee <span class="text-danger">*</span></label>
+                
+                <select formControlName="agencyEmpID"
+                  class="form-control textbox-border-color"
+                  [ngClass]="{ 'is-invalid': userPermissionForm.get('agencyEmpID')?.invalid && userPermissionForm.get('agencyEmpID')?.touched }"
+                >
+                  <option value="">Select Employee</option>
+                  <option *ngFor="let employee of ddlEmployees" [value]="employee.id">
+                    {{ employee.text }}
+                  </option>                
+                </select>
+                <div *ngIf="userPermissionForm.get('agencyEmpID')?.invalid && userPermissionForm.get('agencyEmpID')?.touched" class="text-danger">
+                  Employee is required.
+                </div>
+              </div>            
+            </div>
+        
+            <br>
+
+            <div class="card shadow-lg p-4">      
+              <div class="form-group label-title">
+                <label><i class="fa fa-list"></i> Menu List</label>
+                <hr>
+                <div class="form-check mb-3">
+                  <input type="checkbox" class="form-check-input textbox-border-color" id="selectAll"
+                    [checked]="isAllSelected" (change)="toggleSelectAll($event)"/>
+                  <label class="form-check-label" for="selectAll">Select All</label>
+                </div>
+                <div class="row">
+                  <div *ngFor="let permission of permissions.controls; let i = index" class="col-md-6">
+                    <div class="form-check">
+                      <input
+                        type="checkbox"
+                        class="form-check-input textbox-border-color"
+                        [id]="'permission-' + permission.get('id')?.value"
+                        [checked]="permission.get('isAllowed')?.value"
+                        (change)="togglePermission(i, $event)"
+                      />
+                      <label class="form-check-label" [for]="'permission-' + permission.get('id')?.value">
+                        {{ permission.get('permissionName')?.value }}
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="form-group mt-3">
+                <button type="submit" class="btn btn-md btn-outline-primary" [disabled]="userPermissionForm.invalid">
+                <i class="fa fa-paper-plane"> | Submit</i>
+                </button>
+              </div>
+          </div>      
+          </form>
+        </div>      
+  
+ 
+
+      </div>  
+      
+    </div>
+
+</div>
+  
+
+
+
+  

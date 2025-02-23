@@ -1,0 +1,228 @@
+
+.label-title{
+    color: black;
+  }
+  
+  .textbox-border-color{
+    border: 1px solid #012136
+  }
+  
+  
+  .dropdown-container {
+    position: relative; // Positioning context for the dropdown list
+    width: 100%; // Full width of the parent column
+  
+  
+    // Input field styles
+    input[type="text"] {
+      width: 100%; // Full width
+      border: 1px solid #012136; // Light border color (similar to Google's)
+      border-radius: 5px;
+      // Rounded corners for a soft look
+      font-size: 15px; // Font size
+      transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out; // Smooth transitions
+      height: 30px ;
+  
+  
+      // Focus state
+      &:focus {
+        border-color: #012136; // Google's blue color on focus
+        outline: none; // Remove default outline
+        box-shadow: 0 0 5px #012136; // Subtle shadow to indicate focus
+      }
+    }
+  
+  
+    button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: transparent;
+        border: none;
+        cursor: pointer;
+  
+        &.btn-clear {
+          right: 45px; // Position the clear button
+          color: rgb(209, 29, 29); // Color for the clear button
+          font-size: 13px;
+  
+          &:hover {
+            color: darkred; // Darker color on hover
+          }
+        }
+  
+        &.btn-sm {
+          right: 10px; // Position the dropdown toggle button
+          color: #012136;
+        }
+      }
+  
+    // Dropdown list styles
+    .dropdown-list {
+      position: absolute; // Position dropdown relative to container
+      top: 100%; // Position below the input field
+      left: 0; // Align to the left
+      right: 0; // Full width of the container
+      background-color: white; // Dropdown background color
+      color: black;
+      border: 1px solid #ddd; // Light border
+      border-radius: 4px; // Slightly rounded corners
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); // Subtle shadow for depth
+      z-index: 1000; // Ensure dropdown is above other content
+      max-height: 200px; // Maximum height
+      overflow-y: auto; // Scroll if too many items
+      margin-top: 5px; // Space between input and dropdown
+      list-style: none; // Remove bullet points from list items
+      padding: 0; // Remove padding from the list
+      margin: 0; // Remove margin from the list
+  
+      // List item styles
+      li {
+        padding: 5px 10px; // Padding for list items
+        cursor: pointer; // Pointer cursor on hover
+        transition: background-color 0.2s ease-in-out; // Transition for background color
+  
+        // Hover state for list items
+        &:hover {
+          background-color: #4285f4; // Light grey background on hover
+        }
+      }
+  
+      // No results message
+      li:empty {
+        text-align: center; // Center text
+        color: #999; // Grey color for no results
+        padding: 10px; // Padding for better spacing
+      }
+    }
+  }
+  
+  
+  .table-scrollable {
+    max-height: 700px; /* 500px Set your desired height */
+    overflow-x: auto; /* Enable horizontal scrolling */
+    overflow-y: auto; /* Enable vertical scrolling */
+  }
+  
+  .table-scrollable::-webkit-scrollbar {
+    width: 10px; /* Adjust scrollbar width */
+    height: 10px; /* Adjust scrollbar height */
+  }
+  
+  .table-scrollable::-webkit-scrollbar-thumb {
+    background-color: #b2bccc; /* Scrollbar color */
+    border-radius: 10px; /* Rounded corners */
+  }
+  
+  .table-scrollable::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Track color */
+  }
+  
+  .table-card-size-collapse{
+    width: 80%;
+    margin: 0 auto;
+    border-collapse: collapse;
+  }
+  
+    
+  // later added
+.table-scrollable .table tbody tr td,
+.table-scrollable .table thead tr th td {
+    height: 20px;
+    line-height: 20px;
+    vertical-align: middle; /* Ensure content aligns vertically */
+}
+
+.table td {
+  padding: 0 !important; 
+  height: 20px !important; 
+  line-height: 20px;
+}
+
+ .btn-size{
+  font-weight: bold;
+  height: 20px;
+  width: 20px;
+  padding: 0px;
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+
+// /* Pagination Wrapper */
+// ::ng-deep pagination-controls {
+//   display: flex;
+//   justify-content: center;
+//   margin-top: 20px;
+// }
+
+// /* Pagination List */
+// ::ng-deep .ngx-pagination {
+//   display: flex;
+//   align-items: center;
+//   gap: 8px;
+//   list-style: none;
+//   padding: 0;
+// }
+
+// /* Pagination Buttons */
+// ::ng-deep .ngx-pagination li {
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   width: 40px;
+//   height: 40px;
+//   border-radius: 5px;
+//   border: 1px solid #ddd;
+//   background: white;
+//   color: #007bff;
+//   font-size: 16px;
+//   font-weight: bold;
+//   cursor: pointer;
+//   transition: all 0.3s ease;
+// }
+
+// /* Hover Effect */
+// ::ng-deep .ngx-pagination li:hover {
+//   background: #007bff;
+//   color: white;
+//   border-color: #007bff;
+// }
+
+// /* Active Page */
+// ::ng-deep .ngx-pagination .current {
+//   background: #007bff;
+//   color: white;
+//   border-color: #007bff;
+//   font-weight: bold;
+// }
+
+// /* Disabled Buttons - Fix Dark Color */
+// ::ng-deep .ngx-pagination .disabled {
+//   opacity: 0.6;   /* Lighter than default */
+//   background: #f8f9fa;
+//   color: #aaa !important;  /* Lighter text */
+//   cursor: not-allowed;
+// }
+
+// /* Previous & Next Buttons */
+// ::ng-deep .ngx-pagination .pagination-previous,
+// ::ng-deep .ngx-pagination .pagination-next {
+//   width: 50px;
+//   height: 40px;
+//   font-size: 12px;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   border-radius: 5px;
+//   border: 1px solid #ddd;
+//   background: #f8f9fa;
+//   color: #007bff;
+// }
+
+// ::ng-deep .ngx-pagination .pagination-previous:hover,
+// ::ng-deep .ngx-pagination .pagination-next:hover {
+//   background: #007bff;
+//   color: white;
+//   border-color: #007bff;
+// }

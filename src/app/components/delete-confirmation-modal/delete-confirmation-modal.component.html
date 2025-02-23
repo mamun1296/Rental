@@ -1,0 +1,22 @@
+<ng-template #deleteModal let-modal>
+  <div class="modal-header">
+    <span class="modal-title">Delete Confirmation</span>
+    <div class="icon-right">
+      <button type="button" class="btn btn-sm btn-danger" (click)="closeModal('close')">
+        <i class="fa fa-close"></i>
+      </button>
+    </div>
+  </div>
+  <div class="modal-body">
+    <div class="scrollable-content">
+      <span class="message modal-title">Are you sure you want to delete this Role : <span><b>{{roleName}}</b></span>? This action is irreversible.</span></div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-sm btn-danger btn-danger " (click)="confirmDelete()">
+      <i class="fa fa-save"></i> Yes, Delete
+    </button>
+    <button type="button" class="btn btn-outline-danger btn-sm" (click)="closeModal('close')">
+      <i class="fa fa-close"></i> No, Cancel
+    </button>
+  </div>
+</ng-template>

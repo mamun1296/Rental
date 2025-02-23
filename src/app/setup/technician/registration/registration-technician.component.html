@@ -1,0 +1,166 @@
+  <div class="container-fluid p-2">  
+    <h1 class="label-title text-center text-primary" >Technician</h1>
+    
+    <div class="row m-t-sm mt-0 card-size-collapse">
+        <div class="col-md-12 mb-4">
+          <div class="card shadow-lg p-4">
+            <div *ngIf="showLoginForm">
+              <form [formGroup]="loginForm" (ngSubmit)="login()">
+                <div class="form-group mb-3">
+                  <label for="userName" class="label-title">User Name</label><span class="text-danger"> * </span>
+                  <input type="userName" id="userName" formControlName="userName" class="form-control"
+                  [class.is-invalid]="loginForm.get('userName')?.touched && loginForm.get('userName')?.invalid"/>        
+                  <div *ngIf="loginForm.get('userName')?.touched && loginForm.get('userName')?.invalid">
+                    <div *ngIf="loginForm.get('userName')?.errors?.['required']" class="text-white">
+                        Username is required!
+                    </div>                 
+                  </div>
+                </div>  
+   
+                <div class="form-group mb-3">
+                  <label for="password" class="label-title">Password</label><span class="text-danger"> *</span>
+                  <div class="input-group">
+                    <input [type]="passwordVisible ? 'text' : 'password'" id="password" formControlName="password" class="form-control"
+                      [class.is-invalid]="loginForm.get('password')?.touched && loginForm.get('password')?.invalid" />
+                      <button type="button" class="btn btn-sm btn-outline-secondary password-visibility-button" (click)="togglePasswordVisibility()">
+                        <i [class]="passwordVisible ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+                      </button>                
+                  </div>         
+                  <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
+                    <div *ngIf="loginForm.get('password')?.errors?.['required']" class="text-white">
+                      Password is required!
+                    </div>
+                    <div *ngIf="loginForm.get('password')?.errors?.['minlength']" class="text-white">
+                      Password must be at least 4 characters long!
+                    </div>
+                  </div>
+                </div>       
+  
+                <button type="submit" class="btn btn-primary w-100"
+                  [disabled]="loginForm.invalid || btnLogin">
+                  Login <span [hidden]="!btnLogin" class="spinner-border spinner-border-sm"
+                      role="status" aria-hidden="true"></span>
+                </button>
+  
+                <hr>
+  
+                <div class="row" style="color:rgb(35, 35, 188);">
+                    <div class="form-group col-md-10">
+                      <a class="btn btn-sm btn-success text-white" (click)="toggleForm()"><i class="fa fa-sign-in"></i> Sign Up / Registration</a>
+                    </div>             
+                </div>
+              </form>
+            </div>
+  
+            <div *ngIf="!showLoginForm">
+              <form [formGroup]="registrationForm" (ngSubmit)="registrationSubmit()">
+                <div class="row">
+                  <div class="col-md-6">              
+                    <div class="form-group mb-3">
+                      <label for="technicianName" class="label-title">Technician Name</label><span class="text-danger"> * </span>
+                      <input type="text" class="form-control" id="name" formControlName="technicianName" required>
+                      <div *ngIf="registrationForm.get('technicianName')?.invalid && registrationForm.get('technicianName')?.touched" class="text-danger">
+                        Name is required.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group mb-3">
+                      <label for="technicianCategoryID" class="label-title">Technician Category</label><span class="text-danger"> * </span>                 
+                      <select class="form-control textbox-border-color" id="stateStatus" formControlName="technicianCategoryID">
+                        <option value="">---Select---</option>       
+                        <option value="T0001">Electreician</option>                
+                        <option value="T0002">Sanitary</option>                
+                        <option value="T0003">Furniture</option>         
+                      </select>      
+
+                      <div *ngIf="registrationForm.get('technicianCategoryID')?.invalid && registrationForm.get('technicianCategoryID')?.touched"
+                        class="text-danger">
+                         Category name is required.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+  
+
+                <div class="row">        
+                  <div class="col-md-6 mb-3">
+                    <label for="emailAddress" class="form-label label-title" >Email</label><span class="text-danger"> * </span>
+                    <input type="email" class="form-control" id="emailAddress" formControlName="emailAddress"
+                    required="required" />
+                    <div *ngIf="registrationForm.get('emailAddress')?.touched && registrationForm.get('emailAddress')?.invalid">
+                        <div *ngIf="registrationForm.get('emailAddress')?.errors?.['required']" class="text-danger">
+                          Email is required.
+                        </div>
+                        <div *ngIf="registrationForm.get('emailAddress')?.errors?.['email']" class="text-danger">
+                          Please enter a valid email address.
+                        </div>
+                    </div>
+                  </div>  
+   
+                  <div class="col-md-6 mb-3">
+                    <label for="contact" class="form-label label-title">Contact</label><span class="text-danger"> * </span>
+                    <input type="text" class="form-control" id="contactNumber" formControlName="contactNumber" required />
+                    <div *ngIf="registrationForm.get('contactNumber')?.hasError('required') && registrationForm.get('contactNumber')?.touched" class="text-danger">
+                      Contact number is required.
+                    </div>
+                  </div>
+                </div>
+       
+                <div class="row">                   
+                    <div class="col-md-6 mb-3">
+                      <label for="userName" class="form-label label-title" >User Name</label><span class="text-danger"> * </span>
+                      <input type="text" class="form-control" id="userName" formControlName="userName" required />
+                      <div *ngIf="registrationForm.get('userName')?.hasError('required') && registrationForm.get('userName')?.touched" class="text-danger">
+                        User name is required.
+                      </div>
+                    </div>
+    
+                    
+                    <div class="col-md-6 mb-3">
+                      <label for="password" class="form-label label-title">Password</label><span class="text-danger"> * </span>
+                      <input type="text" class="form-control" id="password" formControlName="password" required />
+                      <div *ngIf="registrationForm.get('password')?.hasError('required') && registrationForm.get('password')?.touched" class="text-danger">
+                        Password is required.
+                      </div>
+                      <div *ngIf="registrationForm.get('password')?.errors?.['minlength']" class="text-white">
+                        Password must be at least 4 characters long!
+                      </div>
+                    </div>
+                </div>
+  
+                <div class="row">
+                   
+                    <div class="col-md-12 mb-3">
+                      <label for="address" class="form-label label-title" >Address</label><span class="text-danger"> * </span>
+                      <input type="text" class="form-control" id="address" formControlName="address" required />
+                      <div *ngIf="registrationForm.get('address')?.hasError('required') && registrationForm.get('address')?.touched" class="text-danger">
+                        Address is required.
+                      </div>
+                    </div>   
+                  
+                </div>
+
+                <hr>               
+               
+                <div class="text-center">            
+                         <button type="submit" class="btn btn-sm btn-success text-white"
+                  [disabled]="registrationForm.invalid || btnRegistration"><i class="fa fa-sign-in"></i> Sign Up
+                    <span [hidden]="!btnRegistration" class="spinner-border spinner-border-sm"
+                      role="status" aria-hidden="true"></span>
+                </button>
+
+                  <a class="btn btn-sm btn-secondary text-white m-1" (click)="toggleForm()"><i class="fa fa-undo"></i> Back to Login</a>
+                </div>
+              </form>     
+            </div>
+        
+          </div>          
+   
+
+        </div> 
+             
+    </div>
+  
+  </div>
+    

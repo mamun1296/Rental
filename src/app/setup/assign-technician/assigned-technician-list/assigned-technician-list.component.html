@@ -1,0 +1,206 @@
+<div class="container-fluid p-4">
+    <h4 class="label-title">Complain List</h4>
+    <br> 
+    <div class="row m-t-sm mt-2">
+        <div class="col-md-12 mb-4">       
+          <div class="card shadow-lg p-4">
+            <form [formGroup]="assignedTechnicianForm">
+              <div class="row g-3">   
+  
+              <div class="col-md-4 col-lg-4">
+                <div class="form-group">
+                  <label for="propertyID" class="label-title">Property <i class="fa fa-angle-down"></i> <span class="text-danger"> *</span></label>
+                  <div class="dropdown-container">
+                      <input type="text"   
+                          [formControl]="propertySearchControl" 
+                          formControlName="propertyID"
+                          (focus)="isPropertyDropdownOpen = true"
+                          placeholder="Search by Property..."
+                      />
+                      <button mat-button class="btn btn-primary btn-sm" (click)="propertyToggleDropdown()">▼</button>
+                      <button *ngIf="assignedTechnicianForm.controls['propertyID'].value" mat-button class="btn-clear" 
+                          (click)="clearPropertySelection()" title="Clear">✖</button>              
+                      <ul *ngIf="isPropertyDropdownOpen" class="dropdown-list">
+                          <li *ngFor="let item of filteredProperties" (click)="selectProperty(item)">
+                              {{ item.text }}
+                          </li>
+                          <li *ngIf="filteredProperties.length === 0">No results found</li>
+                      </ul>
+                  </div>                        
+                  <div
+                      *ngIf="assignedTechnicianForm.get('propertyID')?.invalid && (assignedTechnicianForm.get('propertyID')?.dirty || assignedTechnicianForm.get('propertyID')?.touched)">
+                      <span class="text-danger">Property is required.</span>
+                  </div>   
+              </div>
+              </div>            
+  
+              <div class="col-md-4 col-lg-4">
+                <div class="form-group">
+                  <label for="stateStatus" class="label-title">Status <i class="fa fa-angle-down"></i> </label>
+                  <select class="form-control textbox-border-color" id="stateStatus" formControlName="stateStatus">
+                    <option value="">---Search by Status---</option>
+                    <option *ngFor="let item of ddlStatus">{{item}}</option> 
+                  </select>           
+                </div>
+              </div>
+              <div class="col-md-4 col-lg-4">
+                <div class="form-group">
+                  <label for="isActive" class="label-title">Activation Status <i class="fa fa-angle-down"></i> </label>
+                  <select class="form-control textbox-border-color" id="isActive" formControlName="isActive">
+                    <option value="">---Search by Activation---</option>
+                    <option value="true">Active</option>
+                    <option value="false">In-Active</option>  
+                  </select>           
+                </div>
+              </div>
+  
+            </div>
+            </form>
+        
+          </div>      
+    
+          <div class="card shadow-lg p-4 mt-4">
+                <div class="table-scrollable">     
+                    <div class="table-responsive">  
+                        <div class="pointer-cursor">                                                  
+                            <!-- <button
+                              class="btn btn-sm btn-outline-success"
+                              (click)="bulkApproveSelected()" [hidden]="!btnAllApproval || selectedComplains.size === 0 || _selectComplainStatus !== 'Pending'"                        
+                          >
+                             <i class="fa fa-check faa-passing"></i> | All Approve Selected
+                            </button> -->
+                        </div>  
+                        <br>
+                        <!-- <div *ngIf="selectedComplainDetails?.length; else loading"> -->
+                          <table class="table table-hover table-striped textbox-border-color">
+                          <thead>
+                              <tr class="text-center">
+                              <th>#SL</th>  
+                              <th>Technician Category</th>                                                                
+                              <th>Technician Name</th>
+                              <th>Property Name</th>
+                              <th>Tenant Name</th>
+                              <th>Complain Name</th>
+                              <th>Billing Ammount</th>
+                              <th>Paid Ammount</th>
+                              <th>State Status</th>                    
+                              <th>Action</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr *ngFor="let assignedComplain of assignedComplains| paginate: { id: 'list', itemsPerPage: pagination.pageSize, currentPage: pagination.pageNumber, totalItems: pagination.totalRows }; let i = index">
+                                <td>{{ (pagination.pageNumber - 1) * pagination.pageSize + i + 1 }}</td>
+                              
+                            <td>{{ assignedComplain.technicianCategoryName }}</td>                                     
+                              <td><div>{{ assignedComplain.technicianName}}</div></td>
+                              <td>  
+                                <div>{{ assignedComplain.propertyName}} </div> 
+                              </td>
+                              <td>  
+                                <div>{{ assignedComplain.tenantName}} </div> 
+                              </td>
+                              <td>  
+                                <div>{{ assignedComplain.complainName}} </div> 
+                              </td>
+                              <td>  
+                                <div>{{ assignedComplain.billingAmount}} </div> 
+                              </td>
+                              <td>  
+                                <div>{{ assignedComplain.paidAmount}} </div> 
+                              </td>
+                                <td class="text-center">
+                                  <span class="label label-primary"
+                                  *ngIf="assignedComplain.isCompleted==true; else isSolved"><i class="fa fa-check"></i>
+                                  Completed
+                                  </span> 
+                                  <ng-template #isSolved>
+                                    <span class="label label-info"
+                                  *ngIf="assignedComplain.isSolved==true; else isAssignedTechnician"><i class="fa fa-check"></i>
+                                    Solved
+                                  </span> 
+                                  </ng-template>
+                                  <ng-template #isAssignedTechnician>
+                                    <span class="label label-info"
+                                  *ngIf="assignedComplain.isAssignedTechnician==true; else isRejected"><i class="fa fa-square-arrow-up-right"></i>
+                                    Technician Assigned
+                                  </span> 
+                                  </ng-template>
+                                  <ng-template #isRejected>
+                                    <span class="label label-danger"
+                                  *ngIf="assignedComplain.isRejected==true; else isApproved"><i class="fa fa-times"></i>
+                                    Rejected
+                                  </span> 
+                                  </ng-template>
+                                  <ng-template #isApproved>
+                                    <span class="label label-success"
+                                  *ngIf="assignedComplain.isApproved==true; else isSentToLandlord"><i class="fa fa-check"></i>
+                                    Approved
+                                  </span> 
+                                  </ng-template>
+                                  <ng-template #isSentToLandlord>
+                                    <span class="label label-warning"
+                                  *ngIf="assignedComplain.isSentToLandlord==true; else Pending"><i class="fa fa-paper-plane"></i>
+                                    Sent to landlord
+                                  </span> 
+                                  </ng-template>
+                                  
+                                  <ng-template #Pending>
+                                    <span class="label label-primary"><i class="fa fa-clock"></i>
+                                    Pending
+                                  </span> 
+                                  </ng-template>
+                               </td>
+                                <td class="text-center">
+                                  <button *ngIf="assignedComplain.isApproved == true && assignedComplain.isRejected == false && assignedComplain.isCompleted == false
+                                  && assignedComplain.isSolved == false && assignedComplain.isAssignedTechnician == true"
+                                  class="btn btn-rounded btn-primary my-2 btn-action-size"
+                                  (click)="solve(assignedComplain.complainID)"
+                                  title="Solve" style="font-size: 11px;">
+                                  Solve
+                                 </button>
+                                 &nbsp;
+                                 <button *ngIf="assignedComplain.isApproved == true && assignedComplain.isRejected == false && assignedComplain.isCompleted == false
+                                  && assignedComplain.isSolved == true && assignedComplain.isAssignedTechnician == true"
+                                  class="btn btn-rounded btn-info my-2 btn-action-size"
+                                  (click)="complete(assignedComplain.complainID)"
+                                   title="complete" style="font-size: 11px;">
+                                  Complete
+                                 </button>
+                                   &nbsp;
+                                   <button *ngIf="assignedComplain.isApproved == true && assignedComplain.isRejected == false && assignedComplain.isCompleted == false
+                                    && assignedComplain.isSolved == false && assignedComplain.isAssignedTechnician == true"
+                                    class="btn btn-rounded btn-info my-2 btn-action-size"
+                                     title="Edit" style="font-size: 11px;">
+                                   Edit
+                                   </button>
+                                </td>
+                              </tr>
+                          </tbody>
+                        </table>
+                      
+                    </div>
+            
+                </div>  
+          </div>
+  
+          <div class="d-flex justify-content-end">
+            <!-- <mat-paginator [length]="pagination.totalRows"
+            [pageSize]="pagination.pageSize"
+            [pageIndex]="pagination.pageNumber - 1"
+            (page)="listPageChanged($event.pageIndex + 1)">
+            </mat-paginator> -->
+  
+            <pagination-controls 
+            id="list"
+            [maxSize]="5" 
+            [directionLinks]="true"
+            [autoHide]="false"
+            previousLabel="Previous"
+            nextLabel="Next" style="color: black;"> 
+          </pagination-controls>
+        </div>       
+  
+        </div>
+     
+      </div>  
+  </div>

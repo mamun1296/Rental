@@ -1,0 +1,278 @@
+
+
+<div class="container-fluid p-2">  
+    <h4 class="label-title"> <i class="fa fa-plus-circle"></i>Assign Technician</h4>  
+      <div class="row m-t-sm mt-0">
+        <div class="col-md-12 mb-2">
+          <div class="card shadow-lg p-4">
+            <form [formGroup]="technicianAssignForm" *ngIf="isEditClicked; else elseblock">
+              <div class="row mb-3">  
+               <div class="col-md-6">      
+                <label for="technicianCategoryID" class="label-title">Technician Category</label><span class="text-danger"> * </span>                 
+                <select  (change)="selectCategory($event)" class="form-control textbox-border-color" id="technicianCategoryID" formControlName="technicianCategoryName" required="required">
+                  <option value="">---Select---</option>       
+                  <option *ngFor="let item of technicianCategories" [value]="item.id">
+                    {{ item.text }}
+                  </option>               
+                </select>   
+
+                <div *ngIf="technicianAssignForm.get('technicianCategoryName')?.touched && technicianAssignForm.get('technicianCategoryName')?.invalid">
+                  <div *ngIf="technicianAssignForm.get('technicianCategoryID')?.errors?.['required']" class="text-danger">
+                    Category is required.
+                  </div>                    
+              </div>
+              </div>
+  
+             <div class="col-md-6">  
+                <label for="technicianID" class="label-title">Technician</label><span class="text-danger"> * </span>                 
+                <select class="form-control textbox-border-color" id="technicianID" formControlName="technicianName" required="required">
+                  <option value="">---Select---</option>       
+                  <option *ngFor="let item of technicians" value="{{item.id}}">{{item.text}}</option>               
+                </select>   
+
+                <div *ngIf="technicianAssignForm.get('technicianID')?.touched && technicianAssignForm.get('technicianID')?.invalid">
+                  <div *ngIf="technicianAssignForm.get('technicianID')?.errors?.['required']" class="text-danger">
+                    Technician is required.
+                  </div>                    
+              </div>
+            </div>
+     
+  
+             <div class="col-md-6">      
+                <label for="propertyID" class="label-title">Property</label><span class="text-danger"> * </span>                 
+                <select class="form-control textbox-border-color" id="propertyID" formControlName="propertyID" required ="required">
+                  <option value="">---Select---</option>
+                  <option *ngFor="let item of properties" value="{{item.id}}">{{item.text}}</option>               
+                </select>   
+
+                <div *ngIf="technicianAssignForm.get('propertyID')?.touched && technicianAssignForm.get('propertyID')?.invalid">
+                  <div *ngIf="technicianAssignForm.get('propertyID')?.errors?.['required']" class="text-danger">
+                    Technician is required.
+                  </div>                    
+              </div>
+            </div>       
+                 <div class="col-md-6">
+                    <label for="tenantID" class="label-title">Tenant</label><span class="text-danger"> * </span>                 
+                    <select class="form-control textbox-border-color" id="tenantID" formControlName="tenantID" required ="required">
+                      <option value="">---Select---</option>
+                      <option *ngFor="let item of tenants" value="{{item.id}}">{{item.text}}</option>               
+                    </select>   
+    
+                    <div *ngIf="technicianAssignForm.get('tenantID')?.touched && technicianAssignForm.get('tenantID')?.invalid">
+                      <div *ngIf="technicianAssignForm.get('tenantID')?.errors?.['required']" class="text-danger">
+                        Tenant is required.
+                      </div>                    
+                  </div>            
+                   </div>
+                   <div class="col-md-6">
+                    <label for="complainID" class="label-title">Tenant</label><span class="text-danger"> * </span>                 
+                    <select class="form-control textbox-border-color" id="complainID" formControlName="complainID" required ="required">
+                      <option value="">---Select---</option>
+                      <option *ngFor="let item of complains" value="{{item.id}}">{{item.text}}</option>               
+                    </select>   
+    
+                    <div *ngIf="technicianAssignForm.get('complainID')?.touched && technicianAssignForm.get('complainID')?.invalid">
+                      <div *ngIf="technicianAssignForm.get('complainID')?.errors?.['required']" class="text-danger">
+                        Tenant is required.
+                      </div>                    
+                  </div>            
+                   </div>       
+               <div class="col-md-4 offset-4">      
+                 <br>
+                 <!-- <button type="submit" class="btn btn-sm btn-outline-success" [disabled]="form.invalid"> -->
+                    <button type="submit" class="btn btn-sm btn-outline-success">
+                  <i class="fa fa-pencil"></i> | Update
+                 </button>                   
+                 &nbsp;
+                <!-- <button type="reset" class="btn btn-sm btn-outline-danger" (click)="updateCancel()">
+                  <i class="fa fa-ban"></i> | Cancel
+                </button>                    -->
+                <button type="reset" class="btn btn-sm btn-outline-danger">
+                    <i class="fa fa-ban"></i> | Cancel
+                  </button>
+              </div>
+              </div>
+              </form>
+           <ng-template #elseblock>       
+            <!-- <form [formGroup]="form" (ngSubmit)="onSubmit()"> -->
+                <form [formGroup]="technicianAssignForm" (ngSubmit)="onSubmit()">
+                    <div class="row mb-3">  
+                     <div class="col-md-6">      
+                      <label for="technicianCategoryID" class="label-title">Technician Category</label><span class="text-danger"> * </span>                 
+                      <select class="form-control textbox-border-color" id="technicianCategoryID" formControlName="technicianCategoryID" (change)="selectCategory($event)" required="required">
+                        <option value="">---Select---</option>       
+                        <option *ngFor="let item of technicianCategories" value="{{item.id}}">{{item.text}}</option>               
+                      </select>
+      
+                      <div *ngIf="technicianAssignForm.get('technicianCategoryID')?.touched && technicianAssignForm.get('technicianCategoryID')?.invalid">
+                        <div *ngIf="technicianAssignForm.get('technicianCategoryID')?.errors?.['required']" class="text-danger">
+                          Category is required.
+                        </div>                    
+                    </div>
+                    </div>
+        
+                   <div class="col-md-6">  
+                      <label for="technicianID" class="label-title">Technician</label><span class="text-danger"> * </span>                 
+                      <select (change)="selectTechnician($event)" class="form-control textbox-border-color" id="technicianID" formControlName="technicianID" required="required">
+                        <option value="">---Select---</option>       
+                        <option *ngFor="let item of technicians" value="{{item.id}}">{{item.text}}</option>
+                      </select>   
+      
+                      <div *ngIf="technicianAssignForm.get('technicianID')?.touched && technicianAssignForm.get('technicianID')?.invalid">
+                        <div *ngIf="technicianAssignForm.get('technicianID')?.errors?.['required']" class="text-danger">
+                          Technician is required.
+                        </div>                    
+                    </div>
+                  </div>
+           
+        
+                   <div class="col-md-6">      
+                      <label for="propertyID" class="label-title">Property</label><span class="text-danger"> * </span>                 
+                      <select (change)="selectProperty($event)" class="form-control textbox-border-color" id="propertyID" formControlName="propertyID" required ="required">
+                        <option value="">---Select---</option>
+                        <option *ngFor="let item of properties" value="{{item.id}}">{{item.text}}</option>       
+                      </select>   
+      
+                      <div *ngIf="technicianAssignForm.get('propertyID')?.touched && technicianAssignForm.get('propertyID')?.invalid">
+                        <div *ngIf="technicianAssignForm.get('propertyID')?.errors?.['required']" class="text-danger">
+                          Property is required.
+                        </div>                    
+                    </div>
+                  </div>       
+                       <div class="col-md-6">
+                          <label for="tenantID" class="label-title">Tenant</label><span class="text-danger"> * </span>                 
+                          <select (change)="selectTenant($event)" class="form-control textbox-border-color" id="tenantID" formControlName="tenantID" required ="required">
+                            <option value="">---Select---</option>
+                            <option *ngFor="let item of tenants" value="{{item.id}}">{{item.text}}</option>               
+                          </select>   
+          
+                          <div *ngIf="technicianAssignForm.get('tenantID')?.touched && technicianAssignForm.get('tenantID')?.invalid">
+                            <div *ngIf="technicianAssignForm.get('tenantID')?.errors?.['required']" class="text-danger">
+                              Tenant is required.
+                            </div>                    
+                        </div>            
+                         </div>
+                         <div class="col-md-6">
+                          <label for="complainID" class="label-title">Complain</label><span class="text-danger"> * </span>                 
+                          <select class="form-control textbox-border-color" id="complainID" formControlName="complainID" required ="required">
+                            <option value="">---Select---</option>
+                            <option *ngFor="let item of complains" value="{{item.id}}">{{item.text}}</option>               
+                          </select>   
+          
+                          <div *ngIf="technicianAssignForm.get('complainID')?.touched && technicianAssignForm.get('complainID')?.invalid">
+                            <div *ngIf="technicianAssignForm.get('complainID')?.errors?.['required']" class="text-danger">
+                              Complain is required.
+                            </div>          
+                        </div> 
+                         </div>
+                         <div class="col-md-2">      
+                          <br>
+                          <button type="submit" class="btn btn-sm btn-outline-success"  [disabled]="technicianAssignForm.invalid">
+                            <i class="fa fa-paper-plane"></i> | Submit
+                          </button>
+                         <!-- <button type="submit" class="btn btn-sm btn-outline-success" [disabled]="form.invalid">
+                        <i class="fa fa-paper-plane"></i> | Submit
+                      </button>                    -->
+                       </div> 
+                      </div>       
+                 </form>
+        </ng-template>       
+        </div>
+          <!-- <div class="card shadow-lg p-4 mt-0">
+                <div class="table-scrollable">     
+                    <div class="table-responsive">  
+                        <div class="d-flex justify-content-between align-items-center mb-3">                           
+                           <form [formGroup]="permissionListForm" class="d-flex">
+                            <form class="d-flex">
+                            <div class="form-group mb-0" style="width: 380px;">
+                              <label for="searchString" class="label-title">Search </label>
+                              <input type="text" class="form-control textbox-border-color" formControlName="searchString"
+                                placeholder="Search by anything..."/>
+                            </div>
+                          </form>
+                        </div>                
+                        <table class="table table-hover table-striped textbox-border-color">
+                           <thead>                            
+                            <tr class="text-center">   
+                                <th>#SL</th>
+                                <th>Menu Name</th>
+                                <th>Menu Path</th>                           
+                                <th>Permission Type</th>             
+                                <th>Main Menu ID</th>             
+                                <th>Sub Menu ID</th>                                   
+                                <th>Activation Status</th>                       
+                                <th>Approve Status</th>    
+                                <th>Action</th>      
+                            </tr>
+                            </thead>
+                            <tbody class="text-center">
+                            <ng-container *ngFor="let data of list; let i =index">
+                                <tr>                                   
+                                  <td>                       
+                                      {{ i + 1 }}
+                                  </td>  
+                                  <td>{{ data.permissionName }}</td>    
+                                  <td>{{ data.permissionKey }}</td>    
+                                  <td>{{ data.permissionType }}</td>                                   
+                                  <td>{{ data.mainMenuID }}</td>     
+                                  <td>{{ data.subMenuID }}</td>  
+                                  <td class="text-center">
+                                    <span [class]="data.isActive? 'label label-primary':'label label-danger'">
+                                        {{data.isActive? "Active":"Inactive"}}
+                                    </span>
+                                  </td>
+                                  <td class="text-center">
+                                      <span class="label label-warning"
+                                          *ngIf="data.stateStatus=='Pending'">{{data.stateStatus
+                                          + '...'}}</span>
+                                      <span class="label label-primary" *ngIf="data.stateStatus=='Approved'">
+                                          <i class="fa fa-check"></i> {{data.stateStatus}}
+                                      </span>
+                                      <span class="label label-danger"
+                                          *ngIf="data.stateStatus=='Cancelled'"><i class="fa fa-times"></i>
+                                          {{data.stateStatus}}
+                                      </span>
+                                      <span class="label label-info" *ngIf="data.stateStatus=='Recheck'"><i
+                                              class="fa fa-backward"></i> {{data.stateStatus}}
+                                      </span>
+                                   </td>   
+                                   <td>
+                                    <button type="button" class="btn btn-sm btn-primary btn-size" (click)="editClick(data)" title="Edit">
+                                      <i class="fa fa-pencil"></i>
+                                    </button> 
+                                    <button type="button" class="btn btn-sm btn-primary btn-size" title="Edit">
+                                        <i class="fa fa-pencil"></i>
+                                      </button>
+                                    &nbsp;
+                                    <button type="button" class="btn btn-sm btn-danger btn-size" (click)="confirmDelete(data.permissionID, data.permissionName)" title="Delete">
+                                      <i class="fa fa-trash"></i>
+                                    </button> 
+                                    <button type="button" class="btn btn-sm btn-danger btn-size" title="Delete">
+                                        <i class="fa fa-trash"></i>
+                                      </button>
+                                  </td>                                                         
+                                </tr>
+                            </ng-container>                                 
+                            </tbody>
+                        </table>
+                    </div>
+            
+                </div>  
+          </div> -->
+  
+      
+          <div class="d-flex justify-content-end">
+            <!-- <pagination-controls (pageChange)="listPageChanged($event)" [responsive]="true"
+            [autoHide]="true" id="list"></pagination-controls> -->
+          </div>
+  
+        </div>  
+        
+      </div>
+  
+  </div>
+    
+  
+  
+  
+    

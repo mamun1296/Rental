@@ -1,0 +1,130 @@
+
+
+
+
+
+.menu-icon {
+  font-size: 1.2rem;
+  text-align: center;
+  vertical-align: middle;
+  margin-left: 1px;
+  margin-right: 5px;
+}
+
+
+.menu-item,
+.submenu-item,
+.subsubmenu-item {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  position: relative;
+  border-radius: 0px;
+}
+
+
+// Updated Widths
+.menu-item {
+  width: 97%;
+}
+
+.submenu-item {
+  width: 95%;
+}
+
+.subsubmenu-item {
+  width: 93%;
+}
+
+// Updated Hover Effects
+.menu-item:hover,
+.submenu-item:hover,
+.subsubmenu-item:hover {
+  background-color: rgba(209, 209, 209, 0.2);
+}
+
+// Expanded Menu Item Style
+.expanded-menu-item {
+  // border-left: 0.1875rem solid #7285f0;
+}
+
+// Menu Title Styles
+.menu-item-title,
+.submenu-title,
+.subsubmenu-title {
+  flex: 1;
+  margin: 0;
+  font-size: 0.82rem;
+  white-space: pre-wrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-flex;
+  vertical-align: middle;
+  align-items: center;
+  justify-content: flex-start;
+  color: #ffff;
+}
+
+// Centering Icons and Text
+.menu-toggle-icon {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.menu-toggle-icon.expanded {
+  transform: translateY(-50%) rotate(90deg);
+}
+
+// Material Override for list item height
+.mdc-list-item.mdc-list-item--with-one-line {
+  height: 2rem;
+  padding: 2px;
+}
+
+
+.mat-mdc-nav-list .mat-mdc-list-item{
+  border-radius: 0%;
+}
+
+
+// Active Styles
+.active-menu-item {
+  background-color: rgba(70, 130, 180, 0.4);
+  border-radius: 4px;
+}
+
+.active-submenu-item {
+  background-color: rgba(176, 224, 230, 0.2);
+  border-radius: 4px;
+}
+
+.active-subsubmenu-item {
+  background-color: rgba(173, 216, 230, 0.3);
+  border-radius: 4px;
+}
+
+
+// Disabled Styles
+.menu-item.disabled,
+.submenu-item.disabled,
+.subsubmenu-item.disabled {
+  opacity: 0.5;
+}
+
+
+// Borders for Submenus
+.border2 {
+  margin-left: 2px; 
+  border-left: 2px solid #ddd; 
+}
+
+.border3 {
+  margin-left: 4px; 
+  border-left: 2px solid #ddd; 
+}
+
+
