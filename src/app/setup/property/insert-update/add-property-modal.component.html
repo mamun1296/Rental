@@ -49,7 +49,7 @@
         <div class="col-md-6 col-lg-4">
           <div class="form-group">
             <label for="landlordName" class="label-title">Property Name <small class="text-danger">*</small></label>
-              <input type="text"propertyName class="form-control textbox-border-color" id="propertyName" formControlName="propertyName" required>            
+              <input type="text"propertyName class="form-control " id="propertyName" formControlName="propertyName" required>            
             <div *ngIf="propertyEntryForm.get('propertyName')?.invalid && propertyEntryForm.get('propertyName')?.touched" class="text-danger">
               Property Name is required.
             </div>
@@ -59,7 +59,7 @@
         <div class="col-md-6 col-lg-4">
           <div class="form-group">
             <label for="propertyType" class="label-title">Property Type <i class="fa fa-angle-down"></i> <small class="text-danger"> *</small></label>
-            <select class="form-control textbox-border-color" id="propertyType" formControlName="propertyType" required>
+            <select class="form-control " id="propertyType" formControlName="propertyType" required>
               <option value="" selected>---Select---</option>
               <option value="Empty">Empty</option>
               <option value="Half Furnish">Half Furnish</option>
@@ -76,7 +76,7 @@
             <label for="address" class="label-title">Address <small class="text-danger"> *</small></label>
             <input
             type="text"
-            class="form-control textbox-border-color"
+            class="form-control "
             id="address"
             formControlName="address"
             >
@@ -92,7 +92,7 @@
               <label for="contactNumber" class="label-title">Contact <small class="text-danger"> *</small></label>
               <input
                 type="text"
-                class="form-control textbox-border-color"
+                class="form-control "
                 id="contactNumber"
                 formControlName="contactNumber"
               >
@@ -107,7 +107,7 @@
               <label for="emailAddress" class="label-title">Email</label>
               <input
                 type="text"
-                class="form-control textbox-border-color"
+                class="form-control "
                 id="emailAddress"
                 formControlName="emailAddress"
               >
@@ -120,7 +120,7 @@
               <label for="propertyDescription" class="label-title">Description</label>
               <input
                 type="text"
-                class="form-control textbox-border-color"
+                class="form-control "
                 id="propertyDescription"
                 formControlName="propertyDescription"
               >
@@ -139,7 +139,7 @@
         <h4 class="text-dark"><i class="fa fa-plus-circle"></i> Add Segment Details</h4>
         <div class="table-scrollable">
           <div class="table-responsive">
-            <table class="table table-striped table-hover textbox-border-color">
+            <table class="table table-striped table-hover ">
               <thead>
                 <tr class="text-center">
                   <th style="width: 2%;">#SL</th>
@@ -155,7 +155,7 @@
                   <td class="text-center font-bold">{{ i + 1 }}</td>               
                   <td>
                     <input type="text" name="segmentName{{ i }}" id="segmentName{{ i }}"
-                    class="form-control textbox-border-color font-bold" formControlName="segmentName"
+                    class="form-control  font-bold" formControlName="segmentName"
                     (change)="segmentNameChanged($event, i)">
                 
                     <div *ngIf="segments.at(i).get('segmentName')?.invalid && segments.at(i).get('segmentName')?.touched">
@@ -165,7 +165,7 @@
   
                   <td>
                     <input type="text" name="segmentLength" id="segmentLength"
-                    class="form-control textbox-border-color font-bold" formControlName="segmentLength">
+                    class="form-control  font-bold" formControlName="segmentLength">
                 
                     <div *ngIf="segments.at(i).get('segmentLength')?.invalid && segments.at(i).get('segmentLength')?.touched">
                       <small class="text-danger">Length is required.</small>
@@ -173,7 +173,7 @@
                   </td>
                   <td>
                     <input type="text" name="segmentWidth" id="segmentWidth"
-                    class="form-control textbox-border-color font-bold" formControlName="segmentWidth">
+                    class="form-control  font-bold" formControlName="segmentWidth">
                 
                     <div *ngIf="segments.at(i).get('segmentWidth')?.invalid && segments.at(i).get('segmentWidth')?.touched">
                       <small class="text-danger">Width is required.</small>
@@ -219,7 +219,7 @@
   <!-- <div class="card shadow-sm p-3 table-card-size-collapse">
     <h4 class="text-dark"><i class="fa fa-plus-circle"></i> Add Item Details</h4>
     <div class="table-scrollable table-responsive">
-      <table class="table table-striped table-hover textbox-border-color">
+      <table class="table table-striped table-hover ">
         <thead>
           <tr class="text-center">
             <th style="width: 5%;">#SL</th>

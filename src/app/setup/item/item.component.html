@@ -7,7 +7,7 @@
           <form [formGroup]="itemEntryForm" (ngSubmit)="onItemSubmit()">
           <div class="table-scrollable">
             <div class="table-responsive">
-              <table class="table table-borderless table-striped table-hover textbox-border-color">
+              <table class="table table-borderless table-striped table-hover ">
                 <thead>
                   <tr class="text-center">
                     <th style="width: 2%;">#SL</th>
@@ -26,7 +26,7 @@
                         type="text"
                         name="itemName{{ i }}"
                         id="itemName{{ i }}"
-                        class="form-control textbox-border-color"
+                        class="form-control "
                         formControlName="itemName"
                         (change)="itemNameChanged($event, i)"
                       />
@@ -45,7 +45,7 @@
                     
 
                     <td>                           
-                      <select class="form-control textbox-border-color" id="categoryID" formControlName="categoryID" required="required">
+                      <select class="form-control " id="categoryID" formControlName="categoryID" required="required">
                         <option value="">---Select---</option>       
                         <option *ngFor="let item of ddlItemsCategory" value="{{item.id}}">{{item.text}}</option>               
                       </select>   
@@ -58,7 +58,7 @@
 
                     <td>
                       <input type="text" name="description" id="description"
-                      class="form-control textbox-border-color font-bold" formControlName="description">             
+                      class="form-control  font-bold" formControlName="description">             
                     
                     </td>          
               
@@ -101,12 +101,12 @@
                     <form [formGroup]="itemListForm" class="d-flex">
                       <div class="form-group mb-0" style="width: 380px;">
                         <label for="searchString" class="label-title">Search </label>
-                        <input type="text" class="form-control textbox-border-color" formControlName="searchString"
+                        <input type="text" class="form-control " formControlName="searchString"
                           placeholder="Search by anything..."/>
                       </div>
                     </form>
                   </div>                
-                  <table class="table table-hover table-striped textbox-border-color">
+                  <table class="table table-hover table-striped ">
                      <thead>                            
                       <tr class="text-center">   
                           <th>#SL</th>                         

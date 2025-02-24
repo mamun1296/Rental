@@ -7,14 +7,14 @@
               <div class="row mb-3">             
                 <div class="col-md-4">  
                   <label for="technicianName" class="label-title">Technician Name</label><span class="text-danger"> * </span>
-                  <input type="text" class="form-control textbox-border-color" id="name" formControlName="technicianName" required>
+                  <input type="text" class="form-control " id="name" formControlName="technicianName" required>
                   <div *ngIf="technicianForm.get('technicianName')?.invalid && technicianForm.get('technicianName')?.touched" class="text-danger">
                     Name is required.
                   </div>                
                 </div>
                 <div class="col-md-4">      
                     <label for="technicianCategoryID" class="label-title">Technician Category</label><span class="text-danger"> * </span>                 
-                    <select class="form-control textbox-border-color" id="technicianCategoryID" formControlName="technicianCategoryID" required="required">
+                    <select class="form-control " id="technicianCategoryID" formControlName="technicianCategoryID" required="required">
                       <option value="">---Select---</option>       
                       <option *ngFor="let item of ddlTechnicianCategory" value="{{item.id}}">{{item.text}}</option>               
                     </select>   
@@ -28,7 +28,7 @@
 
                 <div class="col-md-4">
                   <label for="emailAddress" class="label-title">Email</label><span class="text-danger"> * </span>
-                  <input type="text" class="form-control textbox-border-color" id="password" formControlName="emailAddress" required />
+                  <input type="text" class="form-control " id="password" formControlName="emailAddress" required />
                   <div *ngIf="technicianForm.get('emailAddress')?.touched && technicianForm.get('emailAddress')?.invalid">
                     <div *ngIf="technicianForm.get('emailAddress')?.errors?.['required']" class="text-danger">
                       Email is required.
@@ -43,14 +43,14 @@
               <div class="row mb-3">  
                 <div class="col-md-4">
                   <label for="contact" class="label-title">Contact</label><span class="text-danger"> * </span>
-                  <input type="text" class="form-control textbox-border-color" id="contactNumber" formControlName="contactNumber" required />
+                  <input type="text" class="form-control " id="contactNumber" formControlName="contactNumber" required />
                   <div *ngIf="technicianForm.get('contactNumber')?.hasError('required') && technicianForm.get('contactNumber')?.touched" class="text-danger">
                     Contact number is required.
                   </div>
                 </div>                 
                   <div class="col-md-4">
                     <label for="userName" class="label-title" >User Name</label><span class="text-danger"> * </span>
-                    <input type="text" class="form-control textbox-border-color" id="userName" formControlName="userName" required />
+                    <input type="text" class="form-control " id="userName" formControlName="userName" required />
                     <div *ngIf="technicianForm.get('userName')?.hasError('required') && technicianForm.get('userName')?.touched" class="text-danger">
                       User name is required.
                     </div>
@@ -59,7 +59,7 @@
                   
                   <div class="col-md-4">
                     <label for="password" class="label-title">Password</label><span class="text-danger"> * </span>
-                    <input type="text" class="form-control textbox-border-color" id="password" formControlName="password" required />
+                    <input type="text" class="form-control " id="password" formControlName="password" required />
                     <div *ngIf="technicianForm.get('password')?.hasError('required') && technicianForm.get('password')?.touched" class="text-danger">
                       Password is required.
                     </div>
@@ -72,7 +72,7 @@
               <div class="row mb-3">                 
                   <div class="col-md-8">
                     <label for="address" class="label-title" >Address</label><span class="text-danger"> * </span>
-                    <input type="text" class="form-control textbox-border-color" id="address" formControlName="address" required />
+                    <input type="text" class="form-control " id="address" formControlName="address" required />
                     <div *ngIf="technicianForm.get('address')?.hasError('required') && technicianForm.get('address')?.touched" class="text-danger">
                       Address is required.
                     </div>
@@ -95,12 +95,12 @@
                           <form [formGroup]="technicianForm" class="d-flex">
                             <div class="form-group mb-0" style="width: 380px;">
                               <label for="searchString" class="label-title">Search </label>
-                              <input type="text" class="form-control textbox-border-color" formControlName="searchString"
+                              <input type="text" class="form-control " formControlName="searchString"
                                 placeholder="Search by anything..."/>
                             </div>
                           </form>
                         </div>                
-                        <table class="table table-hover table-striped textbox-border-color">
+                        <table class="table table-hover table-striped ">
                            <thead>                            
                             <tr class="text-center">   
                                 <th>#SL</th>

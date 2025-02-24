@@ -7,7 +7,7 @@
             <div class="row mb-3">  
              <div class="col-md-4">      
                <label for="permissionName" class="label-title">Menu Name</label><span class="text-danger"> * </span>                 
-               <input type="text" class="form-control textbox-border-color" id="permissionName" formControlName="permissionName" required>
+               <input type="text" class="form-control " id="permissionName" formControlName="permissionName" required>
                <div *ngIf="form.get('permissionName')?.touched && form.get('permissionName')?.invalid">
                  <div *ngIf="form.get('permissionName')?.errors?.['required']" class="text-danger">
                    Menu name is required.
@@ -17,7 +17,7 @@
 
            <div class="col-md-4">  
              <label for="permissionKey" class="label-title">Menu Path</label><span class="text-danger"> * </span>
-             <input type="text" class="form-control textbox-border-color" id="permissionKey" formControlName="permissionKey" required>
+             <input type="text" class="form-control " id="permissionKey" formControlName="permissionKey" required>
              <div *ngIf="form.get('permissionKey')?.invalid && form.get('permissionKey')?.touched" class="text-danger">
                Path is required.
              </div>                
@@ -26,7 +26,7 @@
 
            <div class="col-md-4">      
                <label for="permissionType" class="label-title">Permission Type</label><span class="text-danger"> * </span>                 
-               <select class="form-control textbox-border-color" id="permissionType" formControlName="permissionType" required="required">
+               <select class="form-control " id="permissionType" formControlName="permissionType" required="required">
                  <option value="FrontEnd">FrontEnd</option>                             
                </select>   
                <div *ngIf="form.get('permissionType')?.touched && form.get('permissionType')?.invalid">
@@ -41,7 +41,7 @@
            <div class="row mb-3">            
                <div class="col-md-4">
                  <label for="mainMenuID" class="label-title">Main Menu ID</label><span class="text-danger"> * </span>
-                 <input type="number" class="form-control textbox-border-color no-spinner" id="mainMenuID" formControlName="mainMenuID" min="0" required />
+                 <input type="number" class="form-control  no-spinner" id="mainMenuID" formControlName="mainMenuID" min="0" required />
                  <div *ngIf="form.get('mainMenuID')?.touched && form.get('mainMenuID')?.invalid">
                    <div *ngIf="form.get('mainMenuID')?.errors?.['required']" class="text-danger">
                      Main menu ID is required.
@@ -50,7 +50,7 @@
               </div>       
               <div class="col-md-4">
                  <label for="subMenuID" class="label-title">Sub Menu ID</label><span class="text-danger"> * </span>
-                 <input type="number" class="form-control textbox-border-color no-spinner" id="subMenuID" formControlName="subMenuID" min="0" required />
+                 <input type="number" class="form-control  no-spinner" id="subMenuID" formControlName="subMenuID" min="0" required />
                  <div *ngIf="form.get('subMenuID')?.touched && form.get('subMenuID')?.invalid">
                    <div *ngIf="form.get('subMenuID')?.errors?.['required']" class="text-danger">
                      Sub menu ID is required.
@@ -74,7 +74,7 @@
              <div class="row mb-3">  
               <div class="col-md-4">      
                 <label for="permissionName" class="label-title">Menu Name</label><span class="text-danger"> * </span>                 
-                <input type="text" class="form-control textbox-border-color" id="permissionName" formControlName="permissionName" required>
+                <input type="text" class="form-control " id="permissionName" formControlName="permissionName" required>
                 <div *ngIf="form.get('permissionName')?.touched && form.get('permissionName')?.invalid">
                   <div *ngIf="form.get('permissionName')?.errors?.['required']" class="text-danger">
                     Menu name is required.
@@ -84,7 +84,7 @@
 
             <div class="col-md-4">  
               <label for="permissionKey" class="label-title">Menu Path</label><span class="text-danger"> * </span>
-              <input type="text" class="form-control textbox-border-color" id="permissionKey" formControlName="permissionKey" required>
+              <input type="text" class="form-control " id="permissionKey" formControlName="permissionKey" required>
               <div *ngIf="form.get('permissionKey')?.invalid && form.get('permissionKey')?.touched" class="text-danger">
                 Path is required.
               </div>                
@@ -93,7 +93,7 @@
 
             <div class="col-md-4">      
                 <label for="permissionType" class="label-title">Permission Type</label><span class="text-danger"> * </span>                 
-                <select class="form-control textbox-border-color" id="permissionType" formControlName="permissionType" required="required">
+                <select class="form-control " id="permissionType" formControlName="permissionType" required="required">
                   <option value="FrontEnd">FrontEnd</option>                             
                 </select>   
                 <div *ngIf="form.get('permissionType')?.touched && form.get('permissionType')?.invalid">
@@ -108,7 +108,7 @@
             <div class="row mb-3">            
                 <div class="col-md-4">
                   <label for="mainMenuID" class="label-title">Main Menu ID</label><span class="text-danger"> * </span>
-                  <input type="number" class="form-control textbox-border-color no-spinner" id="mainMenuID" formControlName="mainMenuID" min="0" required />
+                  <input type="number" class="form-control  no-spinner" id="mainMenuID" formControlName="mainMenuID" min="0" required />
                   <div *ngIf="form.get('mainMenuID')?.touched && form.get('mainMenuID')?.invalid">
                     <div *ngIf="form.get('mainMenuID')?.errors?.['required']" class="text-danger">
                       Main menu ID is required.
@@ -117,7 +117,7 @@
                </div>       
                <div class="col-md-4">
                   <label for="subMenuID" class="label-title">Sub Menu ID</label><span class="text-danger"> * </span>
-                  <input type="number" class="form-control textbox-border-color no-spinner" id="subMenuID" formControlName="subMenuID" min="0" required />
+                  <input type="number" class="form-control  no-spinner" id="subMenuID" formControlName="subMenuID" min="0" required />
                   <div *ngIf="form.get('subMenuID')?.touched && form.get('subMenuID')?.invalid">
                     <div *ngIf="form.get('subMenuID')?.errors?.['required']" class="text-danger">
                       Sub menu ID is required.
@@ -142,13 +142,13 @@
                         <form [formGroup]="permissionListForm" class="d-flex">
                           <div class="form-group mb-0" style="width: 380px;">
                             <label for="searchString" class="label-title">Search </label>
-                            <input type="text" class="form-control textbox-border-color" formControlName="searchString"
+                            <input type="text" class="form-control " formControlName="searchString"
                               placeholder="Search by anything..."/>
                           </div>
                         </form>
                       </div>                
                    
-                      <table class="table table-hover table-striped textbox-border-color">
+                      <table class="table table-hover table-striped ">
                         <thead>                            
                           <tr class="text-center">   
                             <th>#SL</th>

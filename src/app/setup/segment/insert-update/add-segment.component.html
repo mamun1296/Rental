@@ -56,7 +56,7 @@
                                         <li *ngIf="filteredProperty.length === 0">No results found</li>
                                     </ul>
                                 </div>
-                                <!-- <select class="form-control textbox-border-color" id="propertyID" formControlName="propertyID" style="height: 35px;" required>
+                                <!-- <select class="form-control " id="propertyID" formControlName="propertyID" style="height: 35px;" required>
                                     <option value="" selected>---Select---</option>
                                     <option [value]="item.id" *ngFor="let item of filteredProperty">
                                         {{item.text}}
@@ -102,7 +102,7 @@
                         <h4 class="text-dark"><i class="fa fa-plus-circle"></i> Add Item Details</h4>
                         <div class="table-scrollable">
                             <div class="table-responsive">
-                                <table class="table table-hover table-striped textbox-border-color">       
+                                <table class="table table-hover table-striped ">       
                                     <thead>
                                         <tr class="text-center">
                                             <th style="width: 3%;">#SL</th>
@@ -117,7 +117,7 @@
                                             <td class="text-center">{{ i + 1 }}</td>               
                                             <td>
                                                 <select name="itemID{{ i }}" id="itemID{{ i }}"
-                                                    class="form-control textbox-border-color" formControlName="itemID"
+                                                    class="form-control " formControlName="itemID"
                                                     (change)="itemNameChanged($event, i)">
                                                     <option value="">---Select---</option>
                                                     <option [value]="item.id" *ngFor="let item of ddlItems">
@@ -130,7 +130,7 @@
                                             </td>                    
                                             <td>
                                                 <input type="number" name="itemQty" id="itemQty"
-                                                    class="form-control textbox-border-color font-bold no-spinner" formControlName="itemQty" minlength="0">
+                                                    class="form-control  font-bold no-spinner" formControlName="itemQty" minlength="0">
                                                 
                                                 <div *ngIf="items.at(i).get('itemQty')?.invalid && items.at(i).get('itemQty')?.touched">
                                                     <small class="text-danger">Item Qty is required.</small>

@@ -43,16 +43,16 @@ export const routes: Routes = [
     component: NavigationComponent,
     children: [        
      { path: '', redirectTo: 'admin-dashboard', pathMatch: 'full' },
-     { path: 'admin-dashboard',  component: AdminDashboardComponent, canActivate: [AuthGuard]},
-     { path: 'agency-dashboard',  component: AgencyDashboardComponent, canActivate: [AuthGuard], data: { requiredPermission: '/agency-dashboard'} },
-     { path: 'edit-information',  component: AgencyEditComponent, canActivate: [AuthGuard], data: { requiredPermission: '/edit-information'}},
-     { path: 'agency-employees',  component: AgencyEmployeesComponent, canActivate: [AuthGuard] },
-     { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+     { path: 'admin-dashboard',  component: AdminDashboardComponent},
+     { path: 'agency-dashboard',  component: AgencyDashboardComponent, data: { requiredPermission: '/agency-dashboard'} },
+     { path: 'edit-information',  component: AgencyEditComponent, data: { requiredPermission: '/edit-information'}},
+     { path: 'agency-employees',  component: AgencyEmployeesComponent },
+     { path: 'dashboard', component: DashboardComponent },
      
-     { path: 'permission', component: PermissionComponent, canActivate: [AuthGuard]},
-     { path: 'menu-distribution', component: PermissionUserComponent, canActivate: [AuthGuard]},
+     { path: 'permission', component: PermissionComponent},
+     { path: 'menu-distribution', component: PermissionUserComponent},
 
-     { path: 'user-management', component: UserManagementDashboardComponent, canActivate: [AuthGuard]},
+     { path: 'user-management', component: UserManagementDashboardComponent},
      // Lazy load user-management component and its child components
      {
        path: 'user-management',
@@ -64,23 +64,23 @@ export const routes: Routes = [
        ]
      },
      
-     { path: 'landlord', component: LandlordComponent, canActivate: [AuthGuard]},
-     { path: 'property', component: PropertyComponent, canActivate: [AuthGuard]},
+     { path: 'landlord', component: LandlordComponent},
+     { path: 'property', component: PropertyComponent},
      { path: 'item', component: ItemComponent},
      { path: 'item-category', component: ItemCategoryComponent},
-     { path: 'segment', component: SegmentComponent , canActivate: [AuthGuard]},       
-     { path: 'tenant', component: TenantComponent , canActivate: [AuthGuard]},
+     { path: 'segment', component: SegmentComponent },       
+     { path: 'tenant', component: TenantComponent },
 
-     { path: 'complain', component: ComplainComponent, canActivate: [AuthGuard]},   
+     { path: 'complain', component: ComplainComponent},   
      { path: 'registration-technician', component: RegistrationTechnicianComponent},
-     { path: 'technician-onboarding', component: TechnicianComponent, canActivate: [AuthGuard]},
-     { path: 'technician-category', component: TechnicianCategoryComponent, canActivate: [AuthGuard]},
+     { path: 'technician-onboarding', component: TechnicianComponent},
+     { path: 'technician-category', component: TechnicianCategoryComponent},
      { path: 'technician-approval', component: TechnicianApprovalComponent }, 
-     { path: 'assign-technician', component: AssignTechnicianComponent, canActivate: [AuthGuard] },
-     { path: 'assigned-technician-list', component: AssignedTechnicianListComponent , canActivate: [AuthGuard]},
-     { path: 'edit-complain', component: EditComplainComponent, canActivate: [AuthGuard]},
-     { path: 'landlord-dashboard', component: LandlordDashboardComponent, canActivate: [AuthGuard] },
-     { path: 'tenant-dashboard', component: TenantDashboardComponent, canActivate: [AuthGuard] },
+     { path: 'assign-technician', component: AssignTechnicianComponent },
+     { path: 'assigned-technician-list', component: AssignedTechnicianListComponent },
+     { path: 'edit-complain', component: EditComplainComponent},
+     { path: 'landlord-dashboard', component: LandlordDashboardComponent },
+     { path: 'tenant-dashboard', component: TenantDashboardComponent },
   
       // { path: 'agency', component: AgencyDashboardComponent, 
       //   children: [

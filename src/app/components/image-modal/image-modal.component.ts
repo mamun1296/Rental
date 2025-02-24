@@ -23,11 +23,13 @@ export class ImageModalComponent {
   resizing = false;
 
   constructor(
+    
     public dialogRef: MatDialogRef<ImageModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { imageUrl: string }
   ) {}
 
   adjustSize(expand: boolean) {
+    debugger
     if (this.resizing) return;
     this.resizing = true;
 

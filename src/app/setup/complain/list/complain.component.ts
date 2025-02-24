@@ -3,16 +3,12 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgSelect2Module } from 'ng-select2';
 import { NgxPaginationModule } from 'ngx-pagination';
-
 import { ComplainService } from '../complain.service';
-
-import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { TenantService } from '../../tenant/tenant.service';
 import { LanlordService } from '../../landlord/landlord.service';
 import { MatDialog } from '@angular/material/dialog';
 import { TenantComplainServiceService } from '../../tenant/complain/tenant-complain-service.service';
 import { map } from 'rxjs';
-
 import { Router } from '@angular/router';
 import { UserService } from '../../../services/user-services/user.service';
 import { NotifyService } from '../../../services/notify-services/notify.service';
@@ -27,7 +23,8 @@ import { ImageModalComponent } from '../../../components/image-modal/image-modal
     ReactiveFormsModule,
     NgSelect2Module,
     FormsModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    
   ],
   templateUrl: './complain.component.html',
   styleUrl: './complain.component.scss'
@@ -61,10 +58,14 @@ export class ComplainComponent implements OnInit{
          private landlordService: LanlordService, private router: Router, private complainService: ComplainService
        ) 
          {
+
            this.listPageConfig = this.userService.pageConfigInit("list", this.pagination.pageSize, 1, 0);
            this.ddlStatus = this.userService.getDataStatus();
          }
-     
+      
+
+
+         
        ngOnInit(): void {
          this.getUserLoginData();       
          this.sessionAgencyID = this.userLoginData.agencyID;   
@@ -326,11 +327,13 @@ export class ComplainComponent implements OnInit{
          return new Blob(byteArrays, { type: mimeType });
        }
        openModal(imgSrc: string): void {
+        debugger
          this.dialog.open(ImageModalComponent, {
            width: '350px',
            disableClose: false,
            data: { imageUrl: imgSrc }
          });
+         debugger
        }
      
      listPageChanged(event: number) {

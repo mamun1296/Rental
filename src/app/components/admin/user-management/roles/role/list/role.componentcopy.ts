@@ -2,13 +2,14 @@ import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { RoleModalComponent } from '../role-modal/role-modal.component';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
-import { ActionComponent } from 'src/app/components/shared/action/action.component';
-import { PaginationComponent } from 'src/app/components/shared/pagination/pagination.component';
-import { DeleteConfirmationModalComponent } from 'src/app/components/shared/delete-confirmation-modal/delete-confirmation-modal.component';
-import { PageSizeService } from 'src/app/services/pagination-services/page-size.service';
-import { NotifyService } from 'src/app/services/notify-services/notify.service';
+
 import { RoleApiRoutesService } from '../../api-routes/role-api-routes.service';
-import { SharedmethodService } from 'src/app/services/shared-method/sharedmethod.service';
+import { ActionComponent } from '../../../../../action/action.component';
+import { PaginationComponent } from '../../../../../pagination/pagination.component';
+import { DeleteConfirmationModalComponent } from '../../../../../delete-confirmation-modal/delete-confirmation-modal.component';
+import { PageSizeService } from '../../../../../../services/pagination-services/page-size.service';
+import { NotifyService } from '../../../../../../services/notify-services/notify.service';
+import { SharedmethodService } from '../../../../../../services/shared-method/sharedmethod.service';
 
 
 @Component({
@@ -17,7 +18,6 @@ import { SharedmethodService } from 'src/app/services/shared-method/sharedmethod
   imports: [
     CommonModule,
     ActionComponent,
-    PaginationComponent,
     RoleModalComponent,
     DeleteConfirmationModalComponent
   ],
@@ -274,9 +274,4 @@ export class RoleComponent implements OnInit {
       }
     }
   }
-
-
-
-
-  
 }

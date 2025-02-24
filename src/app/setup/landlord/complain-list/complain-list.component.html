@@ -49,7 +49,7 @@
             <div class="col-md-4 col-lg-4">
               <div class="form-group">
                 <label for="stateStatus" class="label-title">Status <i class="fa fa-angle-down"></i> </label>
-                <select class="form-control textbox-border-color" id="stateStatus" formControlName="stateStatus">
+                <select class="form-control " id="stateStatus" formControlName="stateStatus">
                   <option value="">---Search by Status---</option>
                   <option *ngFor="let item of ddlStatus">{{item}}</option> 
                 </select>           
@@ -58,7 +58,7 @@
             <div class="col-md-4 col-lg-4">
               <div class="form-group">
                 <label for="isActive" class="label-title">Activation Status <i class="fa fa-angle-down"></i> </label>
-                <select class="form-control textbox-border-color" id="isActive" formControlName="isActive">
+                <select class="form-control " id="isActive" formControlName="isActive">
                   <option value="">---Search by Activation---</option>
                   <option value="true">Active</option>
                   <option value="false">In-Active</option>  
@@ -84,7 +84,7 @@
                       </div>  
                       <br>
                       <!-- <div *ngIf="selectedComplainDetails?.length; else loading"> -->
-                        <table class="table table-hover table-striped textbox-border-color">
+                        <table class="table table-hover table-striped ">
                         <thead>
                             <tr class="text-center">
                             <th>#SL</th>      
@@ -141,7 +141,7 @@
                         </tbody>
                         </table>
                     <!-- </div>                -->
-                      <!-- <table class="table table-hover table-striped textbox-border-color">
+                      <!-- <table class="table table-hover table-striped ">
                          <thead>                            
                           <tr class="text-center">   
                               <th>
@@ -218,7 +218,7 @@
                                   <td></td>                           
                                   <td colspan="7" >
                                     <div *ngIf="selectedComplainDetails?.length; else loading">
-                                        <table class="table table-hover table-striped textbox-border-color">
+                                        <table class="table table-hover table-striped ">
                                         <thead>
                                             <tr class="text-center">
                                             <th>#SL</th>      
@@ -278,7 +278,7 @@
                                     
 
                                     
-                                    <table class="table table-hover table-striped textbox-border-color">
+                                    <table class="table table-hover table-striped ">
                                       <thead>
                                         <tr class="text-center">
                                         <th>#SL</th>      

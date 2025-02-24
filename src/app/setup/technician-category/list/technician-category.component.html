@@ -7,7 +7,7 @@
         <div class="col-md-6">
           <div class="form-group">
             <label class="label-title" for="categoryName">Category Name <span style="color: red;">*</span></label>
-            <input type="text" class="form-control textbox-border-color" id="categoryName" formControlName="categoryName"
+            <input type="text" class="form-control " id="categoryName" formControlName="categoryName"
               oninvalid="this.setCustomValidity('Please enter the category name.')" oninput="this.setCustomValidity('')" />
             <div
               *ngIf="technicianCategoryForm.get('categoryName')?.invalid && technicianCategoryForm.get('categoryName')?.touched"
@@ -20,7 +20,7 @@
         <div class="col-md-6">
           <div class="form-group">
             <label class="label-title" for="description">Description <span style="color: red;">*</span></label>
-            <input type="text" class="form-control textbox-border-color" id="description" formControlName="description"
+            <input type="text" class="form-control " id="description" formControlName="description"
               required oninvalid="this.setCustomValidity('Please enter the description.')"
               oninput="this.setCustomValidity('')" required>
               <div *ngIf="technicianCategoryForm.get('description')?.invalid && technicianCategoryForm.get('description')?.touched" class="text-danger">
@@ -53,7 +53,7 @@
     </div>
 
     <div class="table-responsive mt-3">
-      <table class="table table-hover textbox-border-color">
+      <table class="table table-hover ">
         <thead>
           <tr class="text-center">
             <th>#SL</th>

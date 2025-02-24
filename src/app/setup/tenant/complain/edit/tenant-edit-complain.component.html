@@ -19,7 +19,7 @@
                                     <li *ngIf="filteredProperties.length === 0">No results found</li>
                                 </ul> -->
                             </div>
-                            <!-- <select class="form-control textbox-border-color" id="propertyID" formControlName="propertyID" style="height: 35px;" required>
+                            <!-- <select class="form-control " id="propertyID" formControlName="propertyID" style="height: 35px;" required>
                                 <option value="" selected>---Select---</option>
                                 <option [value]="item.id" *ngFor="let item of filteredProperty">
                                     {{item.text}}
@@ -67,13 +67,13 @@
             <div class="form-group">
                 <label for="complainName" class="label-title">Complain<small class="text-danger"> *</small></label>
                 <textarea
-                class="form-control textbox-border-color"
+                class="form-control "
                 id="complainName"
                 formControlName="complainName"
                 (input)="adjustHeight($event)"
                 ></textarea>
                 <!-- <textarea
-                class="form-control textbox-border-color"
+                class="form-control "
                 id="complainName"
                 formControlName="complainName"
                 ></textarea> -->

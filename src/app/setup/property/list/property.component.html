@@ -57,7 +57,7 @@
                 <div class="col-md-6 col-lg-4">
                   <div class="form-group">
                     <label for="propertyType" class="label-title">Search by Property Type <i class="fa fa-angle-down"></i> </label>
-                    <select class="form-control textbox-border-color" id="propertyType" formControlName="propertyType">
+                    <select class="form-control " id="propertyType" formControlName="propertyType">
                       <option value="" selected>---Select---</option>
                       <option value="Empty">Empty</option>
                       <option value="Half Furnish">Half Furnish</option>
@@ -75,7 +75,7 @@
         <div class="card shadow-lg p-4 mt-4">
           <div class="table-scrollable">
             <div class="table-responsive">
-              <table class="table table-hover table-striped textbox-border-color">       
+              <table class="table table-hover table-striped ">       
                 <thead>
                   <tr class="text-center">
                     <th>Action</th>  
@@ -115,7 +115,7 @@
                       <tr>
                         <td colspan="10">
                           <div *ngIf="selectedPropertyDetails[data.propertyID]?.length; else loading">
-                            <table class="table table-hover table-striped textbox-border-color">
+                            <table class="table table-hover table-striped ">
                               <thead>
                                 <tr class="text-center">
                                   <th>#SL</th>      

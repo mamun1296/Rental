@@ -67,7 +67,7 @@
                             <label></label>                  
                           <div class="form-check d-flex align-items-center">
                             <input
-                              class="form-check-input textbox-border-color"
+                              class="form-check-input "
                               type="checkbox"
                               id="isOwnerProperty"
                               name="isOwnerProperty"
@@ -87,7 +87,7 @@
                         <h4 class="text-dark"><i class="fa fa-plus-circle"></i> Add Tenant Info Details</h4>
                         <div class="table-scrollable">
                             <div class="table-responsive">
-                                <table class="table table-hover table-striped textbox-border-color">       
+                                <table class="table table-hover table-striped ">       
                                     <thead>
                                         <tr class="text-center">
                                             <th style="width: 3%;">#SL</th>
@@ -104,7 +104,7 @@
                                             <td class="text-center">{{ i + 1 }}</td>               
                                             <td>
                                                 <input type="text" name="tenantName{{ i }}" id="tenantName{{ i }}"
-                                                class="form-control textbox-border-color" formControlName="tenantName" (change)="tenantNameChanged($event, i)">
+                                                class="form-control " formControlName="tenantName" (change)="tenantNameChanged($event, i)">
                                             
                                                 <div *ngIf="tenantsDetail.at(i).get('tenantName')?.invalid && tenantsDetail.at(i).get('tenantName')?.touched">
                                                     <small class="text-danger">Tenant name is required.</small>
@@ -114,7 +114,7 @@
 
                                             <td>
                                                 <input type="text" name="contactNumber" id="contactNumber"
-                                                    class="form-control textbox-border-color" formControlName="contactNumber">
+                                                    class="form-control " formControlName="contactNumber">
                                                 
                                                 <div *ngIf="tenantsDetail.at(i).get('contactNumber')?.invalid && tenantsDetail.at(i).get('contactNumber')?.touched">
                                                     <small class="text-danger">Contact number is required.</small>
@@ -123,7 +123,7 @@
 
                                             <td>
                                                 <input type="email" name="emailAddress" id="emailAddress"
-                                                    class="form-control textbox-border-color" formControlName="emailAddress" >
+                                                    class="form-control " formControlName="emailAddress" >
                                                 
                                                 <div *ngIf="tenantsDetail.at(i).get('emailAddress')?.invalid">
                                                     <small class="text-danger">Enter valid email format.</small>
@@ -132,7 +132,7 @@
 
                                             <td>
                                                 <input type="text" name="address" id="address"
-                                                    class="form-control textbox-border-color" formControlName="address">
+                                                    class="form-control " formControlName="address">
                                                 
                                                 <div *ngIf="tenantsDetail.at(i).get('address')?.invalid && tenantsDetail.at(i).get('address')?.touched">
                                                     <small class="text-danger">Address is required.</small>

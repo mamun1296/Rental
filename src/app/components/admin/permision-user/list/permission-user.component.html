@@ -10,7 +10,7 @@
                 <label for="agencyEmpID" class="label-title">Agency Employee <span class="text-danger">*</span></label>
                 
                 <select formControlName="agencyEmpID"
-                  class="form-control textbox-border-color"
+                  class="form-control "
                   [ngClass]="{ 'is-invalid': userPermissionForm.get('agencyEmpID')?.invalid && userPermissionForm.get('agencyEmpID')?.touched }"
                 >
                   <option value="">Select Employee</option>
@@ -31,7 +31,7 @@
                 <label><i class="fa fa-list"></i> Menu List</label>
                 <hr>
                 <div class="form-check mb-3">
-                  <input type="checkbox" class="form-check-input textbox-border-color" id="selectAll"
+                  <input type="checkbox" class="form-check-input " id="selectAll"
                     [checked]="isAllSelected" (change)="toggleSelectAll($event)"/>
                   <label class="form-check-label" for="selectAll">Select All</label>
                 </div>
@@ -40,7 +40,7 @@
                     <div class="form-check">
                       <input
                         type="checkbox"
-                        class="form-check-input textbox-border-color"
+                        class="form-check-input "
                         [id]="'permission-' + permission.get('id')?.value"
                         [checked]="permission.get('isAllowed')?.value"
                         (change)="togglePermission(i, $event)"

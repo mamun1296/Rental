@@ -9,7 +9,7 @@
               <div class="row mb-3">  
                <div class="col-md-6">      
                 <label for="technicianCategoryID" class="label-title">Technician Category</label><span class="text-danger"> * </span>                 
-                <select  (change)="selectCategory($event)" class="form-control textbox-border-color" id="technicianCategoryID" formControlName="technicianCategoryName" required="required">
+                <select  (change)="selectCategory($event)" class="form-control " id="technicianCategoryID" formControlName="technicianCategoryName" required="required">
                   <option value="">---Select---</option>       
                   <option *ngFor="let item of technicianCategories" [value]="item.id">
                     {{ item.text }}
@@ -25,7 +25,7 @@
   
              <div class="col-md-6">  
                 <label for="technicianID" class="label-title">Technician</label><span class="text-danger"> * </span>                 
-                <select class="form-control textbox-border-color" id="technicianID" formControlName="technicianName" required="required">
+                <select class="form-control " id="technicianID" formControlName="technicianName" required="required">
                   <option value="">---Select---</option>       
                   <option *ngFor="let item of technicians" value="{{item.id}}">{{item.text}}</option>               
                 </select>   
@@ -40,7 +40,7 @@
   
              <div class="col-md-6">      
                 <label for="propertyID" class="label-title">Property</label><span class="text-danger"> * </span>                 
-                <select class="form-control textbox-border-color" id="propertyID" formControlName="propertyID" required ="required">
+                <select class="form-control " id="propertyID" formControlName="propertyID" required ="required">
                   <option value="">---Select---</option>
                   <option *ngFor="let item of properties" value="{{item.id}}">{{item.text}}</option>               
                 </select>   
@@ -53,7 +53,7 @@
             </div>       
                  <div class="col-md-6">
                     <label for="tenantID" class="label-title">Tenant</label><span class="text-danger"> * </span>                 
-                    <select class="form-control textbox-border-color" id="tenantID" formControlName="tenantID" required ="required">
+                    <select class="form-control " id="tenantID" formControlName="tenantID" required ="required">
                       <option value="">---Select---</option>
                       <option *ngFor="let item of tenants" value="{{item.id}}">{{item.text}}</option>               
                     </select>   
@@ -66,7 +66,7 @@
                    </div>
                    <div class="col-md-6">
                     <label for="complainID" class="label-title">Tenant</label><span class="text-danger"> * </span>                 
-                    <select class="form-control textbox-border-color" id="complainID" formControlName="complainID" required ="required">
+                    <select class="form-control " id="complainID" formControlName="complainID" required ="required">
                       <option value="">---Select---</option>
                       <option *ngFor="let item of complains" value="{{item.id}}">{{item.text}}</option>               
                     </select>   
@@ -99,7 +99,7 @@
                     <div class="row mb-3">  
                      <div class="col-md-6">      
                       <label for="technicianCategoryID" class="label-title">Technician Category</label><span class="text-danger"> * </span>                 
-                      <select class="form-control textbox-border-color" id="technicianCategoryID" formControlName="technicianCategoryID" (change)="selectCategory($event)" required="required">
+                      <select class="form-control " id="technicianCategoryID" formControlName="technicianCategoryID" (change)="selectCategory($event)" required="required">
                         <option value="">---Select---</option>       
                         <option *ngFor="let item of technicianCategories" value="{{item.id}}">{{item.text}}</option>               
                       </select>
@@ -113,7 +113,7 @@
         
                    <div class="col-md-6">  
                       <label for="technicianID" class="label-title">Technician</label><span class="text-danger"> * </span>                 
-                      <select (change)="selectTechnician($event)" class="form-control textbox-border-color" id="technicianID" formControlName="technicianID" required="required">
+                      <select (change)="selectTechnician($event)" class="form-control " id="technicianID" formControlName="technicianID" required="required">
                         <option value="">---Select---</option>       
                         <option *ngFor="let item of technicians" value="{{item.id}}">{{item.text}}</option>
                       </select>   
@@ -128,7 +128,7 @@
         
                    <div class="col-md-6">      
                       <label for="propertyID" class="label-title">Property</label><span class="text-danger"> * </span>                 
-                      <select (change)="selectProperty($event)" class="form-control textbox-border-color" id="propertyID" formControlName="propertyID" required ="required">
+                      <select (change)="selectProperty($event)" class="form-control " id="propertyID" formControlName="propertyID" required ="required">
                         <option value="">---Select---</option>
                         <option *ngFor="let item of properties" value="{{item.id}}">{{item.text}}</option>       
                       </select>   
@@ -141,7 +141,7 @@
                   </div>       
                        <div class="col-md-6">
                           <label for="tenantID" class="label-title">Tenant</label><span class="text-danger"> * </span>                 
-                          <select (change)="selectTenant($event)" class="form-control textbox-border-color" id="tenantID" formControlName="tenantID" required ="required">
+                          <select (change)="selectTenant($event)" class="form-control " id="tenantID" formControlName="tenantID" required ="required">
                             <option value="">---Select---</option>
                             <option *ngFor="let item of tenants" value="{{item.id}}">{{item.text}}</option>               
                           </select>   
@@ -154,7 +154,7 @@
                          </div>
                          <div class="col-md-6">
                           <label for="complainID" class="label-title">Complain</label><span class="text-danger"> * </span>                 
-                          <select class="form-control textbox-border-color" id="complainID" formControlName="complainID" required ="required">
+                          <select class="form-control " id="complainID" formControlName="complainID" required ="required">
                             <option value="">---Select---</option>
                             <option *ngFor="let item of complains" value="{{item.id}}">{{item.text}}</option>               
                           </select>   
@@ -186,12 +186,12 @@
                             <form class="d-flex">
                             <div class="form-group mb-0" style="width: 380px;">
                               <label for="searchString" class="label-title">Search </label>
-                              <input type="text" class="form-control textbox-border-color" formControlName="searchString"
+                              <input type="text" class="form-control " formControlName="searchString"
                                 placeholder="Search by anything..."/>
                             </div>
                           </form>
                         </div>                
-                        <table class="table table-hover table-striped textbox-border-color">
+                        <table class="table table-hover table-striped ">
                            <thead>                            
                             <tr class="text-center">   
                                 <th>#SL</th>
